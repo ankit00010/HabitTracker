@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">fukc</string>
+    <string name="habits">Habits</string>
+    <string name="todo">TODO</string>
+    <string name="todo1">TODO</string>
+    <string name="habits1">Habits</string>
+    <string name="_2">2</string>
+    <string name="todo11">TODO11</string>
 </resources>

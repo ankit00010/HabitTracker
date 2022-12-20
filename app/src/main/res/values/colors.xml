@@ -9,6 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#8692f7</color>
     <color name="silver">#494949</color>
+    <color name="blackone">#1E1E1E</color>
+    <color name="gradientviolet">#BC78EC</color>
+
 
 
 </resources>

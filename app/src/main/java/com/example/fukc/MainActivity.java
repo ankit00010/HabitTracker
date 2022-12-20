@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                             if (insert==true)
                             {
                                 Toast.makeText(MainActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+                                Intent intent=new Intent(getApplicationContext(),Login_user.class);
                                 startActivity(intent);
                             }
                             else
