@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/TopBox"
-        android:layout_width="405dp"
-        android:layout_height="111dp"
+        android:layout_width="413dp"
+        android:layout_height="52dp"
         android:background="#040007"
         android:backgroundTint="#0B0606"
         android:contentDescription="@string/_2"
@@ -70,10 +70,10 @@
 
     <TextView
         android:id="@+id/CreateHabitText"
-        android:layout_width="146dp"
-        android:layout_height="66dp"
+        android:layout_width="258dp"
+        android:layout_height="44dp"
         android:gravity="center_vertical"
-        android:text="@string/habits1"
+        android:text="Today's Tasks"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="#FCF7F7"
         app:layout_constraintBottom_toBottomOf="@+id/TopBox"

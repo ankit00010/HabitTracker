@@ -4,18 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="@color/silver"
+    android:gravity="center"
     android:visibility="visible"
     android:orientation="vertical"
-    tools:context=".Login_user">
+    tools:context=".MainActivity">
 
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="266dp"
-        android:layout_height="149dp"
-        app:srcCompat="@drawable/chaaad" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -35,7 +29,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="Register"
                 android:id="@+id/loginText"
                 android:textSize="36sp"
                 android:textAlignment="center"
@@ -46,14 +40,26 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/username1"
+                android:id="@+id/username"
                 android:background="@drawable/custom_textfile"
                 android:drawableLeft="@drawable/ic_baseline_person_24"
                 android:drawablePadding="8dp"
                 android:hint="Username"
                 android:padding="8dp"
                 android:textColor="@color/black"
-
+                android:textColorHighlight="@color/cardview_dark_background"
+                android:layout_marginTop="40dp"
+                android:autofillHints="" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/email"
+                android:background="@drawable/custom_textfile"
+                android:drawableLeft="@drawable/ic_baseline_person_24"
+                android:drawablePadding="8dp"
+                android:hint="Email"
+                android:padding="8dp"
+                android:textColor="@color/black"
                 android:textColorHighlight="@color/cardview_dark_background"
                 android:layout_marginTop="40dp"
                 android:autofillHints="" />
@@ -62,7 +68,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/password1"
+                android:id="@+id/password"
                 android:background="@drawable/custom_textfile"
                 android:drawableLeft="@drawable/ic_baseline_lock_24"
                 android:drawablePadding="8dp"
@@ -72,12 +78,25 @@
                 android:textColor="@color/black"
                 android:textColorHighlight="@color/cardview_dark_background"
                 android:layout_marginTop="20dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/repassword"
+                android:background="@drawable/custom_textfile"
+                android:drawableLeft="@drawable/ic_baseline_lock_24"
+                android:drawablePadding="8dp"
+                android:hint="Confirm Password"
+                android:padding="8dp"
+                android:inputType="textPassword"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/cardview_dark_background"
+                android:layout_marginTop="20dp"/>
 
             <Button
-                android:id="@+id/btnsignin1"
+                android:id="@+id/btnsignup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="Register"
                 android:textSize="18sp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/purple"
@@ -87,13 +106,12 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/signupText"
+        android:id="@+id/signinText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:onClick="signuptext"
-            android:padding="8dp"
-        android:text="Not yet registered ? Signup Now"
+        android:padding="8dp"
+        android:text="ALREADY HAVE ACCOUNT? LOGIN"
         android:textAlignment="center"
         android:textColor="@color/purple_200"
         android:textSize="14sp" />

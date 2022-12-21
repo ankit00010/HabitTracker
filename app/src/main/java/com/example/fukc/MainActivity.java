@@ -1,9 +1,9 @@
 package com.example.fukc;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,69 +13,62 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    EditText username, password, repassword,email;
-    Button signup;
-    TextView signin;
+    EditText username, password;
+    TextView signup;
+    Button btnlogin;
     DBHelper db;
+    //For keeping user logged in
+    SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        username =  findViewById(R.id.username);
-        password =  findViewById(R.id.password);
-        repassword =  findViewById(R.id.repassword);
-        signup =  findViewById(R.id.btnsignup);
-        signin =  findViewById(R.id.signinText);
-        email=findViewById(R.id.email);
-        db=new DBHelper(this);
-        signup.setOnClickListener(new View.OnClickListener() {
+        username = (EditText) findViewById(R.id.username1);
+        password = (EditText) findViewById(R.id.password1);
+        btnlogin = (Button) findViewById(R.id.btnsignin1);
+        signup=findViewById(R.id.signupText);
+        db =new DBHelper(this);
+        //For keeping user logged in
+        sp = getSharedPreferences("login",MODE_PRIVATE);
+
+        if(sp.getBoolean("logged",true)){
+            Intent intent=new Intent(getApplicationContext(),HomeActivity1.class);
+            startActivity(intent);
+        }
+
+
+        btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String user =username.getText().toString();
+                String user=username.getText().toString();
                 String pass=password.getText().toString();
-                String repass=repassword.getText().toString();
-                if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(repass))
-                {
+                if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass) )
                     Toast.makeText(MainActivity.this, "All fields Required", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    if (pass.equals(repass))
+                else
+                {
+                    Boolean checkuserpass=db.checkusernamepassword(user,pass);
+                    if (checkuserpass==true)
                     {
-                        Boolean checkuser=db.checkusername(user);
-                        if (checkuser==false)
-                        {
-                            Boolean insert =db.insertData(user,pass);
-                            if (insert==true)
-                            {
-                                Toast.makeText(MainActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(getApplicationContext(),Login_user.class);
-                                startActivity(intent);
-                            }
-                            else
-                            {
-                                Toast.makeText(MainActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        else
-                        {
-                            Toast.makeText(MainActivity.this, "User Already Exists", Toast.LENGTH_SHORT).show();
-                        }
+                        //For keeping user logged in
+                        sp.edit().putBoolean("logged",true).apply();
+
+                        Toast.makeText(MainActivity.this, "Login Successfull", Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(getApplicationContext(),HomeActivity1.class);
+                        startActivity(intent);
+
                     }else{
-                        Toast.makeText(MainActivity.this, "Passwords are not matching", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
-        signin.setOnClickListener(new View.OnClickListener() {
+        signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent=new Intent(getApplicationContext(),Login_user.class);
+                Intent intent =new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
-
-                finish();
-                            }
+            }
         });
-    }
-}
+    }}
+
