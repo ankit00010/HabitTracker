@@ -35,5 +35,12 @@ ImageView options1,options2;
                 startActivity(intent);
             }
         });
+        options2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(),CreateMeasurableHabit.class);
+                startActivity(intent);
+            }
+        });
     }
 }

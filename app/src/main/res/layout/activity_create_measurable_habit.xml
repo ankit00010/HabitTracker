@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/blackone"
-    tools:context=".CreateYNhabit">
+    tools:context=".CreateMeasurableHabit">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 
     <ImageView
         android:id="@+id/TopBox"
@@ -27,7 +32,7 @@
         android:layout_width="146dp"
         android:layout_height="42dp"
         android:gravity="center_vertical"
-        android:text="Create habit"
+        android:text="@string/create_habit"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="#FCF7F7"
         android:textSize="25sp"
@@ -42,7 +47,7 @@
         android:id="@+id/backbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="back"
+        android:contentDescription="@string/back"
         app:layout_constraintBottom_toBottomOf="@+id/TopBox"
         app:layout_constraintEnd_toStartOf="@+id/CreateHabitText"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,17 +63,18 @@
         app:layout_constraintStart_toEndOf="@+id/CreateHabitText"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.534"
-        app:srcCompat="@drawable/savebutton" />
+        app:srcCompat="@drawable/savebutton"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/SaveText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
-        android:text="Save"
+        android:text="@string/save"
+        android:textColor="#81C784"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="#1BC592"
         app:layout_constraintBottom_toBottomOf="@+id/SaveBox"
         app:layout_constraintEnd_toEndOf="@+id/SaveBox"
         app:layout_constraintHorizontal_bias="0.466"
@@ -80,30 +86,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:foregroundGravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TopBox"
-        app:srcCompat="@drawable/namebox" />
+        app:srcCompat="@drawable/namebox"
+        android:contentDescription="TODO" />
 
     <ImageView
         android:id="@+id/Colorbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.419"
         app:layout_constraintStart_toEndOf="@+id/namebox"
         app:layout_constraintTop_toBottomOf="@+id/TopBox"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/colorbox" />
+        app:srcCompat="@drawable/colorbox"
+        android:contentDescription="TODO" />
 
     <ImageView
         android:id="@+id/QuestionBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.194"
@@ -117,12 +128,13 @@
         android:layout_width="345dp"
         android:layout_height="72dp"
         android:layout_marginTop="24dp"
+        android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.151"
+        app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/QuestionBox"
-        app:layout_constraintVertical_bias="0.043"
+        app:layout_constraintVertical_bias="0.289"
         app:srcCompat="@drawable/frequencybox" />
 
     <ImageView
@@ -130,19 +142,22 @@
         android:layout_width="349dp"
         android:layout_height="70dp"
         android:layout_marginTop="24dp"
+        android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.209"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FrequencyBox"
         app:layout_constraintVertical_bias="0.069"
-        app:srcCompat="@drawable/reminderbox" />
+        app:srcCompat="@drawable/reminderbox"
+        android:contentDescription="TODO" />
 
     <ImageView
         android:id="@+id/NoteBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.196"
@@ -161,7 +176,7 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/namebox"
         app:layout_constraintEnd_toEndOf="@+id/namebox"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TopBox"
         app:layout_constraintVertical_bias="1.0" />
@@ -170,6 +185,7 @@
         android:id="@+id/ColorPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/Colorbox"
         app:layout_constraintEnd_toEndOf="@+id/Colorbox"
         app:layout_constraintStart_toStartOf="@+id/Colorbox"
@@ -184,23 +200,24 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/QuestionBox"
         app:layout_constraintEnd_toEndOf="@+id/QuestionBox"
-        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="@+id/QuestionBox"
         app:layout_constraintTop_toBottomOf="@+id/namebox"
-        app:layout_constraintVertical_bias="0.23000002" />
+        app:layout_constraintVertical_bias="0.20999998" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/frequency_Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:text="Frequency"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/FrequencyBox"
         app:layout_constraintEnd_toEndOf="@+id/FrequencyBox"
-        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="@+id/FrequencyBox"
-        app:layout_constraintTop_toBottomOf="@+id/QuestionBox"
-        app:layout_constraintVertical_bias="0.333" />
+        app:layout_constraintTop_toBottomOf="@+id/Targetbox"
+        app:layout_constraintVertical_bias="0.25" />
 
     <TextView
         android:id="@+id/ReminderText"
@@ -213,7 +230,7 @@
         app:layout_constraintHorizontal_bias="0.055"
         app:layout_constraintStart_toStartOf="@+id/ReminderBox"
         app:layout_constraintTop_toBottomOf="@+id/FrequencyBox"
-        app:layout_constraintVertical_bias="0.322" />
+        app:layout_constraintVertical_bias="0.27999997" />
 
     <TextView
         android:id="@+id/NotesText"
@@ -226,7 +243,7 @@
         app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="@+id/NoteBox"
         app:layout_constraintTop_toBottomOf="@+id/ReminderBox"
-        app:layout_constraintVertical_bias="0.34" />
+        app:layout_constraintVertical_bias="0.26" />
 
     <TextView
         android:id="@+id/Colortext"
@@ -244,13 +261,14 @@
     <EditText
         android:id="@+id/name_edittext"
         android:layout_width="236dp"
-        android:layout_height="42dp"
+        android:layout_height="48dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:foregroundGravity="center"
         android:hint="e.g.   Exercise"
 
-        android:textColorHint="#454141"
+        android:inputType="textPersonName"
 
+        android:textColorHint="#A1887F"
         app:layout_constraintBottom_toBottomOf="@+id/namebox"
         app:layout_constraintEnd_toEndOf="@+id/namebox"
         app:layout_constraintStart_toStartOf="@+id/namebox"
@@ -261,49 +279,103 @@
         android:layout_width="314dp"
         android:layout_height="42dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:foregroundGravity="center"
         android:hint="e.g.   Did you exercise today?"
+        android:inputType="textPersonName"
         android:textColorHint="#454141"
         app:layout_constraintBottom_toBottomOf="@+id/QuestionBox"
         app:layout_constraintEnd_toEndOf="@+id/QuestionBox"
         app:layout_constraintHorizontal_bias="0.366"
         app:layout_constraintStart_toStartOf="@+id/QuestionBox"
         app:layout_constraintTop_toTopOf="@+id/QuestionBox"
-        app:layout_constraintVertical_bias="0.567" />
+        app:layout_constraintVertical_bias="0.567"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/Target_EditText"
+        android:layout_width="314dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:foregroundGravity="center"
+        android:hint="e.g.  15"
+        android:inputType="textPersonName"
+
+        android:textColorHint="#454141"
+        app:layout_constraintBottom_toBottomOf="@+id/Targetbox"
+        app:layout_constraintEnd_toEndOf="@+id/Targetbox"
+        app:layout_constraintStart_toStartOf="@+id/Targetbox"
+        app:layout_constraintTop_toTopOf="@+id/Targetbox" />
 
     <EditText
         android:id="@+id/frequency_edittext"
         android:layout_width="314dp"
-        android:layout_height="42dp"
+        android:layout_height="48dp"
         android:ems="10"
+        android:foregroundGravity="center"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="@+id/FrequencyBox"
         app:layout_constraintEnd_toEndOf="@+id/FrequencyBox"
+        app:layout_constraintHorizontal_bias="0.612"
         app:layout_constraintStart_toStartOf="@+id/FrequencyBox"
-        app:layout_constraintTop_toTopOf="@+id/FrequencyBox" />
+        app:layout_constraintTop_toTopOf="@+id/FrequencyBox"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/reminder_edittext"
         android:layout_width="314dp"
-        android:layout_height="42dp"
+        android:layout_height="48dp"
         android:ems="10"
+        android:foregroundGravity="center"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="@+id/ReminderBox"
         app:layout_constraintEnd_toEndOf="@+id/ReminderBox"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="@+id/ReminderBox"
-        app:layout_constraintTop_toTopOf="@+id/ReminderBox" />
+        app:layout_constraintTop_toTopOf="@+id/ReminderBox"
+        app:layout_constraintVertical_bias="0.464"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/notes_text"
         android:layout_width="314dp"
-        android:layout_height="42dp"
+        android:layout_height="48dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:foregroundGravity="center"
         android:hint="(Optional)"
+        android:inputType="textPersonName"
         android:textColorHint="#454141"
         app:layout_constraintBottom_toBottomOf="@+id/NoteBox"
         app:layout_constraintEnd_toEndOf="@+id/NoteBox"
+        app:layout_constraintHorizontal_bias="0.548"
         app:layout_constraintStart_toStartOf="@+id/NoteBox"
-        app:layout_constraintTop_toTopOf="@+id/NoteBox" />
+        app:layout_constraintTop_toTopOf="@+id/NoteBox"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/Targetbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/FrequencyBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.177"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/QuestionBox"
+        app:srcCompat="@drawable/targetbox" />
+
+    <TextView
+        android:id="@+id/TargetText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Target"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/Targetbox"
+        app:layout_constraintEnd_toEndOf="@+id/Targetbox"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="@+id/Targetbox"
+        app:layout_constraintTop_toBottomOf="@+id/QuestionBox"
+        app:layout_constraintVertical_bias="0.19" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

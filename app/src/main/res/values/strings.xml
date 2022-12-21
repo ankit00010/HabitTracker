@@ -6,4 +6,7 @@
     <string name="habits1">Habits</string>
     <string name="_2">2</string>
     <string name="todo11">TODO11</string>
+    <string name="create_habit">Create habit</string>
+    <string name="back">back</string>
+    <string name="save">Save</string>
 </resources>
