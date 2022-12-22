@@ -20,87 +20,89 @@
         app:cardElevation="20dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_width="362dp"
+            android:layout_height="496dp"
             android:layout_gravity="center"
+            android:orientation="vertical"
             android:padding="24dp">
 
             <TextView
+                android:id="@+id/loginText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Register"
-                android:id="@+id/loginText"
-                android:textSize="36sp"
                 android:textAlignment="center"
+                android:textColor="@color/purple_200"
 
-                android:textStyle="bold"
-                android:textColor="@color/purple_200"/>
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/username"
+                android:layout_marginTop="40dp"
+                android:autofillHints=""
                 android:background="@drawable/custom_textfile"
                 android:drawableLeft="@drawable/ic_baseline_person_24"
                 android:drawablePadding="8dp"
                 android:hint="Username"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="40dp"
-                android:autofillHints="" />
+                android:textColorHighlight="@color/cardview_dark_background" />
+
             <EditText
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/email"
+                android:layout_marginTop="40dp"
+                android:autofillHints=""
                 android:background="@drawable/custom_textfile"
                 android:drawableLeft="@drawable/ic_baseline_person_24"
                 android:drawablePadding="8dp"
                 android:hint="Email"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="40dp"
-                android:autofillHints="" />
+                android:textColorHighlight="@color/cardview_dark_background" />
 
 
             <EditText
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/password"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/custom_textfile"
                 android:drawableLeft="@drawable/ic_baseline_lock_24"
                 android:drawablePadding="8dp"
                 android:hint="Password"
-                android:padding="8dp"
                 android:inputType="textPassword"
+                android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="20dp"/>
+                android:textColorHighlight="@color/cardview_dark_background" />
+
             <EditText
+                android:id="@+id/repassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/repassword"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/custom_textfile"
                 android:drawableLeft="@drawable/ic_baseline_lock_24"
                 android:drawablePadding="8dp"
                 android:hint="Confirm Password"
-                android:padding="8dp"
                 android:inputType="textPassword"
+                android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="20dp"/>
+                android:textColorHighlight="@color/cardview_dark_background" />
 
             <Button
                 android:id="@+id/btnsignup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Register"
-                android:textSize="18sp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/purple"
-                app:cornerRadius="20sp"/>
+                android:text="Register"
+                android:textSize="18sp"
+                app:cornerRadius="20sp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

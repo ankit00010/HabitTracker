@@ -137,33 +137,17 @@
         app:layout_constraintVertical_bias="0.289"
         app:srcCompat="@drawable/frequencybox" />
 
-    <ImageView
-        android:id="@+id/ReminderBox"
-        android:layout_width="349dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="24dp"
-        android:foregroundGravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.209"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FrequencyBox"
-        app:layout_constraintVertical_bias="0.069"
-        app:srcCompat="@drawable/reminderbox"
-        android:contentDescription="TODO" />
 
     <ImageView
         android:id="@+id/NoteBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.196"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ReminderBox"
-        app:layout_constraintVertical_bias="0.142"
+        app:layout_constraintTop_toBottomOf="@+id/RemainderButton"
         app:srcCompat="@drawable/notesbox" />
 
     <TextView
@@ -217,20 +201,7 @@
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="@+id/FrequencyBox"
         app:layout_constraintTop_toBottomOf="@+id/Targetbox"
-        app:layout_constraintVertical_bias="0.25" />
-
-    <TextView
-        android:id="@+id/ReminderText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reminder"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/ReminderBox"
-        app:layout_constraintEnd_toEndOf="@+id/ReminderBox"
-        app:layout_constraintHorizontal_bias="0.055"
-        app:layout_constraintStart_toStartOf="@+id/ReminderBox"
-        app:layout_constraintTop_toBottomOf="@+id/FrequencyBox"
-        app:layout_constraintVertical_bias="0.27999997" />
+        app:layout_constraintVertical_bias="0.13999999" />
 
     <TextView
         android:id="@+id/NotesText"
@@ -242,8 +213,8 @@
         app:layout_constraintEnd_toEndOf="@+id/NoteBox"
         app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="@+id/NoteBox"
-        app:layout_constraintTop_toBottomOf="@+id/ReminderBox"
-        app:layout_constraintVertical_bias="0.26" />
+        app:layout_constraintTop_toBottomOf="@+id/RemainderButton"
+        app:layout_constraintVertical_bias="0.41000003" />
 
     <TextView
         android:id="@+id/Colortext"
@@ -320,20 +291,6 @@
         app:layout_constraintTop_toTopOf="@+id/FrequencyBox"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <EditText
-        android:id="@+id/reminder_edittext"
-        android:layout_width="314dp"
-        android:layout_height="48dp"
-        android:ems="10"
-        android:foregroundGravity="center"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/ReminderBox"
-        app:layout_constraintEnd_toEndOf="@+id/ReminderBox"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="@+id/ReminderBox"
-        app:layout_constraintTop_toTopOf="@+id/ReminderBox"
-        app:layout_constraintVertical_bias="0.464"
-        tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/notes_text"
@@ -349,7 +306,7 @@
         app:layout_constraintHorizontal_bias="0.548"
         app:layout_constraintStart_toStartOf="@+id/NoteBox"
         app:layout_constraintTop_toTopOf="@+id/NoteBox"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.59000003" />
 
     <ImageView
         android:id="@+id/Targetbox"
@@ -374,8 +331,23 @@
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="@+id/Targetbox"
         app:layout_constraintTop_toBottomOf="@+id/QuestionBox"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintVertical_bias="0.110000014" />
 
+    <Button
+        android:id="@+id/RemainderButton"
+        android:layout_width="241dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginBottom="120dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.37"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FrequencyBox"
+        app:layout_constraintVertical_bias="1.0" />
+    "
+      />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
