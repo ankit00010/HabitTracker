@@ -1,6 +1,7 @@
 package com.example.fukc;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -9,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +22,13 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.TimeZone;
 
+import yuku.ambilwarna.AmbilWarnaDialog;
+
 public class CreateMeasurableHabit extends AppCompatActivity {
+
+ int defaultColor;
+ Button color_picker1;
+
 ImageView backarrow;
 TextView ReminderBox,frequency_edittext;
 boolean[] selectedDays;
@@ -35,6 +43,7 @@ String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
         backarrow=findViewById(R.id.backbutton);
         ReminderBox=findViewById(R.id.ReminderButton);
         frequency_edittext=findViewById(R.id.frequency_edittext);
+        color_picker1=findViewById(R.id.colorpicker);
         ReminderBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,7 +149,32 @@ String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
             }
         });
 
+        defaultColor= ContextCompat.getColor(CreateMeasurableHabit.this, com.google.android.material.R.color.design_default_color_primary);
+
+        color_picker1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openColorPicker();
+            }
+        });
 
 
+    }
+    public void openColorPicker()
+    {
+        AmbilWarnaDialog ambilWarnaDialog=  new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+
+            }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                defaultColor=color;
+                color_picker1.setBackgroundColor(defaultColor);
+            }
+        });
+
+        ambilWarnaDialog.show();
     }
 }
