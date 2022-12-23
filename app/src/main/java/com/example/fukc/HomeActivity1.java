@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class HomeActivity1 extends AppCompatActivity {
 FloatingActionButton plus;
 ImageView options1,options2;
-
+SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +47,6 @@ ImageView options1,options2;
                 startActivity(intent);
             }
         });
-
-
-
         }
 
 
@@ -56,9 +54,10 @@ ImageView options1,options2;
     public boolean onOptionsItemSelected( MenuItem item) {
         switch (item.getItemId()){
             case R.id.logout:
+                sp = getSharedPreferences("login",MODE_PRIVATE);
+                sp.edit().putBoolean("logged",false).apply();
                 Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
-                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -69,7 +68,5 @@ ImageView options1,options2;
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.home_menu,menu);
         return true;
-
-
     }
 }

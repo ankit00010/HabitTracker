@@ -1,7 +1,6 @@
 package com.example.fukc;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,7 +13,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     EditText username, password;
-    TextView signup;
+    TextView signup,forgetpass;
     Button btnlogin;
     DBHelper db;
     //For keeping user logged in
@@ -28,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password1);
         btnlogin = (Button) findViewById(R.id.btnsignin1);
         signup=findViewById(R.id.signupText);
+        forgetpass=findViewById(R.id.forgetpass);
         db =new DBHelper(this);
         //For keeping user logged in
         sp = getSharedPreferences("login",MODE_PRIVATE);
@@ -66,7 +66,14 @@ public class MainActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent =new Intent(getApplicationContext(), Register_user.class);
+                startActivity(intent);
+            }
+        });
+        forgetpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(getApplicationContext(), Forget_pass.class);
                 startActivity(intent);
             }
         });

@@ -11,7 +11,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Fukc"
+        android:hardwareAccelerated="true"
         tools:targetApi="31">
+        <activity
+            android:name=".Forget_pass"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+        android:name=".Forget_pass2"
+        android:exported="false">
+        <meta-data
+            android:name="android.app.lib_name"
+            android:value="" />
+        </activity>
+        <activity
+        android:name=".Reset_pass"
+        android:exported="false">
+        <meta-data
+            android:name="android.app.lib_name"
+            android:value="" />
+    </activity>
         <activity
             android:name=".CreateMeasurableHabit"
             android:exported="false">

@@ -91,9 +91,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:minHeight="48dp"
         android:onClick="signuptext"
-            android:padding="8dp"
+        android:padding="8dp"
         android:text="Not yet registered ? Signup Now"
+        android:textAlignment="center"
+        android:textColor="@color/purple_200"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/forgetpass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:minHeight="48dp"
+        android:onClick="forgetpass"
+        android:padding="8dp"
+        android:text="Forgot password ? Reset Now"
         android:textAlignment="center"
         android:textColor="@color/purple_200"
         android:textSize="14sp" />
