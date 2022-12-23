@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/blackone"
-    tools:context=".CreateMeasurableHabit">
+
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:background="@color/blackone"
+tools:context=".CreateMeasurableHabit">>
 
 
     <ImageView
@@ -138,18 +136,6 @@
         app:srcCompat="@drawable/frequencybox" />
 
 
-    <ImageView
-        android:id="@+id/NoteBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:foregroundGravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.196"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RemainderButton"
-        app:srcCompat="@drawable/notesbox" />
-
     <TextView
         android:id="@+id/nametext"
         android:layout_width="wrap_content"
@@ -201,20 +187,7 @@
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="@+id/FrequencyBox"
         app:layout_constraintTop_toBottomOf="@+id/Targetbox"
-        app:layout_constraintVertical_bias="0.13999999" />
-
-    <TextView
-        android:id="@+id/NotesText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Notes"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/NoteBox"
-        app:layout_constraintEnd_toEndOf="@+id/NoteBox"
-        app:layout_constraintHorizontal_bias="0.048"
-        app:layout_constraintStart_toStartOf="@+id/NoteBox"
-        app:layout_constraintTop_toBottomOf="@+id/RemainderButton"
-        app:layout_constraintVertical_bias="0.41000003" />
+        app:layout_constraintVertical_bias="0.23000002" />
 
     <TextView
         android:id="@+id/Colortext"
@@ -292,22 +265,6 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
 
-    <EditText
-        android:id="@+id/notes_text"
-        android:layout_width="314dp"
-        android:layout_height="48dp"
-        android:ems="10"
-        android:foregroundGravity="center"
-        android:hint="(Optional)"
-        android:inputType="textPersonName"
-        android:textColorHint="#454141"
-        app:layout_constraintBottom_toBottomOf="@+id/NoteBox"
-        app:layout_constraintEnd_toEndOf="@+id/NoteBox"
-        app:layout_constraintHorizontal_bias="0.548"
-        app:layout_constraintStart_toStartOf="@+id/NoteBox"
-        app:layout_constraintTop_toTopOf="@+id/NoteBox"
-        app:layout_constraintVertical_bias="0.59000003" />
-
     <ImageView
         android:id="@+id/Targetbox"
         android:layout_width="wrap_content"
@@ -331,23 +288,59 @@
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="@+id/Targetbox"
         app:layout_constraintTop_toBottomOf="@+id/QuestionBox"
-        app:layout_constraintVertical_bias="0.110000014" />
+        app:layout_constraintVertical_bias="0.19" />
 
-    <Button
-        android:id="@+id/RemainderButton"
-        android:layout_width="241dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginBottom="120dp"
-        android:text="Button"
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.37"
+        app:layout_constraintHorizontal_bias="0.164"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FrequencyBox"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.149"
+        app:srcCompat="@drawable/reminderbox" />
+
+    <TextView
+        android:id="@+id/ReminderButton"
+        android:layout_width="295dp"
+        android:layout_height="43dp"
+        android:ems="10"
+        android:gravity="center|left"
+        android:inputType="textPersonName"
+        android:text="     off"
+        android:textColor="#E6D9D9"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintHorizontal_bias="0.366"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reminder"
+        android:textColor="#EBDADA"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FrequencyBox"
+        app:layout_constraintVertical_bias="0.19999999" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/ReminderButton"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
     "
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>

@@ -7,8 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -19,7 +18,7 @@ import java.util.TimeZone;
 
 public class CreateMeasurableHabit extends AppCompatActivity {
 ImageView backarrow;
-Button ReminderBox;
+TextView ReminderBox;
 
 
     @SuppressLint("MissingInflatedId")
@@ -28,7 +27,7 @@ Button ReminderBox;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_measurable_habit);
         backarrow=findViewById(R.id.backbutton);
-        ReminderBox=findViewById(R.id.RemainderButton);
+        ReminderBox=findViewById(R.id.ReminderButton);
         ReminderBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
