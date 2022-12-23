@@ -7,7 +7,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:background="@color/blackone"
-tools:context=".CreateMeasurableHabit">>
+tools:context=".CreateMeasurableHabit">
 
 
     <ImageView
@@ -305,7 +305,7 @@ tools:context=".CreateMeasurableHabit">>
     <TextView
         android:id="@+id/ReminderButton"
         android:layout_width="295dp"
-        android:layout_height="43dp"
+        android:layout_height="48dp"
         android:ems="10"
         android:gravity="center|left"
         android:inputType="textPersonName"
