@@ -18,7 +18,7 @@ import java.util.TimeZone;
 
 public class CreateYNhabit extends AppCompatActivity {
 ImageView backarrow;
-Button reminderbutton;
+TextView reminderbutton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
