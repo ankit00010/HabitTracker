@@ -250,7 +250,7 @@ tools:context=".CreateMeasurableHabit">
         app:layout_constraintStart_toStartOf="@+id/Targetbox"
         app:layout_constraintTop_toTopOf="@+id/Targetbox" />
 
-    <EditText
+    <TextView
         android:id="@+id/frequency_edittext"
         android:layout_width="314dp"
         android:layout_height="48dp"

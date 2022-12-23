@@ -3,7 +3,9 @@ package com.example.fukc;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,13 +15,17 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.TimeZone;
 
 public class CreateMeasurableHabit extends AppCompatActivity {
 ImageView backarrow;
-TextView ReminderBox;
-
+TextView ReminderBox,frequency_edittext;
+boolean[] selectedDays;
+ArrayList<Integer> daysList = new ArrayList<>();
+String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -28,6 +34,7 @@ TextView ReminderBox;
         setContentView(R.layout.activity_create_measurable_habit);
         backarrow=findViewById(R.id.backbutton);
         ReminderBox=findViewById(R.id.ReminderButton);
+        frequency_edittext=findViewById(R.id.frequency_edittext);
         ReminderBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,5 +67,80 @@ TextView ReminderBox;
                 finish();
             }
         });
+        frequency_edittext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Initialize alert dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(CreateMeasurableHabit.this);
+                builder.setTitle("Select Days of the weeek");
+                builder.setCancelable(false);
+
+                builder.setMultiChoiceItems(daysArray, selectedDays, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                        // check condition
+                        if (b) {
+                            // when checkbox selected
+                            // Add position in lang list
+                            daysList.add(i);
+                            Collections.sort(daysList);
+                        } else {
+                            // when checkbox unselected
+                            // Remove position from langList
+                            daysList.remove(Integer.valueOf(i));
+                        }
+                    }
+                });
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Initialize string builder
+                        StringBuilder stringBuilder = new StringBuilder();
+
+                        for (int j = 0; j < daysList.size(); j++) {
+                            // concat array value
+                            stringBuilder.append(daysArray[daysList.get(j)]);
+                            // check condition
+                            if (j != daysList.size() - 1) {
+                                // When j value not equal
+                                // to lang list size - 1
+                                // add comma
+                                stringBuilder.append(", ");
+                            }
+                        }
+                        // set text on textView
+                        frequency_edittext.setText(stringBuilder.toString());
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // dismiss dialog
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // use for loop
+                        for (int j = 0; j < selectedDays.length; j++) {
+                            // remove all selection
+                            selectedDays[j] = false;
+                            // clear language list
+                            daysList.clear();
+                            // clear text view value
+                            frequency_edittext.setText("");
+                        }
+                    }
+                });
+                // show dialog
+                builder.show();
+            }
+        });
+
+
+
     }
 }
