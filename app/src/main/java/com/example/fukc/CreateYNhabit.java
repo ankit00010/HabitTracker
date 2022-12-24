@@ -1,7 +1,6 @@
 package com.example.fukc;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
@@ -9,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -20,11 +18,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.TimeZone;
 
-import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class CreateYNhabit extends AppCompatActivity {
- Button color_picker;
- int defaultColor;
 ImageView backarrow;
 TextView reminderbutton,frequencybutton;
 boolean[] selectedDays;
@@ -34,15 +29,14 @@ String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ynhabit);
-        backarrow=findViewById(R.id.backbutton);
-        reminderbutton=findViewById(R.id.Remainderbtn);
+        backarrow = findViewById(R.id.backbutton);
+        reminderbutton = findViewById(R.id.Remainderbtn);
         frequencybutton = findViewById(R.id.frequency_edittext);
-        color_picker=findViewById(R.id.button);
         selectedDays = new boolean[daysArray.length];
         backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),HomeActivity1.class);
+                Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
                 startActivity(intent);
                 finish();
             }
@@ -50,23 +44,23 @@ String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
         reminderbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Calendar calendar= Calendar.getInstance();
-                int hours=calendar.get(Calendar.HOUR_OF_DAY);
-                int mins=calendar.get(Calendar.MINUTE);
-                TimePickerDialog timePickerDialog=new TimePickerDialog(CreateYNhabit.this, com.google.android.material.R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
+                Calendar calendar = Calendar.getInstance();
+                int hours = calendar.get(Calendar.HOUR_OF_DAY);
+                int mins = calendar.get(Calendar.MINUTE);
+                TimePickerDialog timePickerDialog = new TimePickerDialog(CreateYNhabit.this, com.google.android.material.R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                        Calendar c=Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        c.set(Calendar.MINUTE, minute);
                         c.setTimeZone(TimeZone.getDefault());
-                        SimpleDateFormat format=new SimpleDateFormat("k:mm:a");
-                        String time=format.format(c.getTime());
+                        SimpleDateFormat format = new SimpleDateFormat("k:mm:a");
+                        String time = format.format(c.getTime());
                         reminderbutton.setText(time);
 
 
                     }
-                },hours,mins,false);
+                }, hours, mins, false);
                 timePickerDialog.show();
 
             }
@@ -145,33 +139,7 @@ String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
             }
         });
 
-    //Code for ColorPicker
-        defaultColor= ContextCompat.getColor(CreateYNhabit.this, com.google.android.material.R.color.design_default_color_primary);
-
-        color_picker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openColorPicker();
-            }
-        });
 
     }
-    //openColorPicker method  for color_picker
-    public void openColorPicker()
-    {
-        AmbilWarnaDialog ambilWarnaDialog=  new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
-            @Override
-            public void onCancel(AmbilWarnaDialog dialog) {
 
-            }
-
-            @Override
-            public void onOk(AmbilWarnaDialog dialog, int color) {
-                defaultColor=color;
-                color_picker.setBackgroundColor(defaultColor);
-            }
-        });
-
-        ambilWarnaDialog.show();
-    }
 }
