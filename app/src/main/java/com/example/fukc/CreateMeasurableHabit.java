@@ -22,7 +22,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.TimeZone;
 
-import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class CreateMeasurableHabit extends AppCompatActivity {
 
@@ -65,14 +64,15 @@ String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
 
             }
         });
+        //backarrow to navigate to habit options back
         backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),HomeActivity1.class);
+                Intent intent=new Intent(getApplicationContext(),HabitOptions.class);
                 startActivity(intent);
-                finish();
             }
         });
+        //code for frequency
         frequency_edittext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +97,7 @@ String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
                         }
                     }
                 });
-
+                //code for frequency
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -119,7 +119,7 @@ String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
                         frequency_edittext.setText(stringBuilder.toString());
                     }
                 });
-
+                ///code for frequency
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -144,7 +144,7 @@ String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
                 // show dialog
                 builder.show();
             }
-        });
+        });//end of frequency
 
 
     }
