@@ -2,6 +2,94 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/blackone"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HabitOptions"/>
+    tools:context=".HabitOptions">
+
+
+    <ImageView
+        android:id="@+id/TopBox"
+        android:layout_width="413dp"
+        android:layout_height="52dp"
+        android:background="#040007"
+        android:backgroundTint="#0B0606"
+        android:contentDescription="@string/_2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/toponefrag" />
+
+    <TextView
+        android:id="@+id/CreateHabitText"
+        android:layout_width="404dp"
+        android:layout_height="42dp"
+        android:gravity="center|center_vertical"
+        android:text="How do you want to evaluate your progress?"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#FCF7F7"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/TopBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.124"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/TopBox"
+        app:layout_constraintVertical_bias="0.472" />
+
+    <ImageView
+        android:id="@+id/BottomBox"
+        android:layout_width="413dp"
+        android:layout_height="52dp"
+        android:background="#040007"
+        android:backgroundTint="#0B0606"
+        android:contentDescription="@string/_2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.998"
+        app:srcCompat="@drawable/toponefrag" />
+
+    <TextView
+        android:id="@+id/back_text"
+        android:layout_width="121dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="484dp"
+        android:gravity="center"
+        android:text="BACK"
+        android:textColor="#EFE4E4"
+        app:layout_constraintBottom_toBottomOf="@+id/BottomBox"
+        app:layout_constraintEnd_toEndOf="@+id/CreateHabitText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/CreateHabitText"
+        app:layout_constraintTop_toTopOf="@+id/CreateHabitText"
+        app:layout_constraintVertical_bias="0.989" />
+
+    <ImageView
+        android:id="@+id/option1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="144dp"
+        app:layout_constraintBottom_toTopOf="@+id/BottomBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TopBox"
+        app:layout_constraintVertical_bias="0.016"
+        app:srcCompat="@drawable/option1" />
+
+    <ImageView
+        android:id="@+id/option2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/BottomBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/option1"
+        app:layout_constraintVertical_bias="0.412"
+        app:srcCompat="@drawable/option2" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
