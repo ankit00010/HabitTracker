@@ -3,11 +3,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:background="@color/blackone"
-tools:context=".CreateMeasurableHabit">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/blackone"
+    tools:context=".CreateMeasurableHabit">
 
 
     <ImageView
@@ -121,6 +121,7 @@ tools:context=".CreateMeasurableHabit">
         app:layout_constraintVertical_bias="0.004"
         app:srcCompat="@drawable/questionbox" />
 
+
     <ImageView
         android:id="@+id/FrequencyBox"
         android:layout_width="345dp"
@@ -129,12 +130,11 @@ tools:context=".CreateMeasurableHabit">
         android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.166"
+        app:layout_constraintHorizontal_bias="0.196"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/QuestionBox"
-        app:layout_constraintVertical_bias="0.289"
+        app:layout_constraintVertical_bias="0.034"
         app:srcCompat="@drawable/frequencybox" />
-
 
     <TextView
         android:id="@+id/nametext"
@@ -174,9 +174,7 @@ tools:context=".CreateMeasurableHabit">
         app:layout_constraintBottom_toBottomOf="@+id/FrequencyBox"
         app:layout_constraintEnd_toEndOf="@+id/FrequencyBox"
         app:layout_constraintHorizontal_bias="0.04"
-        app:layout_constraintStart_toStartOf="@+id/FrequencyBox"
-        app:layout_constraintTop_toBottomOf="@+id/Targetbox"
-        app:layout_constraintVertical_bias="0.23000002" />
+        app:layout_constraintStart_toStartOf="@+id/FrequencyBox" />
 
     <TextView
         android:id="@+id/Colortext"
@@ -224,25 +222,10 @@ tools:context=".CreateMeasurableHabit">
         app:layout_constraintVertical_bias="0.567"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <EditText
-        android:id="@+id/Target_EditText"
-        android:layout_width="314dp"
-        android:layout_height="48dp"
-        android:ems="10"
-        android:foregroundGravity="center"
-        android:hint="e.g.  15"
-        android:inputType="textPersonName"
-
-        android:textColorHint="#454141"
-        app:layout_constraintBottom_toBottomOf="@+id/Targetbox"
-        app:layout_constraintEnd_toEndOf="@+id/Targetbox"
-        app:layout_constraintStart_toStartOf="@+id/Targetbox"
-        app:layout_constraintTop_toTopOf="@+id/Targetbox" />
-
     <TextView
         android:id="@+id/frequency_edittext"
         android:layout_width="300dp"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:ems="10"
         android:foregroundGravity="center"
         android:inputType="textPersonName"
@@ -253,31 +236,6 @@ tools:context=".CreateMeasurableHabit">
         app:layout_constraintTop_toTopOf="@+id/FrequencyBox"
         app:layout_constraintVertical_bias="0.642"
         tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageView
-        android:id="@+id/Targetbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:foregroundGravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/FrequencyBox"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.177"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/QuestionBox"
-        app:srcCompat="@drawable/targetbox" />
-
-    <TextView
-        android:id="@+id/TargetText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Target"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/Targetbox"
-        app:layout_constraintEnd_toEndOf="@+id/Targetbox"
-        app:layout_constraintHorizontal_bias="0.04"
-        app:layout_constraintStart_toStartOf="@+id/Targetbox"
-        app:layout_constraintTop_toBottomOf="@+id/QuestionBox"
-        app:layout_constraintVertical_bias="0.19" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -345,13 +303,12 @@ tools:context=".CreateMeasurableHabit">
 
     <Button
         android:id="@+id/colorpicker"
-        android:layout_width="42dp"
-        android:layout_height="41dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         app:layout_constraintBottom_toBottomOf="@+id/Colorbox"
         app:layout_constraintEnd_toEndOf="@+id/Colorbox"
         app:layout_constraintStart_toStartOf="@+id/Colorbox"
-        app:layout_constraintTop_toBottomOf="@+id/Colortext" />
-    "
-      />
+        app:layout_constraintTop_toBottomOf="@+id/Colortext"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

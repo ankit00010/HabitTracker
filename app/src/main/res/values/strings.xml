@@ -9,4 +9,5 @@
     <string name="create_habit">Create habit</string>
     <string name="back">back</string>
     <string name="save">Save</string>
+    <string name="create_cat">Create Category</string>
 </resources>

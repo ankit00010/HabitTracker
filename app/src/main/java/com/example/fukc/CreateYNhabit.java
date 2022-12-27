@@ -33,16 +33,14 @@ String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
         reminderbutton = findViewById(R.id.Remainderbtn);
         frequencybutton = findViewById(R.id.frequency_edittext);
         selectedDays = new boolean[daysArray.length];
-
-        //back arrow to navigate to habit options
         backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), HabitOptions.class);
+                Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
                 startActivity(intent);
+                finish();
             }
         });
-        //code for reminder (setting part is pending)
         reminderbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
