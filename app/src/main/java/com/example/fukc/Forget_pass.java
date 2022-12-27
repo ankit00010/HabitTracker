@@ -38,7 +38,7 @@ public class Forget_pass extends AppCompatActivity {
                     startActivity(intent);
 
                 }
-                    else{
+                else{
                     Toast.makeText(Forget_pass.this, "No record found for provided email", Toast.LENGTH_SHORT).show();
                 }
             }

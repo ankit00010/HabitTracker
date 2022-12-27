@@ -5,9 +5,11 @@
     <string name="todo1">TODO</string>
     <string name="habits1">Habits</string>
     <string name="_2">2</string>
-    <string name="todo11">TODO11</string>
     <string name="create_habit">Create habit</string>
     <string name="back">back</string>
     <string name="save">Save</string>
+    <string name="option1">Yes or no\n\n e.g.\t\tDid you wake up early? Did you exercise?  Did you play chess?</string>
+    <string name="option2"> Measurable\n\n e.g.\t\tHow many miles did you run\t today? How many pages did\tou read?</string>
     <string name="create_cat">Create Category</string>
+
 </resources>

@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class HomeActivity1 extends AppCompatActivity {
-FloatingActionButton plus;
-SharedPreferences sp;
+    FloatingActionButton plus;
+    SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,13 +25,13 @@ SharedPreferences sp;
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Intent intent=new Intent(getApplicationContext(),Category_layout.class);
-            startActivity(intent);
+                Intent intent=new Intent(getApplicationContext(),Category_layout.class);
+                startActivity(intent);
 
             }
         });
 
-        }
+    }
 
 
     @Override

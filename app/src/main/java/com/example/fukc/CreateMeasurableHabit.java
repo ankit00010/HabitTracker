@@ -27,18 +27,18 @@ public class CreateMeasurableHabit extends AppCompatActivity {
 
 
 
-ImageView backarrow;
-TextView ReminderBox,frequency_edittext;
-boolean[] selectedDays;
-ArrayList<Integer> daysList = new ArrayList<>();
-String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
+    ImageView backarrow;
+    TextView ReminderBox,frequency_edittext;
+    boolean[] selectedDays;
+    ArrayList<Integer> daysList = new ArrayList<>();
+    String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_measurable_habit);
-        backarrow=findViewById(R.id.backbutton);
+        backarrow=(ImageView) findViewById(R.id.backbutton);
         ReminderBox=findViewById(R.id.ReminderButton);
         frequency_edittext=findViewById(R.id.frequency_edittext);
         ReminderBox.setOnClickListener(new View.OnClickListener() {

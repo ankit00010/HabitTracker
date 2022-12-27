@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="color_picker">
+        <item name="picker_1">#F6402C</item>
+        <item name="picker_2">#EB1460</item>
+        <item name="picker_3">#9C1AB1</item>
+        <item name="picker_4">#6633B9</item>
+        <item name="picker_5">#3D4DB7</item>
+        <item name="picker_6">#1093F5</item>
+        <item name="picker_7">#00A6F6</item>
+        <item name="picker_8">#00BBD5</item>
+        <item name="picker_9">#009687</item>
+        <item name="picker_10">#46AF4A</item>
+        <item name="picker_11">#88C440</item>
+        <item name="picker_12">#CCDD1E</item>
+        <item name="picker_13">#FFEC16</item>
+        <item name="picker_14">#FFC100</item>
+        <item name="picker_15">#FF9800</item>
+        <item name="picker_16">#FF5505</item>
+        <item name="picker_17">#7A5547</item>
+        <item name="picker_18">#9D9D9D</item>
+    </string-array>
+</resources>

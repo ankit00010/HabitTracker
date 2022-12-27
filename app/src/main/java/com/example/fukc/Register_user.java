@@ -1,6 +1,9 @@
 package com.example.fukc;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,8 +20,9 @@ public class Register_user extends AppCompatActivity {
     EditText username, password, repassword,email,securityan;
     Button signup;
     TextView signin;
-    Spinner securityquel;
+    Spinner securityquel ;
     DBHelper db;
+    ImageView hidepaswd,hidecnfrmpswd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +30,16 @@ public class Register_user extends AppCompatActivity {
         setContentView(R.layout.activity_register_user);
 
         //Retrieving register details in variables
+
         username =  findViewById(R.id.username);
-        password =  findViewById(R.id.password);
-        repassword =  findViewById(R.id.repassword);
+        password =  findViewById(R.id.passreset);
+        repassword =  findViewById(R.id.repassreset);
         signup =  findViewById(R.id.btnsignup);
         signin =  findViewById(R.id.signinText);
+        //varibales for hide and unhide paswword eye
+        hidepaswd=findViewById(R.id.hidepaswd);
+        hidecnfrmpswd=findViewById(R.id.hidepaswd1);
+
         email=findViewById(R.id.email);
         //email format validation
 
@@ -111,6 +121,45 @@ public class Register_user extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+
+        //Show hide password  using eye icon
+        hidepaswd.setImageResource(R.drawable.hidepaswd);
+        hidecnfrmpswd.setImageResource(R.drawable.hidepaswd);
+        hidepaswd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //first to check whether the password  is visible or hidden when the eye icon is clicked
+                //Transformation method will return whether the password is hidden or visible
+                if(password.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
+                    //if password is visible then hide it
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    hidepaswd.setImageResource(R.drawable.hidepaswd);
+                }else
+                {
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    hidepaswd.setImageResource(R.drawable.unhidepswd);
+                }
+            }
+        });
+
+        //code for confirm password hide and unhide
+        hidecnfrmpswd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //first to check whether the password  is visible or hidden when the eye icon is clicked
+                //Transformation method will return whether the password is hidden or visible
+                if(password.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
+                    //if password is visible then hide it
+                    repassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    hidepaswd.setImageResource(R.drawable.hidepaswd);
+                }else
+                {
+                    repassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    hidecnfrmpswd.setImageResource(R.drawable.unhidepswd);
+                }
             }
         });
     }

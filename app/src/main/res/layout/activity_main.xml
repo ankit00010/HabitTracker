@@ -5,17 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/silver"
+    android:background="@color/black"
     android:visibility="visible"
     android:orientation="vertical"
     tools:context=".Register_user">
 
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="266dp"
-        android:layout_height="149dp"
-        app:srcCompat="@drawable/chaaad" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -26,62 +20,89 @@
         app:cardElevation="20dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_width="367dp"
+            android:layout_height="372dp"
             android:layout_gravity="center"
+            android:background="@color/blackone"
+            android:orientation="vertical"
             android:padding="24dp">
 
             <TextView
+                android:id="@+id/loginText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Login"
-                android:id="@+id/loginText"
-                android:textSize="36sp"
                 android:textAlignment="center"
+                android:textColor="@color/teal_200"
 
-                android:textStyle="bold"
-                android:textColor="@color/purple_200"/>
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/username1"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/username1"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/custom_textfile"
+
                 android:drawableLeft="@drawable/ic_baseline_person_24"
                 android:drawablePadding="8dp"
                 android:hint="Username"
                 android:padding="8dp"
-                android:textColor="@color/black"
 
+                android:textColor="@color/white"
                 android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="40dp"
-                android:autofillHints="" />
+                android:textColorHint="@color/teal_200" />
 
 
-            <EditText
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/password1"
-                android:background="@drawable/custom_textfile"
-                android:drawableLeft="@drawable/ic_baseline_lock_24"
-                android:drawablePadding="8dp"
-                android:hint="Password"
-                android:padding="8dp"
-                android:inputType="textPassword"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="20dp"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <EditText
+                    android:id="@+id/password1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_textfile"
+                    android:drawableLeft="@drawable/ic_baseline_lock_24"
+                    android:drawablePadding="8dp"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    android:textColorHighlight="@color/cardview_dark_background"
+                    android:textColorHint="@color/teal_200"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageView
+                    android:id="@+id/hideloginpaswd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/password1"
+                    app:layout_constraintHorizontal_bias="0.883"
+                    app:layout_constraintStart_toStartOf="@+id/password1"
+                    app:layout_constraintTop_toTopOf="@+id/password1"
+                    app:srcCompat="@drawable/hidepaswd" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
                 android:id="@+id/btnsignin1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Login"
-                android:textSize="18sp"
                 android:layout_marginTop="30dp"
-                android:backgroundTint="@color/purple"
-                app:cornerRadius="20sp"/>
+                android:backgroundTint="@color/black"
+                android:text="Login"
+                android:textColor="@color/teal_200"
+                android:textSize="18sp"
+                app:cornerRadius="20sp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -90,27 +111,27 @@
         android:id="@+id/signupText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:minHeight="48dp"
+        android:layout_gravity="center|left"
+        android:layout_marginTop="50dp"
+        android:minHeight="20dp"
         android:onClick="signuptext"
         android:padding="8dp"
-        android:text="Not yet registered ? Signup Now"
-        android:textAlignment="center"
-        android:textColor="@color/purple_200"
+        android:layout_margin="20dp"
+        android:text="New user? Register Now"
+        android:textColor="@color/teal_200"
         android:textSize="14sp" />
 
     <TextView
         android:id="@+id/forgetpass"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="34dp"
+        android:layout_gravity="right|center"
         android:minHeight="48dp"
+        android:layout_marginTop="-55dp"
         android:onClick="forgetpass"
         android:padding="8dp"
-        android:text="Forgot password ? Reset Now"
-        android:textAlignment="center"
-        android:textColor="@color/purple_200"
+        android:text="Forgot password?"
+        android:layout_marginRight="10dp"
+        android:textColor="@color/teal_200"
         android:textSize="14sp" />
-
-
 </LinearLayout>

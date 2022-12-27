@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/TopBox"
-        android:layout_width="413dp"
-        android:layout_height="52dp"
+        android:layout_width="411dp"
+        android:layout_height="115dp"
         android:background="#040007"
         android:backgroundTint="#0B0606"
         android:contentDescription="@string/_2"
@@ -24,21 +24,21 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
-        android:layout_width="415dp"
-        android:layout_height="116dp"
+        android:layout_width="406dp"
+        android:layout_height="89dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/TopBox"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.95">
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="15dp"
             android:layout_gravity="bottom"
-            app:backgroundTint="#9B88BD"
+            app:backgroundTint="@color/blackone"
             app:fabCradleMargin="10dp"
             app:fabCradleRoundedCornerRadius="10dp"
             app:fabCradleVerticalOffset="10dp">
@@ -48,8 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/transperent_background"
-                app:menu="@menu/bottom_nav_menu"
+                android:background="@color/blackone"
+                android:backgroundTint="@color/blackone"
 
                 >
 
@@ -60,9 +60,9 @@
             android:id="@+id/plussign"
             android:layout_width="68dp"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/todo11"
             android:src="@drawable/plus"
 
+            app:backgroundTint="#6304A0"
             app:layout_anchor="@id/bottomAppBar"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -70,19 +70,19 @@
 
     <TextView
         android:id="@+id/CreateHabitText"
-        android:layout_width="402dp"
-        android:layout_height="41dp"
-        android:gravity="center|center_vertical"
+        android:layout_width="182dp"
+        android:layout_height="85dp"
+        android:gravity="center_vertical"
         android:text="Today's Tasks"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="#FCF7F7"
-        android:textSize="20sp"
+        android:textColor="@color/yellow"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/TopBox"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.124"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/TopBox"
-        app:layout_constraintVertical_bias="0.472" />
+        app:layout_constraintVertical_bias="0.615" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

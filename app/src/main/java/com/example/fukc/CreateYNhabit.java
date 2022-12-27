@@ -20,16 +20,16 @@ import java.util.TimeZone;
 
 
 public class CreateYNhabit extends AppCompatActivity {
-ImageView backarrow;
-TextView reminderbutton,frequencybutton;
-boolean[] selectedDays;
-ArrayList<Integer> daysList = new ArrayList<>();
-String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
+    ImageView backarrow;
+    TextView reminderbutton,frequencybutton;
+    boolean[] selectedDays;
+    ArrayList<Integer> daysList = new ArrayList<>();
+    String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ynhabit);
-        backarrow = findViewById(R.id.backbutton);
+        backarrow =(ImageView) findViewById(R.id.backbutton);
         reminderbutton = findViewById(R.id.Remainderbtn);
         frequencybutton = findViewById(R.id.frequency_edittext);
         selectedDays = new boolean[daysArray.length];

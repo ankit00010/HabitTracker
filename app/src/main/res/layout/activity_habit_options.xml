@@ -8,10 +8,10 @@
     tools:context=".HabitOptions">
 
 
-    <ImageView
+    <TextView
         android:id="@+id/TopBox"
-        android:layout_width="413dp"
-        android:layout_height="52dp"
+        android:layout_width="405sp"
+        android:layout_height="111sp"
         android:background="#040007"
         android:backgroundTint="#0B0606"
         android:contentDescription="@string/_2"
@@ -25,12 +25,12 @@
 
     <TextView
         android:id="@+id/CreateHabitText"
-        android:layout_width="404dp"
-        android:layout_height="42dp"
+        android:layout_width="404sp"
+        android:layout_height="42sp"
         android:gravity="center|center_vertical"
         android:text="How do you want to evaluate your progress?"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="#FCF7F7"
+        android:textColor="@color/yellow"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/TopBox"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
         android:layout_marginTop="484dp"
         android:gravity="center"
         android:text="BACK"
-        android:textColor="#EFE4E4"
+        android:textColor="@color/orange"
         app:layout_constraintBottom_toBottomOf="@+id/BottomBox"
         app:layout_constraintEnd_toEndOf="@+id/CreateHabitText"
         app:layout_constraintHorizontal_bias="0.0"
@@ -68,28 +68,41 @@
         app:layout_constraintTop_toTopOf="@+id/CreateHabitText"
         app:layout_constraintVertical_bias="0.989" />
 
-    <ImageView
+    <TextView
         android:id="@+id/option1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="144dp"
-        app:layout_constraintBottom_toTopOf="@+id/BottomBox"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TopBox"
-        app:layout_constraintVertical_bias="0.016"
-        app:srcCompat="@drawable/option1" />
+        android:layout_width="396dp"
+        android:layout_height="165dp"
+        android:background="@color/black"
+        android:contentDescription="@string/option1"
+        android:gravity="center"
+        android:text="@string/option1"
 
-    <ImageView
+        android:textColor="@color/teal_200"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/TopBox"
+        app:layout_constraintVertical_bias="0.334" />
+
+    <TextView
         android:id="@+id/option2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="396dp"
+        android:layout_height="165dp"
+        android:layout_marginBottom="88dp"
+        android:background="@color/black"
+        android:gravity="center"
+        android:text="@string/option2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/teal_200"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/BottomBox"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.347"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/option1"
-        app:layout_constraintVertical_bias="0.412"
-        app:srcCompat="@drawable/option2" />
+        app:layout_constraintTop_toBottomOf="@+id/option1"
+        app:layout_constraintVertical_bias="0.626" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

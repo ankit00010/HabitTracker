@@ -32,7 +32,7 @@
         android:gravity="center_vertical"
         android:text="@string/create_habit"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="#FCF7F7"
+        android:textColor="#FFEB3B"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/TopBox"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:text="@string/save"
-        android:textColor="#81C784"
+        android:textColor="@color/lightgreen"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/SaveBox"
@@ -121,7 +121,6 @@
         app:layout_constraintVertical_bias="0.004"
         app:srcCompat="@drawable/questionbox" />
 
-
     <ImageView
         android:id="@+id/FrequencyBox"
         android:layout_width="345dp"
@@ -130,11 +129,12 @@
         android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.196"
+        app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/QuestionBox"
-        app:layout_constraintVertical_bias="0.034"
+        app:layout_constraintVertical_bias="0.289"
         app:srcCompat="@drawable/frequencybox" />
+
 
     <TextView
         android:id="@+id/nametext"
@@ -174,7 +174,9 @@
         app:layout_constraintBottom_toBottomOf="@+id/FrequencyBox"
         app:layout_constraintEnd_toEndOf="@+id/FrequencyBox"
         app:layout_constraintHorizontal_bias="0.04"
-        app:layout_constraintStart_toStartOf="@+id/FrequencyBox" />
+        app:layout_constraintStart_toStartOf="@+id/FrequencyBox"
+        app:layout_constraintTop_toBottomOf="@+id/Targetbox"
+        app:layout_constraintVertical_bias="0.23000002" />
 
     <TextView
         android:id="@+id/Colortext"
@@ -198,8 +200,8 @@
         android:hint="e.g.   Exercise"
 
         android:inputType="textPersonName"
-
-        android:textColorHint="#A1887F"
+        android:textColor="@color/white"
+        android:textColorHint="@color/teal_200"
         app:layout_constraintBottom_toBottomOf="@+id/namebox"
         app:layout_constraintEnd_toEndOf="@+id/namebox"
         app:layout_constraintStart_toStartOf="@+id/namebox"
@@ -213,7 +215,9 @@
         android:foregroundGravity="center"
         android:hint="e.g.   Did you exercise today?"
         android:inputType="textPersonName"
-        android:textColorHint="#454141"
+        android:textColorHint="@color/teal_200"
+        android:textColor="@color/white"
+
         app:layout_constraintBottom_toBottomOf="@+id/QuestionBox"
         app:layout_constraintEnd_toEndOf="@+id/QuestionBox"
         app:layout_constraintHorizontal_bias="0.366"
@@ -222,13 +226,31 @@
         app:layout_constraintVertical_bias="0.567"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <TextView
-        android:id="@+id/frequency_edittext"
-        android:layout_width="300dp"
+    <EditText
+        android:id="@+id/Target_EditText"
+        android:layout_width="314dp"
         android:layout_height="48dp"
         android:ems="10"
         android:foregroundGravity="center"
+        android:hint="e.g.  15"
         android:inputType="textPersonName"
+
+        android:textColorHint="@color/teal_200"
+        app:layout_constraintBottom_toBottomOf="@+id/Targetbox"
+        app:layout_constraintEnd_toEndOf="@+id/Targetbox"
+        app:layout_constraintStart_toStartOf="@+id/Targetbox"
+        app:layout_constraintTop_toTopOf="@+id/Targetbox" />
+
+    <TextView
+        android:id="@+id/frequency_edittext"
+        android:layout_width="330dp"
+        android:layout_height="58dp"
+        android:ems="10"
+        android:foregroundGravity="center"
+        android:gravity="center|left"
+        android:hint="eg. Sunday"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/teal_200"
         app:layout_constraintBottom_toBottomOf="@+id/FrequencyBox"
         app:layout_constraintEnd_toEndOf="@+id/FrequencyBox"
         app:layout_constraintHorizontal_bias="0.288"
@@ -236,6 +258,33 @@
         app:layout_constraintTop_toTopOf="@+id/FrequencyBox"
         app:layout_constraintVertical_bias="0.642"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageView
+        android:id="@+id/Targetbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/FrequencyBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.177"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/white"
+
+        app:layout_constraintTop_toBottomOf="@+id/QuestionBox"
+        app:srcCompat="@drawable/targetbox" />
+
+    <TextView
+        android:id="@+id/TargetText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Target"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/Targetbox"
+        app:layout_constraintEnd_toEndOf="@+id/Targetbox"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="@+id/Targetbox"
+        app:layout_constraintTop_toBottomOf="@+id/QuestionBox"
+        app:layout_constraintVertical_bias="0.19" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -251,13 +300,15 @@
 
     <TextView
         android:id="@+id/ReminderButton"
-        android:layout_width="295dp"
-        android:layout_height="48dp"
+        android:layout_width="303dp"
+        android:layout_height="59dp"
         android:ems="10"
         android:gravity="center|left"
+        android:hint="     off"
         android:inputType="textPersonName"
-        android:text="     off"
-        android:textColor="#E6D9D9"
+        android:textColor="@color/white"
+        android:textColorHint="@color/teal_200"
+
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintHorizontal_bias="0.366"
@@ -303,12 +354,13 @@
 
     <Button
         android:id="@+id/colorpicker"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="41dp"
+        android:layout_height="51dp"
         app:layout_constraintBottom_toBottomOf="@+id/Colorbox"
         app:layout_constraintEnd_toEndOf="@+id/Colorbox"
         app:layout_constraintStart_toStartOf="@+id/Colorbox"
-        app:layout_constraintTop_toBottomOf="@+id/Colortext"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/Colortext" />
+
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

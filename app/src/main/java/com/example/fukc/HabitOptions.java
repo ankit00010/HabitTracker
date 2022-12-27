@@ -14,8 +14,8 @@ public class HabitOptions extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_options);
-       ImageView option1=(ImageView)findViewById(R.id.option1);
-       ImageView option2= (ImageView)findViewById(R.id.option2);
+        TextView option1=(TextView) findViewById(R.id.option1);
+        TextView option2= (TextView) findViewById(R.id.option2);
         TextView back=(TextView) findViewById(R.id.back_text);
 
         //YES or NO Create Habit option navigation by clicking
