@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -20,7 +21,7 @@ import java.util.TimeZone;
 
 
 public class CreateYNhabit extends AppCompatActivity {
-    ImageView backarrow;
+    Button colorbutton;
     TextView reminderbutton,frequencybutton;
     boolean[] selectedDays;
     ArrayList<Integer> daysList = new ArrayList<>();
@@ -29,16 +30,18 @@ public class CreateYNhabit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ynhabit);
-        backarrow =(ImageView) findViewById(R.id.backbutton);
-        reminderbutton = findViewById(R.id.Remainderbtn);
-        frequencybutton = findViewById(R.id.frequency_edittext);
+        ImageView   backarrow =(ImageView) findViewById(R.id.backbutton);
+        reminderbutton = (TextView) findViewById(R.id.Remainderbtn);
+        colorbutton=(Button)findViewById(R.id.button);
+        frequencybutton =(TextView) findViewById(R.id.frequency_edittext);
         selectedDays = new boolean[daysArray.length];
         backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
+                Intent intent = new Intent(getApplicationContext(), HabitOptions.class);
                 startActivity(intent);
                 finish();
+
             }
         });
         reminderbutton.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +142,33 @@ public class CreateYNhabit extends AppCompatActivity {
             }
         });
 
+        //code for colorpicker
+        colorbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                opencolorpicker();
+            }
+        });
 
+    }
+    public void opencolorpicker()
+    {
+
+
+
+
+
+        ArrayList<String> colors =new ArrayList<>();
+        colors.add("#258174");
+        colors.add("#3C8D2F");
+        colors.add("#20724f");
+        colors.add("#6a3ab2");
+        colors.add("#323299");
+        colors.add("#800080");
+        colors.add("#b79716");
+        colors.add("#966d37");
+        colors.add("#b77231");
+        colors.add("#808000");
     }
 
 }
