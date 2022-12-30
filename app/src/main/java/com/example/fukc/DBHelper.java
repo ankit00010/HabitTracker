@@ -22,8 +22,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //User table
         db.execSQL("create table users(userid INTEGER PRIMARY KEY AUTOINCREMENT,username TEXT,email TEXT,password TEXT,securityque TEXT,securityans TEXT)");
-        db.execSQL("create table habits(habitid INTEGER PRIMARY KEY AUTOINCREMENT,habitname TEXT,color TEXT ,question TEXT NOT NULL DEFAULT 'unknown',frequency TEXT,remainder TEXT,habittype INTEGER)");
         db.execSQL("create table category(catid INTEGER PRIMARY KEY AUTOINCREMENT,catname TEXT)");
+        db.execSQL("create table habits(habitid INTEGER PRIMARY KEY AUTOINCREMENT,habitname TEXT,color TEXT,question TEXT NOT NULL DEFAULT 'unknown',frequency TEXT,remainder TEXT NOT NULL DEFAULT 'unknown',habittype INTEGER,target INTEGER NOT NULL DEFAULT 'unknown',catid INTEGER,FOREIGN KEY (catid) REFERENCES category(catid))");
+
+
     }
 
     @Override
@@ -50,7 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //Insert data in habits
-    public Boolean insertDatahabit(String habitname,String color ,String question,String frequency,String remainder,Integer habittype){
+    public Boolean insertDatahabit(String habitname,String color ,String question,String frequency,String remainder,Integer habittype,Integer target,Integer catid){
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues= new ContentValues();
         contentValues.put("habitname", habitname);
@@ -59,6 +61,8 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("frequency", frequency);
         contentValues.put("remainder", remainder);
         contentValues.put("habittype", habittype);
+        contentValues.put("target", target);
+        contentValues.put("catid", catid);
         long result = MyDB.insert("habits", null, contentValues);
         if(result==-1) return false;
         else
@@ -85,6 +89,17 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
+    //get data from Habit table
+    public Cursor getdataHabit()
+    {
+        String query = "SELECT * FROM habits";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if(db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
     //Delete Category
     public void deleteCat(String catname){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -96,6 +111,51 @@ public class DBHelper extends SQLiteOpenHelper {
         long count = DatabaseUtils.queryNumEntries(db, "category");
         db.close();
         return count;
+    }
+    //Get Category id from category table
+    public int getCatId(String cname)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT catid FROM category WHERE catname = ?";
+        Cursor cursor = null;
+        int id=0;
+        if(db != null) {
+            cursor = db.rawQuery(query, new String[]{cname});
+            if (cursor.moveToFirst()) {
+                id = cursor.getInt(0);
+            }
+        }
+        return id;
+    }
+    //get habit type from habits table
+    public int getHabittype(String cname)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM habits WHERE habitname = ?";
+        Cursor cursor = null;
+        int habittype=0;
+        if(db != null) {
+            cursor = db.rawQuery(query, new String[]{cname});
+            if (cursor.moveToFirst()) {
+                habittype = cursor.getInt(6);
+            }
+        }
+        return habittype;
+    }
+    //get habit target from habits table
+    public int getHabitTarget(String cname)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM habits WHERE habitname = ?";
+        Cursor cursor = null;
+        int target=0;
+        if(db != null) {
+            cursor = db.rawQuery(query, new String[]{cname});
+            if (cursor.moveToFirst()) {
+                target = cursor.getInt(7);
+            }
+        }
+        return target;
     }
     //Update pass
     public void updatepass(String pass,String email){

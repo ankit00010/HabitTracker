@@ -7,22 +7,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class HabitOptions extends AppCompatActivity {
+    int habittype;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_options);
-        TextView option1=(TextView) findViewById(R.id.option1);
-        TextView option2= (TextView) findViewById(R.id.option2);
-        TextView back=(TextView) findViewById(R.id.back_text);
-
+        TextView option1=findViewById(R.id.option1);
+        TextView option2= findViewById(R.id.option2);
+        TextView back=findViewById(R.id.back_text);
+        Intent intent = getIntent();
+        String catid = intent.getStringExtra("cid");
         //YES or NO Create Habit option navigation by clicking
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                habittype = 0;
+                String strhabittype =String.valueOf(habittype);
                 Intent intent=new Intent(getApplicationContext(),CreateYNhabit.class);
+                intent.putExtra("catid",catid);
+                intent.putExtra("habittype",strhabittype);
                 startActivity(intent);
             }
         });
@@ -30,7 +37,11 @@ public class HabitOptions extends AppCompatActivity {
         option2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                habittype = 1;
+                String strhabittype =String.valueOf(habittype);
                 Intent intent=new Intent(getApplicationContext(),CreateMeasurableHabit.class);
+                intent.putExtra("catid",catid);
+                intent.putExtra("habittype",strhabittype);
                 startActivity(intent);
             }
         });

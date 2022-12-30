@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Category_layout extends AppCompatActivity {
-TextView cancel_txt,next_txt;
+TextView cancel_txt;
 CardView createcat;
 DBHelper db;
 RecyclerView recyclerView;
@@ -33,7 +33,6 @@ MyAdapterCat adapter;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_layout);
         cancel_txt = findViewById(R.id.cancel_text);
-        next_txt = findViewById(R.id.next_text);
         createcat = findViewById(R.id.createcat);
         db = new DBHelper(this);
         catname = new ArrayList<>();
@@ -53,10 +52,6 @@ MyAdapterCat adapter;
 
         cancel_txt.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
-            startActivity(intent);
-        });
-        next_txt.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), HabitOptions.class);
             startActivity(intent);
         });
         createcat.setOnClickListener(v -> {

@@ -53,7 +53,7 @@
         app:srcCompat="@drawable/backarrow" />
 
     <ImageView
-        android:id="@+id/SaveBox"
+        android:id="@+id/savebox"
         android:layout_width="87dp"
         android:layout_height="38dp"
         app:layout_constraintBottom_toBottomOf="@+id/TopBox"
@@ -73,11 +73,11 @@
         android:textColor="@color/lightgreen"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/SaveBox"
-        app:layout_constraintEnd_toEndOf="@+id/SaveBox"
+        app:layout_constraintBottom_toBottomOf="@+id/savebox"
+        app:layout_constraintEnd_toEndOf="@+id/savebox"
         app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="@+id/SaveBox"
-        app:layout_constraintTop_toTopOf="@+id/SaveBox" />
+        app:layout_constraintStart_toStartOf="@+id/savebox"
+        app:layout_constraintTop_toTopOf="@+id/savebox" />
 
     <ImageView
         android:id="@+id/namebox"
@@ -175,7 +175,7 @@
         app:layout_constraintEnd_toEndOf="@+id/FrequencyBox"
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="@+id/FrequencyBox"
-        app:layout_constraintTop_toBottomOf="@+id/Targetbox"
+        app:layout_constraintTop_toBottomOf="@+id/targetbox"
         app:layout_constraintVertical_bias="0.23000002" />
 
     <TextView
@@ -236,10 +236,10 @@
         android:inputType="textPersonName"
 
         android:textColorHint="@color/teal_200"
-        app:layout_constraintBottom_toBottomOf="@+id/Targetbox"
-        app:layout_constraintEnd_toEndOf="@+id/Targetbox"
-        app:layout_constraintStart_toStartOf="@+id/Targetbox"
-        app:layout_constraintTop_toTopOf="@+id/Targetbox" />
+        app:layout_constraintBottom_toBottomOf="@+id/targetbox"
+        app:layout_constraintEnd_toEndOf="@+id/targetbox"
+        app:layout_constraintStart_toStartOf="@+id/targetbox"
+        app:layout_constraintTop_toTopOf="@+id/targetbox" />
 
     <TextView
         android:id="@+id/frequency_edittext"
@@ -260,7 +260,7 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
-        android:id="@+id/Targetbox"
+        android:id="@+id/targetbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:foregroundGravity="center"
@@ -279,10 +279,10 @@
         android:layout_height="wrap_content"
         android:text="Target"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/Targetbox"
-        app:layout_constraintEnd_toEndOf="@+id/Targetbox"
+        app:layout_constraintBottom_toBottomOf="@+id/targetbox"
+        app:layout_constraintEnd_toEndOf="@+id/targetbox"
         app:layout_constraintHorizontal_bias="0.04"
-        app:layout_constraintStart_toStartOf="@+id/Targetbox"
+        app:layout_constraintStart_toStartOf="@+id/targetbox"
         app:layout_constraintTop_toBottomOf="@+id/QuestionBox"
         app:layout_constraintVertical_bias="0.19" />
 
@@ -354,13 +354,14 @@
 
     <Button
         android:id="@+id/colorpicker"
-        android:layout_width="41dp"
+        android:layout_width="48dp"
         android:layout_height="51dp"
+        android:contentDescription="color"
         app:layout_constraintBottom_toBottomOf="@+id/Colorbox"
         app:layout_constraintEnd_toEndOf="@+id/Colorbox"
         app:layout_constraintStart_toStartOf="@+id/Colorbox"
         app:layout_constraintTop_toBottomOf="@+id/Colortext" />
 
-    />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,33 +2,34 @@ package com.example.fukc;
 
 
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-
 import java.util.ArrayList;
 import java.util.List;
 public class MyAdapterCat extends RecyclerView.Adapter<MyAdapterCat.MyViewHolder> {
     private Context context;
     private ArrayList name;
     private ImageView myImageList;
+    private int currentpos=-1;
+    private String isSelected;
     DBHelper db;
 
     public MyAdapterCat(Context context, ArrayList name) {
         this.context = context;
         this.name = name;
-        //imageList = myImageList.findViewById(R.id.deleteicon);;
     }
 
     @NonNull
@@ -40,7 +41,7 @@ public class MyAdapterCat extends RecyclerView.Adapter<MyAdapterCat.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder,final int position) {
         holder.name.setText(String.valueOf(name.get(position)));
         String cname = holder.name.getText().toString();
         holder.imageView.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +74,20 @@ public class MyAdapterCat extends RecyclerView.Adapter<MyAdapterCat.MyViewHolder
                 alert.show();
             }
         });
+        //select category
+        holder.clickcat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String scat = holder.name.getText().toString();
+                currentpos= db.getCatId(scat);
+                String strcurrentpos =String.valueOf(currentpos);
+                Intent intent = new Intent(context.getApplicationContext(), HabitOptions.class);
+                intent.putExtra("cid", strcurrentpos);
+                context.startActivity(intent);
+            }
+
+        });
+
     }
 
     @Override
@@ -83,11 +98,12 @@ public class MyAdapterCat extends RecyclerView.Adapter<MyAdapterCat.MyViewHolder
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
         public ImageView imageView;
+        public LinearLayout clickcat;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.title);
             imageView = itemView.findViewById(R.id.deleteicon);
-
+            clickcat=itemView.findViewById(R.id.clickcat);
         }
     }
 }

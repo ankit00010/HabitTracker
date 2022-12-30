@@ -1,7 +1,6 @@
 package com.example.fukc;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -10,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,23 +23,31 @@ import java.util.TimeZone;
 
 public class CreateMeasurableHabit extends AppCompatActivity {
 
-
-
-    ImageView backarrow;
-    TextView ReminderBox,frequency_edittext;
+    ImageView backarrow,savehabit;
+    EditText habitname,habitque,target;
+    TextView reminderbox,frequency_edittext;
     boolean[] selectedDays;
     ArrayList<Integer> daysList = new ArrayList<>();
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
-
+    String hname,hque,catid,habittype;
+    DBHelper db;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_measurable_habit);
-        backarrow=(ImageView) findViewById(R.id.backbutton);
-        ReminderBox=findViewById(R.id.ReminderButton);
+        backarrow=findViewById(R.id.backbutton);
+        reminderbox =findViewById(R.id.ReminderButton);
         frequency_edittext=findViewById(R.id.frequency_edittext);
-        ReminderBox.setOnClickListener(new View.OnClickListener() {
+        habitname = findViewById(R.id.name_edittext);
+        habitque = findViewById(R.id.question_edittext);
+        savehabit= findViewById(R.id.savebox);
+        target= findViewById(R.id.Target_EditText);
+        Intent intent = getIntent();
+        catid = intent.getStringExtra("catid");
+        habittype =intent.getStringExtra("habittype");
+        db = new DBHelper(this);
+        reminderbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar calendar= Calendar.getInstance();
@@ -54,9 +60,9 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                         c.set(Calendar.HOUR_OF_DAY,hourOfDay);
                         c.set(Calendar.MINUTE,minute);
                         c.setTimeZone(TimeZone.getDefault());
-                        SimpleDateFormat format=new SimpleDateFormat("k:mm:a");
+                        SimpleDateFormat format=new SimpleDateFormat("k:mm a");
                         String time=format.format(c.getTime());
-                        ReminderBox.setText(time);
+                        reminderbox.setText(time);
 
 
                     }
@@ -146,6 +152,23 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                 builder.show();
             }
         });//end of frequency
+
+        savehabit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int fcatid = Integer.valueOf(catid);
+                int fhabittype = Integer.valueOf(habittype);
+                String frequency =frequency_edittext.getText().toString();
+                String reminder = reminderbox.getText().toString();
+                int targetval = Integer.valueOf(target.getText().toString());
+                hname= habitname.getText().toString();
+                hque= habitque.getText().toString();
+                db.insertDatahabit(hname,"no color",hque,frequency,reminder,fhabittype,targetval,fcatid);
+                Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
     }
