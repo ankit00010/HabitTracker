@@ -2,6 +2,8 @@ package com.example.fukc;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -53,5 +55,25 @@ public class HabitOptions extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    public void onBackPressed(){
+        AlertDialog.Builder alertDialog =new AlertDialog.Builder(HabitOptions.this);
+        alertDialog.setTitle("Discard");
+        alertDialog.setMessage("Discard the new habit ?");
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent=new Intent(getApplicationContext(),HomeActivity1.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 }

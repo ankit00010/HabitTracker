@@ -172,5 +172,25 @@ public class CreateMeasurableHabit extends AppCompatActivity {
 
 
     }
+    public void onBackPressed(){
+        AlertDialog.Builder alertDialog =new AlertDialog.Builder(CreateMeasurableHabit.this);
+        alertDialog.setTitle("Discard");
+        alertDialog.setMessage("Discard the new habit ?");
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent=new Intent(getApplicationContext(),HomeActivity1.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
 
 }
