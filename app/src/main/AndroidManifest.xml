@@ -14,14 +14,14 @@
         android:theme="@style/Theme.Fukc"
         tools:targetApi="31">
         <activity
-            android:name=".HabitOptions"
+            android:name=".CreateChecklistHabits"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Category_layout"
+            android:name=".HabitOptions"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

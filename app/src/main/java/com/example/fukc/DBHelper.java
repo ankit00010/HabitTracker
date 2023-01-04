@@ -22,8 +22,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //User table
         db.execSQL("create table users(userid INTEGER PRIMARY KEY AUTOINCREMENT,username TEXT,email TEXT,password TEXT,securityque TEXT,securityans TEXT)");
-        db.execSQL("create table category(catid INTEGER PRIMARY KEY AUTOINCREMENT,catname TEXT)");
-        db.execSQL("create table habits(habitid INTEGER PRIMARY KEY AUTOINCREMENT,habitname TEXT,color TEXT,question TEXT NOT NULL DEFAULT 'unknown',frequency TEXT,remainder TEXT NOT NULL DEFAULT 'unknown',habittype INTEGER,target INTEGER NOT NULL DEFAULT 'unknown',catid INTEGER,FOREIGN KEY (catid) REFERENCES category(catid))");
+        db.execSQL("create table subhabits(shabitid INTEGER PRIMARY KEY AUTOINCREMENT,shabitlist TEXT)");
+        db.execSQL("create table habits(habitid INTEGER PRIMARY KEY AUTOINCREMENT,habitname TEXT,color TEXT,question TEXT NOT NULL DEFAULT 'unknown',frequency TEXT,remainder TEXT NOT NULL DEFAULT 'unknown',habittype INTEGER,target INTEGER NOT NULL DEFAULT 'unknown',shabitid INTEGER NOT NULL DEFAULT 'unknown',FOREIGN KEY (shabitid) REFERENCES subhabits(shabitid))");
 
 
     }
@@ -32,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("drop table if exists users");
         db.execSQL("drop table if exists habits");
-        db.execSQL("drop table if exists category");
+        db.execSQL("drop table if exists subhabits");
         onCreate(db);
     }
 
@@ -62,26 +62,26 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("remainder", remainder);
         contentValues.put("habittype", habittype);
         contentValues.put("target", target);
-        contentValues.put("catid", catid);
+        contentValues.put("shabitid", catid);
         long result = MyDB.insert("habits", null, contentValues);
         if(result==-1) return false;
         else
             return true;
     }
-    //Insert data in category
-    public Boolean insertDataCategory(String catname){
+    //Insert data in subhabits
+    public Boolean insertDataSubhabits(String shabitname){
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues= new ContentValues();
-        contentValues.put("catname", catname);
-        long result = MyDB.insert("category", null, contentValues);
+        contentValues.put("shabitlist", shabitname);
+        long result = MyDB.insert("subhabits", null, contentValues);
         if(result==-1) return false;
         else
             return true;
     }
-    //get data from Category Table
-    public Cursor getdata()
+    //get last id from subhabits Table
+   public Cursor getdata()
     {
-        String query = "SELECT * FROM category";
+        String query = "SELECT shabitid FROM subhabits";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if(db != null){
@@ -101,12 +101,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
     //Delete Category
-    public void deleteCat(String catname){
+   /* public void deleteCat(String catname){
         SQLiteDatabase db = this.getReadableDatabase();
         db.execSQL("DELETE FROM category WHERE catname = ?", new String[]{catname});
-    }
+    }*/
     //get number of rows in category table
-    public long getCountCat() {
+    /*public long getCountCat() {
         SQLiteDatabase db = this.getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, "category");
         db.close();
@@ -126,7 +126,7 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
         return id;
-    }
+    }*/
     //get habit type from habits table
     public int getHabittype(String cname)
     {

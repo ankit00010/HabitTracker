@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blackone"
+        tools:context=".HabitOptions">
+
+
+        <TextView
+            android:id="@+id/CreateHabitText"
+            android:layout_width="315dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="42dp"
+            android:gravity="center|top"
+            android:text="Define your habit"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/teal_700"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/name_text_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/BottomBox"
+            android:layout_width="390dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="72dp"
+            android:background="#040007"
+            android:contentDescription="@string/_2"
+            android:foreground="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/question_input1"
+            app:srcCompat="@drawable/toponefrag" />
+
+        <TextView
+            android:id="@+id/back_text"
+            android:layout_width="94dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="3dp"
+            android:background="#0B0606"
+            android:gravity="center"
+            android:text="BACK"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/create_text"
+            android:layout_width="94dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="300dp"
+            android:layout_marginBottom="3dp"
+            android:background="#0B0606"
+            android:gravity="center"
+            android:text="CREATE"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name_text_input"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="287dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="104dp"
+            app:boxBackgroundColor="@color/black"
+            app:boxStrokeColor="@color/teal_700"
+            app:layout_constraintEnd_toStartOf="@+id/Colorbox"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name_edittext"
+                android:layout_width="287dp"
+                android:layout_height="50dp"
+                android:layout_gravity="start"
+                android:ems="10"
+                android:hint="Habit name"
+                android:inputType="textPersonName"
+                android:textColor="@color/white"
+                android:textColorHint="#009688"
+                app:layout_constraintStart_toStartOf="@id/name_text_input"
+                app:layout_constraintTop_toTopOf="@id/name_text_input" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name_text_input1"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="287dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="68dp"
+            app:boxBackgroundColor="@color/black"
+            app:boxStrokeColor="@color/teal_700"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/egmoring_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/checklist_edittext"
+                android:layout_width="287dp"
+                android:layout_height="50dp"
+                android:layout_gravity="start"
+                android:ems="10"
+                android:hint="Item name"
+                android:inputType="textPersonName"
+                android:textColor="@color/white"
+                android:textColorHint="#009688" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/question_input1"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            app:boxBackgroundColor="@color/black"
+            app:boxStrokeColor="@color/teal_700"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/qustionr_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/question_edittext"
+                android:layout_width="330dp"
+                android:layout_height="50dp"
+                android:layout_gravity="start"
+                android:ems="10"
+                android:hint="Did i complete my morning routine?"
+                android:inputType="textPersonName"
+                android:textColor="@color/white"
+                android:textColorHint="#009688"
+                app:layout_constraintStart_toStartOf="@id/question_input1"
+                app:layout_constraintTop_toTopOf="@id/question_input1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/frequency_textview"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:background="@color/black"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:hint=" eg. Monday,Thursday,Sunday"
+            android:inputType="textPersonName"
+            android:textColor="@color/white"
+            android:textColorHint="#7E7E7E"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frequency_text" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/reminder_textview"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:background="@color/black"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:hint=" Off"
+            android:inputType="textPersonName"
+            android:textColor="@color/white"
+            android:textColorHint="#7C7C7C"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reminder_text" />
+
+
+        <ImageView
+            android:id="@+id/Colorbox"
+            android:layout_width="63dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="322dp"
+            android:layout_marginTop="105dp"
+            android:contentDescription="abc"
+            android:foregroundGravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/colorbox" />
+
+        <ImageView
+            android:id="@+id/color_icon"
+            android:layout_width="58dp"
+            android:layout_height="53dp"
+            android:layout_marginEnd="13dp"
+            android:contentDescription="abc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/Colorbox"
+            app:layout_constraintTop_toTopOf="@+id/Colorbox"
+            app:srcCompat="@drawable/choose_color_icon" />
+
+        <TextView
+            android:id="@+id/checklist_text"
+            android:layout_width="71dp"
+            android:layout_height="23dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="44dp"
+            android:text="Checklist"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/egmoring_text" />
+
+        <TextView
+            android:id="@+id/frequency_text"
+            android:layout_width="71dp"
+            android:layout_height="23dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Frequency"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/additem_text" />
+
+        <TextView
+            android:id="@+id/reminder_text"
+            android:layout_width="140dp"
+            android:layout_height="23dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="28dp"
+            android:text="Reminder (Optional)"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frequency_textview" />
+
+        <TextView
+            android:id="@+id/qustionr_text"
+            android:layout_width="140dp"
+            android:layout_height="23dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="21dp"
+            android:text="Question (Optional)"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reminder_textview" />
+
+        <TextView
+            android:id="@+id/egmoring_text"
+            android:layout_width="144dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="4dp"
+            android:text="eg. Morning routine"
+            android:textColor="#959595"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name_text_input" />
+
+        <TextView
+            android:id="@+id/additem_text"
+            android:layout_width="83dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="124dp"
+            android:layout_marginTop="20dp"
+            android:text="ADD ITEM"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name_text_input1">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/recyclerview"
+                android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView14"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="252dp"
+            app:layout_constraintStart_toEndOf="@+id/name_text_input1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/delete_icon" />
+
+        <ImageView
+            android:id="@+id/dropicon_feq"
+            android:layout_width="42dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/frequency_textview"
+            app:layout_constraintTop_toTopOf="@+id/frequency_textview"
+            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+
+        <ImageView
+            android:id="@+id/dropicon_rem"
+            android:layout_width="42dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/reminder_textview"
+            app:layout_constraintTop_toTopOf="@+id/reminder_textview"
+            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

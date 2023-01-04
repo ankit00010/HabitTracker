@@ -8,8 +8,12 @@
     <string name="create_habit">Create habit</string>
     <string name="back">back</string>
     <string name="save">Save</string>
-    <string name="option1">Yes or no\n\n e.g.\t\tDid you wake up early? Did you exercise?  Did you play chess?</string>
-    <string name="option2"> Measurable\n\n e.g.\t\tHow many miles did you run\t today? How many pages did\tou read?</string>
+    <string name="option1">WITH A YES OR NO</string>
+    <string name="option1note">If you just want to record weather you succeed with the activity or not</string>
+    <string name="option2"> WITH A NUMERIC VALUE</string>
+    <string name="option2note">If you just want to establish a value as a daily goal or limit</string>
+    <string name="option3"> WITH A CHECKLIST</string>
+    <string name="option3note">If you want to evaluate your activity based on set of sub-items</string>
     <string name="create_cat">Create Category</string>
 
 </resources>
