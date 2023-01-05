@@ -23,9 +23,9 @@ import java.util.TimeZone;
 
 public class CreateMeasurableHabit extends AppCompatActivity {
 
-    ImageView backarrow,savehabit;
+    ImageView colorbutton;
     EditText habitname,habitque,target;
-    TextView reminderbox,frequency_edittext;
+    TextView reminderbox,frequency_edittext,backtext,savehabit;
     boolean[] selectedDays;
     ArrayList<Integer> daysList = new ArrayList<>();
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
@@ -36,13 +36,14 @@ public class CreateMeasurableHabit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_measurable_habit);
-        backarrow=findViewById(R.id.backbutton);
-        reminderbox =findViewById(R.id.ReminderButton);
-        frequency_edittext=findViewById(R.id.frequency_edittext);
-        habitname = findViewById(R.id.name_edittext);
-        habitque = findViewById(R.id.question_edittext);
-        savehabit= findViewById(R.id.savebox);
-        target= findViewById(R.id.Target_EditText);
+        backtext=findViewById(R.id.measurable_back_text);
+        reminderbox =findViewById(R.id.measurable_reminder_edit_text);
+        frequency_edittext=findViewById(R.id.measurable_frequency_edit_text);
+        habitname = findViewById(R.id.measurable_name_text);
+        habitque = findViewById(R.id.measurable_question_edit_text);
+        savehabit= findViewById(R.id.measurable_create_text);
+        target= findViewById(R.id.measurable_target_text1);
+        colorbutton=findViewById(R.id.measurable_color_button);
         Intent intent = getIntent();
         catid = intent.getStringExtra("catid");
         habittype =intent.getStringExtra("habittype");
@@ -71,8 +72,8 @@ public class CreateMeasurableHabit extends AppCompatActivity {
 
             }
         });
-        //backarrow to navigate to habit options back
-        backarrow.setOnClickListener(new View.OnClickListener() {
+        //backtext to navigate to habit options back
+        backtext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getApplicationContext(),HabitOptions.class);

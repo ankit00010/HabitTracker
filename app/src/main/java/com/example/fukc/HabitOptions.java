@@ -7,9 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class HabitOptions extends AppCompatActivity {
@@ -21,7 +19,7 @@ public class HabitOptions extends AppCompatActivity {
         TextView option1=findViewById(R.id.option1);
         TextView option2= findViewById(R.id.option2);
         TextView option3= findViewById(R.id.option3);
-        TextView back=findViewById(R.id.back_text);
+        TextView back=findViewById(R.id.options_back);
         Intent intent = getIntent();
         String catid = intent.getStringExtra("cid");
         //YES or NO Create Habit option navigation by clicking

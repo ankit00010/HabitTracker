@@ -6,28 +6,18 @@ import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ContextThemeWrapper;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,7 +27,6 @@ import java.util.List;
 import java.util.TimeZone;
 
 public class CreateChecklistHabits extends AppCompatActivity {
-    ImageView color;
     LinearLayout subhabitlist;
     EditText habitname,habitque,subhabit1;
     TextView reminderbutton,frequencybutton,addsubtask,savehabit,backarrow,create;
@@ -58,13 +47,12 @@ public class CreateChecklistHabits extends AppCompatActivity {
         setContentView(R.layout.create_checklist_habits);
         habitname = findViewById(R.id.name_edittext);
         subhabit1 = findViewById(R.id.checklist_edittext);
-        habitque = findViewById(R.id.question_edittext);
-        savehabit= findViewById(R.id.create_text);
-        backarrow =findViewById(R.id.back_text);
-        reminderbutton = findViewById(R.id.reminder_textview);
-        frequencybutton = findViewById(R.id.frequency_textview);
+        habitque = findViewById(R.id.yes_question_edit_text);
+        backarrow =findViewById(R.id.yes_back_text);
+        reminderbutton = findViewById(R.id.yes_reminder_textview);
+        frequencybutton = findViewById(R.id.yes_frequency_textview);
         addsubtask = findViewById(R.id.additem_text);
-        create = findViewById(R.id.create_text);
+        create = findViewById(R.id.yes_create_text);
         subhabitlist = findViewById(R.id.linearLayout);
         db = new DBHelper(this);
         backarrow.setOnClickListener(new View.OnClickListener() {

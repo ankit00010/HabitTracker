@@ -29,7 +29,7 @@
                 app:boxBackgroundColor="@color/black"
                 app:boxStrokeColor="@color/teal_700"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/name_text_input">
+                app:layout_constraintTop_toTopOf="@id/yes_input_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/checklist_edittext2"

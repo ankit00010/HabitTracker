@@ -59,7 +59,7 @@
         app:srcCompat="@drawable/toponefrag" />
 
     <TextView
-        android:id="@+id/back_text"
+        android:id="@+id/options_back"
         android:layout_width="94dp"
         android:layout_height="50dp"
         android:layout_marginBottom="3dp"

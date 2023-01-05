@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -24,10 +23,10 @@ import java.util.TimeZone;
 
 
 public class CreateYNhabit extends AppCompatActivity {
-    ImageView backarrow,savehabit;
+    ImageView  colorbutton;
     EditText habitname,habitque;
-    Button colorbutton;
-    TextView reminderbutton,frequencybutton;
+
+    TextView reminderbutton,frequencybutton,savehabit,yes_backtext;
     DBHelper db;
     boolean[] selectedDays;
     String hname,hque,catid,habittype;
@@ -37,22 +36,19 @@ public class CreateYNhabit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ynhabit);
-        habitname = findViewById(R.id.name_edittext);
-        habitque = findViewById(R.id.question_edittext);
-        savehabit= findViewById(R.id.save);
-        backarrow =findViewById(R.id.backbutton);
-        reminderbutton = findViewById(R.id.Remainderbtn);
-        frequencybutton = findViewById(R.id.frequency_edittext);
-        ImageView   backarrow =(ImageView) findViewById(R.id.backbutton);
-        reminderbutton = (TextView) findViewById(R.id.Remainderbtn);
-        colorbutton=(Button)findViewById(R.id.button);
-        frequencybutton =(TextView) findViewById(R.id.frequency_edittext);
+        habitname = (EditText) findViewById(R.id.yes_name_edit_text);
+        habitque = findViewById(R.id.yes_question_edit_text);
+        savehabit= (TextView) findViewById(R.id.yes_create_text);
+        yes_backtext =findViewById(R.id.yes_back_text);
+        reminderbutton = (TextView) findViewById(R.id.yes_reminder_textview);
+        frequencybutton = (TextView) findViewById(R.id.yes_frequency_textview);
+        colorbutton=(ImageView) findViewById(R.id.yes_color_button);
         selectedDays = new boolean[daysArray.length];
         Intent intent = getIntent();
         catid = intent.getStringExtra("catid");
         habittype =intent.getStringExtra("habittype");
         db = new DBHelper(this);
-        backarrow.setOnClickListener(new View.OnClickListener() {
+        yes_backtext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), HabitOptions.class);
