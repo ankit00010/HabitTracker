@@ -10,11 +10,13 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -202,17 +204,23 @@ public class CreateYNhabit extends AppCompatActivity {
         savehabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                colorvalue= dialogFragment.colorval;
-                int fcatid = Integer.valueOf(catid);
-                int fhabittype = Integer.valueOf(habittype);
-                String frequency =frequencybutton.getText().toString();
-                String reminder = reminderbutton.getText().toString();
-                hname= habitname.getText().toString();
-                hque= habitque.getText().toString();
-                db.insertDatahabit(hname,colorvalue,hque,frequency,reminder,fhabittype,NULL,fcatid);
-                Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
-                startActivity(intent);
-                finish();
+                if (TextUtils.isEmpty(habitname.getText())) {
+                    Toast.makeText(CreateYNhabit.this, "Enter a name", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(frequencybutton.getText())) {
+                    Toast.makeText(CreateYNhabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
+                } else {
+                    colorvalue = dialogFragment.colorval;
+                    int fcatid = Integer.valueOf(1);
+                    int fhabittype = Integer.valueOf(habittype);
+                    String frequency = frequencybutton.getText().toString();
+                    String reminder = reminderbutton.getText().toString();
+                    hname = habitname.getText().toString();
+                    hque = habitque.getText().toString();
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, fhabittype, NULL, fcatid);
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 

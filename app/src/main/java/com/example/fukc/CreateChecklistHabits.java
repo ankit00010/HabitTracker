@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -221,37 +222,51 @@ public class CreateChecklistHabits extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int sHabitId;
-                colorvalue= dialogFragment.colorval;
-                String value="";
-                String hname= habitname.getText().toString();
-                String frequency =frequencybutton.getText().toString();
-                String reminder = reminderbutton.getText().toString();
-                String hque= habitque.getText().toString();
-                String subH1=subhabit1.getText().toString();
-                inputList.add(subH1);
-                if(numberOfEditTexts>0) {
-                    for (int i = 0; i < recyclerView.getAdapter().getItemCount(); i++) {
-                        MyAdapterSHabit.MyViewHolder viewHolder = (MyAdapterSHabit.MyViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
-                        if (viewHolder != null) {
-                            String text = viewHolder.getText();
-                            inputList.add(text);
+                if(TextUtils.isEmpty(habitname.getText()))
+                {
+                    Toast.makeText(CreateChecklistHabits.this, "Enter a name", Toast.LENGTH_SHORT).show();
+                }
+                else if(TextUtils.isEmpty(frequencybutton.getText()))
+                {
+                    Toast.makeText(CreateChecklistHabits.this, "Select at least one frequency", Toast.LENGTH_SHORT).show();
+                }
+                else if(TextUtils.isEmpty(subhabit1.getText())){
+                    Toast.makeText(CreateChecklistHabits.this, "Enter at least two sub habit", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    int sHabitId;
+                    colorvalue = dialogFragment.colorval;
+                    String value = "";
+                    String hname = habitname.getText().toString();
+                    String frequency = frequencybutton.getText().toString();
+                    String reminder = reminderbutton.getText().toString();
+                    String hque = habitque.getText().toString();
+                    String subH1 = subhabit1.getText().toString();
+                    inputList.add(subH1);
+                    if (numberOfEditTexts > 0) {
+                        for (int i = 0; i < recyclerView.getAdapter().getItemCount(); i++) {
+                            MyAdapterSHabit.MyViewHolder viewHolder = (MyAdapterSHabit.MyViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
+                            if (viewHolder != null) {
+                                String text = viewHolder.getText();
+                                inputList.add(text);
+                            }
                         }
                     }
-                }
-                String delimiter = ",";
-                String result = String.join(delimiter, inputList);
-                if(db.insertDataSubhabits(result)){
-                    Cursor cursor = db.getdata();
-                    if (cursor.moveToLast()) {
-                        value = cursor.getString(0);
+                    String delimiter = ",";
+                    String result = String.join(delimiter, inputList);
+                    if (db.insertDataSubhabits(result)) {
+                        Cursor cursor = db.getdata();
+                        if (cursor.moveToLast()) {
+                            value = cursor.getString(0);
+                        }
                     }
+                    sHabitId = Integer.valueOf(value);
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL, sHabitId);
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
+                    startActivity(intent);
+                    finish();
+
                 }
-                sHabitId=Integer.valueOf(value);
-                db.insertDatahabit(hname,colorvalue,hque,frequency,reminder,habittype,NULL,sHabitId);
-                Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
-                startActivity(intent);
-                finish();
             }
         });
         color.setOnClickListener(new View.OnClickListener() {
