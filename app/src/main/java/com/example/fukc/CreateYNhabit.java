@@ -3,6 +3,7 @@ package com.example.fukc;
 import static java.sql.Types.NULL;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
@@ -23,15 +24,59 @@ import java.util.TimeZone;
 
 
 public class CreateYNhabit extends AppCompatActivity {
-    ImageView  colorbutton;
+    ImageView  color;
     EditText habitname,habitque;
-
     TextView reminderbutton,frequencybutton,savehabit,yes_backtext;
     DBHelper db;
+    String colorvalue;
     boolean[] selectedDays;
     String hname,hque,catid,habittype;
     ArrayList<Integer> daysList = new ArrayList<>();
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
+    DialogfragmentColorYN dialogFragment = new DialogfragmentColorYN();
+    public void selectclr(ImageView ac) {
+        if(ac==dialogFragment.cl1){
+            color.setImageResource(R.drawable.cl1);
+        }else if(ac==dialogFragment.cl2){
+            color.setImageResource(R.drawable.cl2);
+        }else if(ac==dialogFragment.cl3){
+            color.setImageResource(R.drawable.cl3);
+        }else if(ac==dialogFragment.cl4){
+            color.setImageResource(R.drawable.cl4);
+        }else if(ac==dialogFragment.cl5){
+            color.setImageResource(R.drawable.cl5);
+        }else if(ac==dialogFragment.cl6){
+            color.setImageResource(R.drawable.cl6);
+        }else if(ac==dialogFragment.cl7){
+            color.setImageResource(R.drawable.cl7);
+        }else if(ac==dialogFragment.cl8){
+            color.setImageResource(R.drawable.cl8);
+        }else if(ac==dialogFragment.cl9){
+            color.setImageResource(R.drawable.cl9);
+        }else if(ac==dialogFragment.cl10){
+            color.setImageResource(R.drawable.cl10);
+        }else if(ac==dialogFragment.cl11){
+            color.setImageResource(R.drawable.cl11);
+        }else if(ac==dialogFragment.cl12){
+            color.setImageResource(R.drawable.cl12);
+        }else if(ac==dialogFragment.cl13){
+            color.setImageResource(R.drawable.cl13);
+        }else if(ac==dialogFragment.cl14){
+            color.setImageResource(R.drawable.cl14);
+        }else if(ac==dialogFragment.cl15){
+            color.setImageResource(R.drawable.cl15);
+        }else if(ac==dialogFragment.cl16){
+            color.setImageResource(R.drawable.cl16);
+        }else if(ac==dialogFragment.cl17){
+            color.setImageResource(R.drawable.cl17);
+        }else if(ac==dialogFragment.cl18){
+            color.setImageResource(R.drawable.cl18);
+        }else if(ac==dialogFragment.cl19){
+            color.setImageResource(R.drawable.cl19);
+        }else if(ac==dialogFragment.cl20){
+            color.setImageResource(R.drawable.cl20);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +87,7 @@ public class CreateYNhabit extends AppCompatActivity {
         yes_backtext =findViewById(R.id.yes_back_text);
         reminderbutton = (TextView) findViewById(R.id.yes_reminder_textview);
         frequencybutton = (TextView) findViewById(R.id.yes_frequency_textview);
-        colorbutton=(ImageView) findViewById(R.id.yes_color_button);
+        color=(ImageView) findViewById(R.id.yes_color_button);
         selectedDays = new boolean[daysArray.length];
         Intent intent = getIntent();
         catid = intent.getStringExtra("catid");
@@ -157,46 +202,29 @@ public class CreateYNhabit extends AppCompatActivity {
         savehabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                colorvalue= dialogFragment.colorval;
                 int fcatid = Integer.valueOf(catid);
                 int fhabittype = Integer.valueOf(habittype);
                 String frequency =frequencybutton.getText().toString();
                 String reminder = reminderbutton.getText().toString();
                 hname= habitname.getText().toString();
                 hque= habitque.getText().toString();
-                db.insertDatahabit(hname,"no color",hque,frequency,reminder,fhabittype,NULL,fcatid);
+                db.insertDatahabit(hname,colorvalue,hque,frequency,reminder,fhabittype,NULL,fcatid);
                 Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-        //code for colorpicker
-        colorbutton.setOnClickListener(new View.OnClickListener() {
+        color.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                opencolorpicker();
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                dialogFragment.show(fragmentManager, "dialog");
+
             }
         });
 
-    }
-    public void opencolorpicker()
-    {
-
-
-
-
-
-        ArrayList<String> colors =new ArrayList<>();
-        colors.add("#258174");
-        colors.add("#3C8D2F");
-        colors.add("#20724f");
-        colors.add("#6a3ab2");
-        colors.add("#323299");
-        colors.add("#800080");
-        colors.add("#b79716");
-        colors.add("#966d37");
-        colors.add("#b77231");
-        colors.add("#808000");
     }
     public void onBackPressed(){
         AlertDialog.Builder alertDialog =new AlertDialog.Builder(CreateYNhabit.this);

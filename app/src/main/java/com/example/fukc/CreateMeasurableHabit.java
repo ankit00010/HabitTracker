@@ -1,6 +1,7 @@
 package com.example.fukc;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -23,7 +24,7 @@ import java.util.TimeZone;
 
 public class CreateMeasurableHabit extends AppCompatActivity {
 
-    ImageView colorbutton;
+    ImageView color;
     EditText habitname,habitque,target;
     TextView reminderbox,frequency_edittext,backtext,savehabit;
     boolean[] selectedDays;
@@ -31,6 +32,51 @@ public class CreateMeasurableHabit extends AppCompatActivity {
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
     String hname,hque,catid,habittype;
     DBHelper db;
+    String colorvalue;
+    DialogfragmentColorM dialogFragment = new DialogfragmentColorM();
+    public void selectclr(ImageView ac) {
+        if(ac==dialogFragment.cl1){
+            color.setImageResource(R.drawable.cl1);
+        }else if(ac==dialogFragment.cl2){
+            color.setImageResource(R.drawable.cl2);
+        }else if(ac==dialogFragment.cl3){
+            color.setImageResource(R.drawable.cl3);
+        }else if(ac==dialogFragment.cl4){
+            color.setImageResource(R.drawable.cl4);
+        }else if(ac==dialogFragment.cl5){
+            color.setImageResource(R.drawable.cl5);
+        }else if(ac==dialogFragment.cl6){
+            color.setImageResource(R.drawable.cl6);
+        }else if(ac==dialogFragment.cl7){
+            color.setImageResource(R.drawable.cl7);
+        }else if(ac==dialogFragment.cl8){
+            color.setImageResource(R.drawable.cl8);
+        }else if(ac==dialogFragment.cl9){
+            color.setImageResource(R.drawable.cl9);
+        }else if(ac==dialogFragment.cl10){
+            color.setImageResource(R.drawable.cl10);
+        }else if(ac==dialogFragment.cl11){
+            color.setImageResource(R.drawable.cl11);
+        }else if(ac==dialogFragment.cl12){
+            color.setImageResource(R.drawable.cl12);
+        }else if(ac==dialogFragment.cl13){
+            color.setImageResource(R.drawable.cl13);
+        }else if(ac==dialogFragment.cl14){
+            color.setImageResource(R.drawable.cl14);
+        }else if(ac==dialogFragment.cl15){
+            color.setImageResource(R.drawable.cl15);
+        }else if(ac==dialogFragment.cl16){
+            color.setImageResource(R.drawable.cl16);
+        }else if(ac==dialogFragment.cl17){
+            color.setImageResource(R.drawable.cl17);
+        }else if(ac==dialogFragment.cl18){
+            color.setImageResource(R.drawable.cl18);
+        }else if(ac==dialogFragment.cl19){
+            color.setImageResource(R.drawable.cl19);
+        }else if(ac==dialogFragment.cl20){
+            color.setImageResource(R.drawable.cl20);
+        }
+    }
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +89,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
         habitque = findViewById(R.id.measurable_question_edit_text);
         savehabit= findViewById(R.id.measurable_create_text);
         target= findViewById(R.id.measurable_target_text1);
-        colorbutton=findViewById(R.id.measurable_color_button);
+        color=findViewById(R.id.measurable_color_button);
         Intent intent = getIntent();
         catid = intent.getStringExtra("catid");
         habittype =intent.getStringExtra("habittype");
@@ -157,6 +203,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
         savehabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                colorvalue= dialogFragment.colorval;
                 int fcatid = Integer.valueOf(catid);
                 int fhabittype = Integer.valueOf(habittype);
                 String frequency =frequency_edittext.getText().toString();
@@ -164,10 +211,18 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                 int targetval = Integer.valueOf(target.getText().toString());
                 hname= habitname.getText().toString();
                 hque= habitque.getText().toString();
-                db.insertDatahabit(hname,"no color",hque,frequency,reminder,fhabittype,targetval,fcatid);
+                db.insertDatahabit(hname,colorvalue,hque,frequency,reminder,fhabittype,targetval,fcatid);
                 Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+        color.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                dialogFragment.show(fragmentManager, "dialog");
+
             }
         });
 
