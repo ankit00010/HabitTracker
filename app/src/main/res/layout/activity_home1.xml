@@ -54,14 +54,25 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewhabit"
-        android:layout_width="393dp"
-        android:layout_height="643dp"
+        android:layout_width="397dp"
+        android:layout_height="573dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.714"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/TopBox"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.405" />
+
+    <ImageView
+        android:id="@+id/Analysis"
+        android:layout_width="46dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/plussign"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.546"
+        app:layout_constraintStart_toEndOf="@+id/plussign"
+        app:layout_constraintTop_toTopOf="@+id/plussign"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_baseline_analytics_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

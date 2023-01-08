@@ -21,6 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 public class HomeActivity1 extends AppCompatActivity {
+    ImageView Stats;
     FloatingActionButton plus;
     SharedPreferences sp;
     DBHelper db;
@@ -37,6 +38,7 @@ public class HomeActivity1 extends AppCompatActivity {
         ImageView imageList=view.findViewById(R.id.deleteicon);
         imageList.setImageResource(R.drawable.deleteicon);;
         recyclerView = findViewById(R.id.recyclerViewhabit);
+        Stats=(ImageView)  findViewById(R.id.Analysis);
         adapter = new MyAdapterHabit(this, habitname);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -54,7 +56,17 @@ public class HomeActivity1 extends AppCompatActivity {
 
             }
         });
+            //Temporary code to test the stats
+        Stats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),Create_Habit_Statistics.class);
+                startActivity(intent);
+                finish();
 
+
+            }
+        });
     }
 
 
