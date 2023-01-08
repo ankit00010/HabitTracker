@@ -59,8 +59,7 @@ public class Create_Habit_Statistics extends AppCompatActivity {
         barChart.animateY(2000);
         pieChart.animateXY(2000,2000);
 
-        barChart.setBackgroundColor(Color.BLACK);
-        pieChart.setBackgroundColor(Color.BLACK);
+
         XAxis xAxis = barChart.getXAxis();
         xAxis.setDrawGridLines(false);
 

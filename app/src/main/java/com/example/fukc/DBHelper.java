@@ -30,9 +30,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("drop table if exists users");
-        db.execSQL("drop table if exists habits");
-        db.execSQL("drop table if exists subhabits");
+        db.execSQL("DROP TABLE IF  EXISTS users");
+        db.execSQL("DROP TABLE IF EXISTS  habits");
+        db.execSQL("DROP TABLE IF EXISTS  subhabits");
+        db.close();
         onCreate(db);
     }
 
