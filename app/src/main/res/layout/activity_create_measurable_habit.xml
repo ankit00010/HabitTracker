@@ -130,7 +130,7 @@
                 android:layout_gravity="start"
                 android:ems="10"
                 android:hint="eg: 15"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:textColor="@color/white"
                 android:textColorHint="#009688" />
         </com.google.android.material.textfield.TextInputLayout>

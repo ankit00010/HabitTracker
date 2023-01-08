@@ -205,18 +205,19 @@ public class CreateMeasurableHabit extends AppCompatActivity {
         savehabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(TextUtils.isEmpty(habitname.getText()))
+                if(TextUtils.isEmpty(habitname.getText()))//validation for  habitname field is empty
                 {
                     Toast.makeText(CreateMeasurableHabit.this, "Enter a name", Toast.LENGTH_SHORT).show();
                 }
-                else if(TextUtils.isEmpty(frequency_edittext.getText()))
-                {
-                    Toast.makeText(CreateMeasurableHabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
-                }
-                else if(TextUtils.isEmpty(target.getText()))
+                else if(TextUtils.isEmpty(target.getText()))//validation for  Target field is empty
                 {
                     Toast.makeText(CreateMeasurableHabit.this, "Enter a target greater than zero", Toast.LENGTH_SHORT).show();
                 }
+                else if(TextUtils.isEmpty(frequency_edittext.getText()))//validation for  Frequency field is empty
+                {
+                    Toast.makeText(CreateMeasurableHabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
+                }
+                //save the data
                 else {
                     colorvalue = dialogFragment.colorval;
                     int fcatid = Integer.valueOf(catid);
