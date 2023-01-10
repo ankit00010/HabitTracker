@@ -32,7 +32,7 @@ public class CreateYNhabit extends AppCompatActivity {
     DBHelper db;
     String colorvalue;
     boolean[] selectedDays;
-    String hname,hque,catid,habittype;
+    String hname,hque;
     ArrayList<Integer> daysList = new ArrayList<>();
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
     DialogfragmentColorYN dialogFragment = new DialogfragmentColorYN();
@@ -92,8 +92,6 @@ public class CreateYNhabit extends AppCompatActivity {
         color=(ImageView) findViewById(R.id.yes_color_button);
         selectedDays = new boolean[daysArray.length];
         Intent intent = getIntent();
-        catid = intent.getStringExtra("catid");
-        habittype =intent.getStringExtra("habittype");
         db = new DBHelper(this);
         yes_backtext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,13 +208,12 @@ public class CreateYNhabit extends AppCompatActivity {
                     Toast.makeText(CreateYNhabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
                 } else {
                     colorvalue = dialogFragment.colorval;
-                    int fcatid = Integer.valueOf(1);
-                    int fhabittype = Integer.valueOf(habittype);
+                    final int habittype = 0;
                     String frequency = frequencybutton.getText().toString();
                     String reminder = reminderbutton.getText().toString();
                     hname = habitname.getText().toString();
                     hque = habitque.getText().toString();
-                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, fhabittype, NULL, fcatid);
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL);
                     Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
                     startActivity(intent);
                     finish();

@@ -55,7 +55,7 @@ public class CreateChecklistHabits extends AppCompatActivity {
     RecyclerView recyclerView;
     DBHelper db;
     DialogfragmentColor dialogFragment = new DialogfragmentColor();
-    int habittype = 3;
+    int habittype = 2;
     String colorvalue;
     public void selectclr(ImageView ac) {
         if(ac==dialogFragment.cl1){
@@ -234,9 +234,7 @@ public class CreateChecklistHabits extends AppCompatActivity {
                     Toast.makeText(CreateChecklistHabits.this, "Enter at least two sub habit", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    int sHabitId;
                     colorvalue = dialogFragment.colorval;
-                    String value = "";
                     String hname = habitname.getText().toString();
                     String frequency = frequencybutton.getText().toString();
                     String reminder = reminderbutton.getText().toString();
@@ -254,14 +252,9 @@ public class CreateChecklistHabits extends AppCompatActivity {
                     }
                     String delimiter = ",";
                     String result = String.join(delimiter, inputList);
-                    if (db.insertDataSubhabits(result)) {
-                        Cursor cursor = db.getdata();
-                        if (cursor.moveToLast()) {
-                            value = cursor.getString(0);
-                        }
-                    }
-                    sHabitId = Integer.valueOf(value);
-                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL, sHabitId);
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL);
+                    int habitid=db.getHabitId(hname);
+                    db.insertDataSubhabits(result,habitid);
                     Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
                     startActivity(intent);
                     finish();

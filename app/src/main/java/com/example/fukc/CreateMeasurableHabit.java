@@ -32,7 +32,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
     boolean[] selectedDays;
     ArrayList<Integer> daysList = new ArrayList<>();
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
-    String hname,hque,catid,habittype;
+    String hname,hque;
     DBHelper db;
     String colorvalue;
     DialogfragmentColorM dialogFragment = new DialogfragmentColorM();
@@ -93,8 +93,6 @@ public class CreateMeasurableHabit extends AppCompatActivity {
         target= findViewById(R.id.measurable_target_text1);
         color=findViewById(R.id.measurable_color_button);
         Intent intent = getIntent();
-        catid = intent.getStringExtra("catid");
-        habittype =intent.getStringExtra("habittype");
         db = new DBHelper(this);
         reminderbox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,14 +218,13 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                 //save the data
                 else {
                     colorvalue = dialogFragment.colorval;
-                    int fcatid = Integer.valueOf(catid);
-                    int fhabittype = Integer.valueOf(habittype);
+                    final int habittype = 1;
                     String frequency = frequency_edittext.getText().toString();
                     String reminder = reminderbox.getText().toString();
                     int targetval = Integer.valueOf(target.getText().toString());
                     hname = habitname.getText().toString();
                     hque = habitque.getText().toString();
-                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, fhabittype, targetval, fcatid);
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, targetval);
                     Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
                     startActivity(intent);
                     finish();

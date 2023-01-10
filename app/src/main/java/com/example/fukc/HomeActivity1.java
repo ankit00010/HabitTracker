@@ -1,26 +1,40 @@
 package com.example.fukc;
 
+import static java.sql.Types.NULL;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class HomeActivity1 extends AppCompatActivity {
+
     ImageView Stats;
     FloatingActionButton plus;
     SharedPreferences sp;
@@ -28,25 +42,28 @@ public class HomeActivity1 extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<String> habitname;
     MyAdapterHabit adapter;
+    Calendar calendar = Calendar.getInstance();
+    String strday = calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.getDefault());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    String strDate = dateFormat.format(calendar.getTime());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home1);
         db = new DBHelper(this);
         habitname = new ArrayList<>();
-        View view = getLayoutInflater().inflate(R.layout.category_item, null);
-        ImageView imageList=view.findViewById(R.id.deleteicon);
-        imageList.setImageResource(R.drawable.deleteicon);;
+        Cursor cursor = db.getdataHabit(strday);
+        while (cursor.moveToNext()) {
+            habitname.add(cursor.getString(0));
+        }
         recyclerView = findViewById(R.id.recyclerViewhabit);
         Stats=(ImageView)  findViewById(R.id.Analysis);
         adapter = new MyAdapterHabit(this, habitname);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //add data to adapter
-        Cursor cursor = db.getdataHabit();
-        while (cursor.moveToNext()) {
-            habitname.add(cursor.getString(1));
-        }
+        Log.d("71",String.valueOf(habitname));
+
         plus=findViewById(R.id.plussign);
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +87,7 @@ public class HomeActivity1 extends AppCompatActivity {
     }
 
 
+
     @Override
     public boolean onOptionsItemSelected( MenuItem item) {
         switch (item.getItemId()){
@@ -89,4 +107,6 @@ public class HomeActivity1 extends AppCompatActivity {
         inflater.inflate(R.menu.home_menu,menu);
         return true;
     }
+
+
 }
