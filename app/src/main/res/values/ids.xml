@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tag_variable" type="id"/>
+    <item name="tag_variable1" type="id"/>
+    <item name="tag_variable2" type="id"/>
+</resources>

@@ -1,10 +1,6 @@
 package com.example.fukc;
 
-
-
-
 import static java.sql.Types.NULL;
-
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -14,9 +10,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +29,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,9 +41,9 @@ import java.util.List;
 public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHolder> {
     private Context context;
     private ArrayList name;
-    public int[] drawables = {R.drawable.circle,R.drawable.checkedcircle, R.drawable.crossedcircle };
+    public int[] drawables = {R.drawable.crossedcircle,R.drawable.checkedcircle};
     public int[] drawablesm = {R.drawable.checkedcircle, R.drawable.minuscircle};
-    public String[] recordYN = {"N","Y","N"};
+    public String[] recordYN = {"N","Y"};
     int number;
     DBHelper db;
     ArrayList<String> shabitname;
@@ -55,6 +55,15 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
         this.context = context;
         this.name = name;
 
+    }
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    private OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -68,61 +77,45 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.name.setText(String.valueOf(name.get(position)));
         String habitname = holder.name.getText().toString();
+
         int habittype = db.getHabittype(habitname);
         int target = db.getHabitTarget(habitname);
         int habitid= db.getHabitId(habitname);
-        //
-        /*if (!holder.itemStoredToday) {
-            db.insertDataRecord(habitid,"N",strDate,NULL);
-            holder.itemStoredToday = true;
-        }*/
-        //
+        String colorcode=db.getHabitColor(habitname);
+        if(!TextUtils.isEmpty(colorcode)){
+            holder.name.setTextColor(Color.parseColor(colorcode));
+        }
         if (habittype == 0) {
-
             holder.checkbox.setOnClickListener(new View.OnClickListener() {
                 int currentDrawableIndex = 0;
                 @Override
                 public void onClick(View view) {
                     currentDrawableIndex = (currentDrawableIndex + 1) % drawables.length;
                     holder.checkbox.setImageDrawable(context.getDrawable(drawables[currentDrawableIndex]));
-                    //Log.d("xyz", "Inserting record into database: " + habitid + " " + "N" + " " + strDate + " " + NULL);
+                    Log.d("xyz", "Inserting record into database: " + habitid + " " + recordYN[currentDrawableIndex] + " " + strDate + " " + NULL);
                     db.updateYNrecord(habitid,recordYN[currentDrawableIndex],strDate);
-                    //Log.d("xyz", "Inserting record into database: " + habitid + " " + recordYN[currentDrawableIndex] + " " + strDate + " " + NULL);
+                    Log.d("xyz", "Inserting record into database: " + habitid + " " + recordYN[currentDrawableIndex] + " " + strDate + " " + NULL);
                 }
             });
         }else if (habittype == 1) {
-            holder.builder.setTitle("Select a value");
-            holder.builder.setView(holder.editText);
-            holder.builder.setMessage("Target is " + target);
-            holder.builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    number = Integer.valueOf(holder.editText.getText().toString());
-                    if (number >= target) {
-                        holder.checkbox.setImageDrawable(context.getDrawable(drawablesm[0]));
-                        db.updateMeasurableRecord(habitid,"Y",strDate,number);
-                    } else if(number<=0){
-                        holder.checkbox.setImageDrawable(context.getDrawable(drawables[0]));
-                        db.updateMeasurableRecord(habitid,"N",strDate,number);
-                    }else {
-                        holder.checkbox.setImageDrawable(context.getDrawable(drawablesm[1]));
-                        db.updateMeasurableRecord(habitid,"F",strDate,number);
-                    }
-                }
-            });
-            holder.builder.setNegativeButton("Cancel", null);
-            AlertDialog dialog = holder.builder.create();
+            holder.itemView.setTag(R.id.tag_variable, target);
+            holder.itemView.setTag(R.id.tag_variable2, habitid);
             holder.checkbox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dialog.show();
+                    Log.d("dialog today","before this");
+                    if (listener != null) {
+                        int position = holder.getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
                 }
             });
         } else if (habittype == 2) {
             String shlst= db.getdataSHabit(habitid);
             String[] stringArray = shlst.split(",");
             ArrayList<String> shabitname = new ArrayList<>(Arrays.asList(stringArray));
-            holder.recyclerView.setVisibility(View.VISIBLE);
             adapter = new MyAdapterSubHabit(context,shabitname,habitid);
             holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
             holder.recyclerView.setHasFixedSize(true);
@@ -145,9 +138,19 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
             }else if(iconn==childCount){
                 holder.checkbox.setImageDrawable(context.getDrawable(drawablesm[0]));
             }
-           // Log.d("CompositeAdapter", "id "  );
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (holder.recyclerView.getVisibility() == View.GONE) {
+                        holder.recyclerView.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.recyclerView.setVisibility(View.GONE);
+                    }
+                }
+            });
         }
     }
+
     @Override
     public int getItemCount() {
         return name.size();
@@ -155,18 +158,13 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
         public ImageView checkbox;
-        public AlertDialog.Builder builder = new AlertDialog.Builder(context);
         RecyclerView recyclerView;
-        final EditText editText = new EditText(context);
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.habitname);
             checkbox = itemView.findViewById(R.id.empty);
-            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
             recyclerView = itemView.findViewById(R.id.child_rv);
+            Glide.with(itemView.getContext()).load(R.drawable.circle).into(checkbox);
         }
-
-
     }
 }
-

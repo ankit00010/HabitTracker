@@ -4,8 +4,12 @@ import static java.sql.Types.NULL;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -22,10 +26,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,79 +41,36 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class HomeActivity1 extends AppCompatActivity {
-
-    ImageView Stats;
-    FloatingActionButton plus;
-    SharedPreferences sp;
-    DBHelper db;
-    RecyclerView recyclerView;
-    ArrayList<String> habitname;
-    MyAdapterHabit adapter;
-    Calendar calendar = Calendar.getInstance();
-    String strday = calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.getDefault());
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-    String strDate = dateFormat.format(calendar.getTime());
-
+TabLayout tabLayout;
+TabItem today,habits;
+ViewPager2 mainLayout;
+MyFragmentAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home1);
-        db = new DBHelper(this);
-        habitname = new ArrayList<>();
-        Cursor cursor = db.getdataHabit(strday);
-        while (cursor.moveToNext()) {
-            habitname.add(cursor.getString(0));
-        }
-        recyclerView = findViewById(R.id.recyclerViewhabit);
-        Stats=(ImageView)  findViewById(R.id.Analysis);
-        adapter = new MyAdapterHabit(this, habitname);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Log.d("71",String.valueOf(habitname));
-
-        plus=findViewById(R.id.plussign);
-        plus.setOnClickListener(new View.OnClickListener() {
+        today=findViewById(R.id.tab_item_1);
+        habits=findViewById(R.id.tab_item_2);
+        mainLayout=findViewById(R.id.main_layout);
+        tabLayout =findViewById(R.id.tab_layout);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        adapter = new MyFragmentAdapter(fragmentManager , getLifecycle());
+        mainLayout.setAdapter(adapter);
+        mainLayout.setUserInputEnabled(false);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),HabitOptions.class);
-                startActivity(intent);
+            public void onTabSelected(TabLayout.Tab tab) {
+                mainLayout.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
             }
-        });
-            //Temporary code to test the stats
-        Stats.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),Create_Habit_Statistics.class);
-                startActivity(intent);
-                finish();
-
-
+            public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+
     }
-
-
-
-    @Override
-    public boolean onOptionsItemSelected( MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.logout:
-                sp = getSharedPreferences("login",MODE_PRIVATE);
-                sp.edit().putBoolean("logged",false).apply();
-                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.home_menu,menu);
-        return true;
-    }
-
 
 }

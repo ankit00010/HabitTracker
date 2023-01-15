@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,7 +20,7 @@ public class MyAdapterSubHabit extends RecyclerView.Adapter<MyAdapterSubHabit.Vi
     private ArrayList name;
     private Context context;
     private int habitid;
-    public int[] drawables = {R.drawable.circle,R.drawable.checkedcircle, R.drawable.crossedcircle };
+    public int[] drawables = {R.drawable.crossedcircle,R.drawable.checkedcircle};
     public String[] record = {"N","Y","N"};
     DBHelper db;
     Calendar calendar = Calendar.getInstance();
@@ -38,14 +41,13 @@ public class MyAdapterSubHabit extends RecyclerView.Adapter<MyAdapterSubHabit.Vi
     @Override
     public void onBindViewHolder(@NonNull MyAdapterSubHabit.ViewHolder holder, int position) {
         holder.name.setText(String.valueOf(name.get(position)));
-
+        Glide.with(holder.itemView.getContext()).load(R.drawable.circle).into(holder.checkbox);
         holder.checkbox.setOnClickListener(new View.OnClickListener() {
             int currentDrawableIndex = 0;
             @Override
             public void onClick(View view) {
                 currentDrawableIndex = (currentDrawableIndex+1 ) % drawables.length;
                 holder.checkbox.setImageDrawable(context.getDrawable(drawables[currentDrawableIndex]));
-                Log.d("subhAdapter", "id " + habitid);
             }
         });
     }
