@@ -5,10 +5,16 @@ import static java.sql.Types.NULL;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -26,7 +32,7 @@ import java.util.TimeZone;
 
 
 public class CreateYNhabit extends AppCompatActivity {
-    ImageView  color;
+     ImageView  color;
     EditText habitname,habitque;
     TextView reminderbutton,frequencybutton,savehabit,yes_backtext;
     DBHelper db;
@@ -34,8 +40,12 @@ public class CreateYNhabit extends AppCompatActivity {
     boolean[] selectedDays;
     String hname,hque;
     ArrayList<Integer> daysList = new ArrayList<>();
+      AlarmManager alaramManager;
+      PendingIntent pendingIntent;
+      Calendar calendar;
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
     DialogfragmentColorYN dialogFragment = new DialogfragmentColorYN();
+
     public void selectclr(ImageView ac) {
         if(ac==dialogFragment.cl1){
             color.setImageResource(R.drawable.cl1);
@@ -91,6 +101,7 @@ public class CreateYNhabit extends AppCompatActivity {
         frequencybutton = (TextView) findViewById(R.id.yes_frequency_textview);
         color=(ImageView) findViewById(R.id.yes_color_button);
         selectedDays = new boolean[daysArray.length];
+        calendar=Calendar.getInstance();
         Intent intent = getIntent();
         db = new DBHelper(this);
         yes_backtext.setOnClickListener(new View.OnClickListener() {
@@ -191,7 +202,7 @@ public class CreateYNhabit extends AppCompatActivity {
                             // clear language list
                             daysList.clear();
                             // clear text view value
-                            reminderbutton.setText("");
+                            frequencybutton.setText("");
                         }
                     }
                 });
@@ -202,11 +213,16 @@ public class CreateYNhabit extends AppCompatActivity {
         savehabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 if (TextUtils.isEmpty(habitname.getText())) {
                     Toast.makeText(CreateYNhabit.this, "Enter a name", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(frequencybutton.getText())) {
                     Toast.makeText(CreateYNhabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+
+                 else {
+                     setAlaram();
                     colorvalue = dialogFragment.colorval;
                     final int habittype = 0;
                     String frequency = frequencybutton.getText().toString();
@@ -231,14 +247,23 @@ public class CreateYNhabit extends AppCompatActivity {
         });
 
     }
-    public void onBackPressed(){
-        AlertDialog.Builder alertDialog =new AlertDialog.Builder(CreateYNhabit.this);
+//Method used to set the alaram after the habit is created
+    private void setAlaram() {
+        alaramManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent=new Intent(this,AlaramReciever.class);
+        pendingIntent=PendingIntent.getBroadcast(this,0,intent,0);
+        alaramManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+        Toast.makeText(this, "Alarm Success", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onBackPressed() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(CreateYNhabit.this);
         alertDialog.setTitle("Discard");
         alertDialog.setMessage("Discard the new habit ?");
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent=new Intent(getApplicationContext(),HomeActivity1.class);
+                Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
                 startActivity(intent);
                 finish();
             }
@@ -250,5 +275,23 @@ public class CreateYNhabit extends AppCompatActivity {
             }
         });
         alertDialog.show();
+
+
+    }
+    private void createNotificationChannel() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "foxandroidReminderChannel";
+            String description = "Channel For Alarm Manager";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("foxandroid",name,importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+        }
+
+
     }
 }

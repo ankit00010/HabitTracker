@@ -5,7 +5,9 @@ plugins {
 android {
     namespace 'com.example.fukc'
     compileSdk 33
-
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "com.example.fukc"
         minSdk 21
@@ -14,6 +16,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {

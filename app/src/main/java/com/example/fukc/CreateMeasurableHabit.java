@@ -132,7 +132,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
             public void onClick(View view) {
                 // Initialize alert dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(CreateMeasurableHabit.this);
-                builder.setTitle("Select Days of the weeek");
+                builder.setTitle("Select Days of the week");
                 builder.setCancelable(false);
 
                 builder.setMultiChoiceItems(daysArray, selectedDays, new DialogInterface.OnMultiChoiceClickListener() {
@@ -151,7 +151,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                         }
                     }
                 });
-                //code for frequency
+
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -173,7 +173,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                         frequency_edittext.setText(stringBuilder.toString());
                     }
                 });
-                ///code for frequency
+
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -198,7 +198,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                 // show dialog
                 builder.show();
             }
-        });//end of frequency
+        });
 
         savehabit.setOnClickListener(new View.OnClickListener() {
             @Override
