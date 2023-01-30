@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -95,9 +96,12 @@ public class CreateYNhabit extends AppCompatActivity {
         setContentView(R.layout.activity_create_ynhabit);
         habitname = (EditText) findViewById(R.id.yes_name_edit_text);
         habitque = findViewById(R.id.yes_question_edit_text);
+
         savehabit= (TextView) findViewById(R.id.yes_create_text);
         yes_backtext =findViewById(R.id.yes_back_text);
         reminderbutton = (TextView) findViewById(R.id.yes_reminder_textview);
+        String reminder = reminderbutton.getText().toString().trim();
+
         frequencybutton = (TextView) findViewById(R.id.yes_frequency_textview);
         color=(ImageView) findViewById(R.id.yes_color_button);
         selectedDays = new boolean[daysArray.length];
@@ -113,6 +117,7 @@ public class CreateYNhabit extends AppCompatActivity {
 
             }
         });
+        Log.d("reminder",reminderbutton.getText().toString());
         reminderbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -221,18 +226,45 @@ public class CreateYNhabit extends AppCompatActivity {
                     Toast.makeText(CreateYNhabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
                 }
 
+              else  if (reminder.isEmpty() )
+                {
+                    Log.d("reminderenter","remindercancel");
+                    String question = habitque.getText().toString().trim();
+
+                    if (question.isEmpty())
+                    {
+                        Log.d("question","questionhandler");
+
+                        Toast.makeText(CreateYNhabit.this, "Please fill in the question field ", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Log.d("save","Created Successfully");
+                        colorvalue = dialogFragment.colorval;
+                        final int habittype = 0;
+                        String frequency = frequencybutton.getText().toString();
+                        String reminder = reminderbutton.getText().toString();
+                        hname = habitname.getText().toString();
+                        hque = habitque.getText().toString();
+                        db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL);
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
                  else {
-                     setAlaram();
+
+                    setAlaram();
                     colorvalue = dialogFragment.colorval;
-                    final int habittype = 0;
-                    String frequency = frequencybutton.getText().toString();
-                    String reminder = reminderbutton.getText().toString();
-                    hname = habitname.getText().toString();
-                    hque = habitque.getText().toString();
-                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL);
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
-                    startActivity(intent);
-                    finish();
+                        final int habittype = 0;
+                        String frequency = frequencybutton.getText().toString();
+                        String reminder = reminderbutton.getText().toString();
+                        hname = habitname.getText().toString();
+                        hque = habitque.getText().toString();
+                        db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL);
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
+                        startActivity(intent);
+                        finish();
+
                 }
             }
         });
@@ -249,11 +281,11 @@ public class CreateYNhabit extends AppCompatActivity {
     }
 //Method used to set the alaram after the habit is created
     private void setAlaram() {
+        Toast.makeText(this, "naah bro ", Toast.LENGTH_SHORT).show();
         alaramManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent=new Intent(this,AlaramReciever.class);
         pendingIntent=PendingIntent.getBroadcast(this,0,intent,0);
         alaramManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
-        Toast.makeText(this, "Alarm Success", Toast.LENGTH_SHORT).show();
     }
 
     public void onBackPressed() {
