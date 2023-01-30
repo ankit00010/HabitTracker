@@ -58,7 +58,7 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.name.setText(String.valueOf(name.get(position)));
-        Glide.with(holder.itemView.getContext()).load(R.drawable.stats_icon).into(holder.stats);
+        Glide.with(holder.itemView.getContext()).load(R.drawable.stats).into(holder.stats);
         String hname = String.valueOf(name.get(position));
         String frequncy =db.getHabitFrequency(hname);
         String colorcode=db.getHabitColor(hname);

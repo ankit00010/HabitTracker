@@ -217,6 +217,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                 }
                 //save the data
                 else {
+
                     colorvalue = dialogFragment.colorval;
                     final int habittype = 1;
                     String frequency = frequency_edittext.getText().toString();

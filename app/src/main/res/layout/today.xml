@@ -9,16 +9,16 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+
+    >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewhabit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"/>
 
-        </androidx.recyclerview.widget.RecyclerView>
+
 
         <ImageView
             android:id="@+id/plussign"

@@ -16,11 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class Habits extends Fragment {
-View view;
-RecyclerView recyclerView;
-ArrayList<String> habitname;
-MyAdapterAllHabit adapter;
-DBHelper db;
+    View view;
+    RecyclerView recyclerView;
+    ArrayList<String> habitname;
+    MyAdapterAllHabit adapter;
+    DBHelper db;
     public Habits() {
         // Required empty public constructor
     }
@@ -40,7 +40,7 @@ DBHelper db;
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL));
+        adapter.notifyDataSetChanged();
         return view;
     }
 }
-

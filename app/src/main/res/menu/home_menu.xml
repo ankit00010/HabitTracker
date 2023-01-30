@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_baseline_logout_24"
         app:showAsAction="ifRoom"
         android:title="Logout"/>
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="ifRoom"
+        android:title="Logout"/>
 </menu>

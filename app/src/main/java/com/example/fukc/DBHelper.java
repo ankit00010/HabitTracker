@@ -166,6 +166,36 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return freq;
     }
+    ///get habit question from habits table
+    public String getHabitque(String hname) {
+        String query = "SELECT frequency FROM habits WHERE habitname = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        String que="";
+        if(db != null) {
+            cursor = db.rawQuery(query, new String[]{hname});
+            if (cursor.moveToFirst()) {
+                que = cursor.getString(0);
+            }
+        }
+
+        return que;
+    }
+    //get habitname from habits table
+    public String getHabitName(String hname) {
+        String query = "SELECT habitname FROM habits WHERE habitname = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        String name="";
+        if(db != null) {
+            cursor = db.rawQuery(query, new String[]{hname});
+            if (cursor.moveToFirst()) {
+                name = cursor.getString(0);
+            }
+        }
+
+        return name;
+    }
     //get color from habits Table
     public String getHabitColor(String hname) {
         String query = "SELECT color FROM habits WHERE habitname = ?";
