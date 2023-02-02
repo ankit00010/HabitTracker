@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="HardcodedText,contentDescription"
+    tools:ignore="HardcodedText"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/blackone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:context=".activityAndFragmentClasses.HabitOptions">
 
 
@@ -26,54 +32,57 @@
             android:textColor="@color/teal_700"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/name_text_input"
+            app:layout_constraintBottom_toTopOf="@+id/yes_input_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/BottomBox"
-            android:layout_width="390dp"
-            android:layout_height="53dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="92dp"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="168dp"
             android:background="#040007"
-            android:contentDescription="@string/_2"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/question_input1"
+            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/toponefrag" />
 
         <TextView
-            android:id="@+id/back_text"
+            android:id="@+id/yes_back_text"
             android:layout_width="94dp"
             android:layout_height="50dp"
-            android:layout_marginBottom="3dp"
             android:background="#0B0606"
             android:gravity="center"
             android:text="BACK"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.012"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/BottomBox"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/create_text"
+            android:id="@+id/yes_create_text"
             android:layout_width="94dp"
             android:layout_height="50dp"
-            android:layout_marginStart="300dp"
-            android:layout_marginBottom="3dp"
             android:background="#0B0606"
             android:gravity="center"
             android:text="CREATE"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/BottomBox"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/BottomBox"
+            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/name_text_input"
+            android:id="@+id/yes_input_text"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="287dp"
             android:layout_height="50dp"
@@ -81,13 +90,11 @@
             android:layout_marginTop="104dp"
             app:boxBackgroundColor="@color/black"
             app:boxStrokeColor="@color/teal_700"
-            app:layout_constraintEnd_toStartOf="@+id/Colorbox"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/name_edittext"
+                android:id="@+id/yes_name_edit_text"
                 android:layout_width="287dp"
                 android:layout_height="50dp"
                 android:layout_gravity="start"
@@ -96,32 +103,8 @@
                 android:inputType="textPersonName"
                 android:textColor="@color/white"
                 android:textColorHint="#009688"
-                app:layout_constraintStart_toStartOf="@id/name_text_input"
-                app:layout_constraintTop_toTopOf="@id/name_text_input" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/name_text_input1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="287dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="68dp"
-            app:boxBackgroundColor="@color/black"
-            app:boxStrokeColor="@color/teal_700"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/egmoring_text">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/checklist_edittext"
-                android:layout_width="287dp"
-                android:layout_height="50dp"
-                android:layout_gravity="start"
-                android:ems="10"
-                android:hint="Item name"
-                android:inputType="textPersonName"
-                android:textColor="@color/white"
-                android:textColorHint="#009688" />
+                app:layout_constraintStart_toStartOf="@id/yes_input_text"
+                app:layout_constraintTop_toTopOf="@id/yes_input_text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -136,7 +119,7 @@
             app:layout_constraintTop_toBottomOf="@+id/qustionr_text">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/question_edittext"
+                android:id="@+id/yes_question_edit_text"
                 android:layout_width="330dp"
                 android:layout_height="50dp"
                 android:layout_gravity="start"
@@ -150,10 +133,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/frequency_textview"
+            android:id="@+id/yes_frequency_textview"
             android:layout_width="330dp"
             android:layout_height="50dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginTop="68dp"
             android:background="@color/black"
             android:ems="10"
             android:gravity="center_vertical"
@@ -161,11 +144,13 @@
             android:inputType="textPersonName"
             android:textColor="@color/white"
             android:textColorHint="#7E7E7E"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.246"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frequency_text" />
+            app:layout_constraintTop_toBottomOf="@+id/egmoring_text" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/reminder_textview"
+            android:id="@+id/yes_reminder_textview"
             android:layout_width="330dp"
             android:layout_height="50dp"
             android:layout_marginStart="20dp"
@@ -181,50 +166,31 @@
 
 
         <ImageView
-            android:id="@+id/Colorbox"
-            android:layout_width="63dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="322dp"
-            android:layout_marginTop="105dp"
+            android:id="@+id/yes_color_button"
+            android:layout_width="58dp"
+            android:layout_height="53dp"
+            android:layout_marginEnd="24dp"
             android:contentDescription="abc"
-            android:foregroundGravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/colorbox" />
-
-        <ImageView
-            android:id="@+id/color_icon"
-            android:layout_width="63dp"
-            android:layout_height="55dp"
-            android:layout_marginEnd="13dp"
-            android:contentDescription="abc"
+            app:layout_constraintBottom_toBottomOf="@+id/yes_input_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/Colorbox"
-            app:layout_constraintTop_toTopOf="@+id/Colorbox"
+            app:layout_constraintHorizontal_bias="0.409"
+            app:layout_constraintStart_toEndOf="@+id/yes_input_text"
+            app:layout_constraintTop_toBottomOf="@+id/CreateHabitText"
+            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/choose_color_icon" />
-
-        <TextView
-            android:id="@+id/checklist_text"
-            android:layout_width="71dp"
-            android:layout_height="23dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="44dp"
-            android:text="Checklist"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/egmoring_text" />
 
         <TextView
             android:id="@+id/frequency_text"
             android:layout_width="71dp"
             android:layout_height="23dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
             android:text="Frequency"
             android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/yes_frequency_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.047"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/additem_text" />
+            app:layout_constraintTop_toBottomOf="@+id/egmoring_text"
+            app:layout_constraintVertical_bias="0.362" />
 
         <TextView
             android:id="@+id/reminder_text"
@@ -235,7 +201,7 @@
             android:text="Reminder (Optional)"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frequency_textview" />
+            app:layout_constraintTop_toBottomOf="@+id/yes_frequency_textview" />
 
         <TextView
             android:id="@+id/qustionr_text"
@@ -246,7 +212,7 @@
             android:text="Question (Optional)"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reminder_textview" />
+            app:layout_constraintTop_toBottomOf="@+id/yes_reminder_textview" />
 
         <TextView
             android:id="@+id/egmoring_text"
@@ -257,45 +223,7 @@
             android:text="eg. Morning routine"
             android:textColor="#959595"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name_text_input" />
-
-        <TextView
-            android:id="@+id/additem_text"
-            android:layout_width="83dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="124dp"
-            android:layout_marginTop="8dp"
-            android:text="ADD ITEM"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name_text_input1">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/recyclerview"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/imageView14"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="252dp"
-            app:layout_constraintStart_toEndOf="@+id/name_text_input1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/delete_icon" />
+            app:layout_constraintTop_toBottomOf="@+id/yes_input_text" />
 
         <ImageView
             android:id="@+id/dropicon_feq"
@@ -303,9 +231,10 @@
             android:layout_height="41dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="4dp"
-            app:layout_constraintEnd_toEndOf="@+id/frequency_textview"
-            app:layout_constraintTop_toTopOf="@+id/frequency_textview"
-            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+            app:layout_constraintEnd_toEndOf="@+id/yes_frequency_textview"
+            app:layout_constraintTop_toTopOf="@+id/yes_frequency_textview"
+            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/dropicon_rem"
@@ -313,9 +242,10 @@
             android:layout_height="41dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="4dp"
-            app:layout_constraintEnd_toEndOf="@+id/reminder_textview"
-            app:layout_constraintTop_toTopOf="@+id/reminder_textview"
-            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+            app:layout_constraintEnd_toEndOf="@+id/yes_reminder_textview"
+            app:layout_constraintTop_toTopOf="@+id/yes_reminder_textview"
+            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

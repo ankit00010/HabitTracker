@@ -15,70 +15,70 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".Statistics"
+            android:name=".activityAndFragmentClasses.Statistics"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CreateChecklistHabits"
+            android:name=".activityAndFragmentClasses.CreateChecklistHabits"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".HabitOptions"
+            android:name=".activityAndFragmentClasses.HabitOptions"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Forget_pass"
+            android:name=".activityAndFragmentClasses.Forget_pass"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Forget_pass2"
+            android:name=".activityAndFragmentClasses.Forget_pass_2"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Reset_pass"
+            android:name=".activityAndFragmentClasses.Reset_pass"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CreateMeasurableHabit"
+            android:name=".activityAndFragmentClasses.CreateMeasurableHabit"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CreateYNhabit"
+            android:name=".activityAndFragmentClasses.CreateYNhabit"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Register_user"
+            android:name=".activityAndFragmentClasses.Register_user"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".HomeActivity1"
+            android:name=".activityAndFragmentClasses.HomeScreen"
             android:exported="false">
 
             <meta-data
@@ -86,7 +86,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activityAndFragmentClasses.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -98,7 +98,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <receiver android:name=".AlaramReciever"/>
+        <receiver android:name=".otherClasses.AlaramReciever"/>
     </application>
 
 </manifest>
