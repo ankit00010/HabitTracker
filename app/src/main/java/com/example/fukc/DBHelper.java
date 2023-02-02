@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +15,7 @@ import java.util.Date;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String DBNAME="habittracker.db";
+
     public DBHelper( Context context) {
         super(context, "habit_tracker.db", null,1);
     }
@@ -25,7 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("create table users(userid INTEGER PRIMARY KEY AUTOINCREMENT,username TEXT,email TEXT,password TEXT,securityque TEXT,securityans TEXT)");
         db.execSQL("create table subhabits(shabitid INTEGER PRIMARY KEY AUTOINCREMENT,shabitlist TEXT,habitid INTEGER,FOREIGN KEY (habitid) REFERENCES habits(habitid))");
         db.execSQL("create table habits(habitid INTEGER PRIMARY KEY AUTOINCREMENT,habitname TEXT,color TEXT,question TEXT NOT NULL DEFAULT 'unknown',frequency TEXT,remainder TEXT NOT NULL DEFAULT 'unknown',habittype INTEGER,target INTEGER NOT NULL DEFAULT 'unknown')");
-        db.execSQL("create table record(recordid INTEGER PRIMARY KEY AUTOINCREMENT,habitid INTEGER,record TEXT,date TEXT,target INTEGER,FOREIGN KEY (habitid) REFERENCES habits(habitid))");
+        db.execSQL("create table records(recordid INTEGER PRIMARY KEY AUTOINCREMENT,habitid INTEGER,record TEXT,date TEXT,target INTEGER,subrecord TEXT,FOREIGN KEY (habitid) REFERENCES habits(habitid))");
     }
 
     @Override
@@ -33,8 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS users");
         db.execSQL("DROP TABLE IF EXISTS  habits");
         db.execSQL("DROP TABLE IF EXISTS  subhabits");
-        db.execSQL("DROP TABLE IF EXISTS  record");
-        db.close();
+        db.execSQL("DROP TABLE IF EXISTS  records");
         onCreate(db);
     }
 
@@ -47,6 +47,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("email", email);
         contentValues.put("securityque", securityque);
         contentValues.put("securityans", securityans);
+        MyDB.close();
         long result = MyDB.insert("users", null, contentValues);
         if(result==-1) return false;
         else
@@ -64,10 +65,157 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("remainder", remainder);
         contentValues.put("habittype", habittype);
         contentValues.put("target", target);
+        MyDB.close();
         long result = MyDB.insert("habits", null, contentValues);
         if(result==-1) return false;
         else
             return true;
+    }
+    //Insert data in record
+    public Boolean insertDataRecord(Integer habitid, String record, String date,Integer target,String subrecord){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues= new ContentValues();
+        contentValues.put("habitid", habitid);
+        contentValues.put("record", record);
+        contentValues.put("date", date);
+        contentValues.put("target", target);
+        contentValues.put("subrecord", subrecord);
+        long result = MyDB.insert("records", null, contentValues);
+        MyDB.close();
+        if(result==-1) return false;
+        else
+            return true;
+    }
+
+    //Insert data in subhabits
+    public Boolean insertDataSubhabits(String shabitname,Integer habitid){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues= new ContentValues();
+        contentValues.put("shabitlist", shabitname);
+        contentValues.put("habitid", habitid);
+        long result = MyDB.insert("subhabits", null, contentValues);
+        MyDB.close();
+        if(result==-1) return false;
+        else
+            return true;
+    }
+
+    //Get Record
+    public String getRecord(String hname) {
+        int id = getHabitId(hname);
+        String query = "SELECT record FROM records WHERE habitid = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        String record="";
+        if(db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+            if (cursor.moveToFirst()) {
+                record = cursor.getString(0);
+            }
+        }
+        return record;
+    }
+    //Get Record
+    public String getSubRecord(String hname) {
+        int id = getHabitId(hname);
+        String query = "SELECT subrecord FROM records WHERE habitid = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        String record="";
+        if(db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+            if (cursor.moveToFirst()) {
+                record = cursor.getString(0);
+            }
+        }
+        return record;
+    }
+    //Current Streak
+    public int getCurrentStreak(String habitName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id =getHabitId(habitName);
+        String query ="SELECT record FROM records WHERE habitid = "+ id +" ORDER BY recordid DESC";
+        Cursor cursor = db.rawQuery(query, null);
+        int count = 0;
+        if(cursor.moveToFirst()){
+            do {
+                if (cursor.getString(0).equals("Y")) {
+                    count++;
+                } else {
+                    break;
+                }
+            } while (cursor.moveToNext());
+
+        }
+        return count;
+    }
+    //Best Streak
+    public int getBestStreak(String habitName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id =getHabitId(habitName);
+        String query ="SELECT record FROM records WHERE habitid = "+ id +" ORDER BY recordid DESC";
+        Cursor cursor = db.rawQuery(query, null);
+        int counts = 0;
+        int maxCount = 0;
+        if(cursor.moveToFirst()){
+            do {
+                if (cursor.getString(0).equals("Y")) {
+                    counts++;
+                    if (counts > maxCount) {
+                        maxCount = counts;
+                    }
+                } else {
+                    counts = 0;
+                }
+            }while (cursor.moveToNext());
+        }
+        return maxCount;
+    }
+    // returns success count for a month
+    public int getMonthsCount(String habitName,String month){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id =getHabitId(habitName);
+        String query ="SELECT COUNT(*) FROM records WHERE record LIKE '%Y%' AND date LIKE '%-"+month+"-%' AND habitid = "+ id +"";
+        Cursor cursor = db.rawQuery(query, null);
+        int count = 0;
+        if(cursor.moveToFirst()){
+            count = cursor.getInt(0);
+        }
+        return count;
+    }
+    //for pieChart
+    public int getDoneCount(String habitName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id =getHabitId(habitName);
+        String query ="SELECT COUNT(*) FROM records WHERE record LIKE '%Y%' AND habitid = "+ id +"";
+        Cursor cursor = db.rawQuery(query, null);
+        int count = 0;
+        if(cursor.moveToFirst()){
+            count = cursor.getInt(0);
+        }
+        return count;
+    }
+    public int getSkipCount(String habitName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id =getHabitId(habitName);
+        String query ="SELECT COUNT(*) FROM records WHERE record LIKE '%S%' AND habitid = "+ id +"";
+        Cursor cursor = db.rawQuery(query, null);
+        int count = 0;
+        if(cursor.moveToFirst()){
+            count = cursor.getInt(0);
+        }
+        return count;
+    }
+    public int getFailCount(String habitName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id =getHabitId(habitName);
+        String query ="SELECT COUNT(*) FROM records WHERE record LIKE '%N%' AND habitid = "+ id +"";
+        Cursor cursor = db.rawQuery(query, null);
+        int count = 0;
+        if(cursor.moveToFirst()){
+            count = cursor.getInt(0);
+        }
+        return count;
     }
     //Delete a habit
     public void deleteHabit(String habitName){
@@ -81,45 +229,30 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete("record", whereClause1, whereArgs1);
         db.delete("subhabits", whereClause1, whereArgs1);
     }
-    //Insert data in subhabits
-    public Boolean insertDataSubhabits(String shabitname,Integer habitid){
-        SQLiteDatabase MyDB = this.getWritableDatabase();
-        ContentValues contentValues= new ContentValues();
-        contentValues.put("shabitlist", shabitname);
-        contentValues.put("habitid", habitid);
-        long result = MyDB.insert("subhabits", null, contentValues);
-        if(result==-1) return false;
-        else
-            return true;
-    }
-    //Insert data in record
-    public Boolean insertDataRecord(Integer habitid, String record, String date,Integer target){
-        SQLiteDatabase MyDB = this.getWritableDatabase();
-        ContentValues contentValues= new ContentValues();
-        contentValues.put("habitid", habitid);
-        contentValues.put("record", record);
-        contentValues.put("date", date);
-        contentValues.put("target", target);
-        long result = MyDB.insert("record", null, contentValues);
-        if(result==-1) return false;
-        else
-            return true;
-    }
+
 
     //Update record for YN habits
     public void updateYNrecord(int habitid,String record,String date){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("record", record);
-        db.update("record", values, "habitid = ? AND date = ?", new String[]{String.valueOf(habitid),date});
+        db.update("records", values, "habitid = ? AND date = ?", new String[]{String.valueOf(habitid),date});
     }
+    //Update record for Sub habits
+    public void updateSubRecord(int habitid,String subrecord,String date){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("subrecord", subrecord);
+        db.update("records", values, "habitid = ? AND date = ?", new String[]{String.valueOf(habitid),date});
+    }
+
     //Update record for Measurable habits
     public void updateMeasurableRecord(int habitid,String record,String date,int target){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("record", record);
         values.put("target", target);
-        db.update("record", values, "habitid = ? AND date = ?", new String[]{String.valueOf(habitid),date});
+        db.update("records", values, "habitid = ? AND date = ?", new String[]{String.valueOf(habitid),date});
     }
     //get id from habits Table
    public int getHabitId(String hname) {
@@ -133,7 +266,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 id = cursor.getInt(0);
             }
         }
-
         return id;
     }
     //get type from habits Table
@@ -148,7 +280,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 type = cursor.getInt(0);
             }
         }
-
         return type;
     }
     //get frequency from habits Table
@@ -163,12 +294,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 freq = cursor.getString(0);
             }
         }
-
         return freq;
     }
     ///get habit question from habits table
     public String getHabitque(String hname) {
-        String query = "SELECT frequency FROM habits WHERE habitname = ?";
+        String query = "SELECT question FROM habits WHERE habitname = ?";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         String que="";
@@ -178,7 +308,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 que = cursor.getString(0);
             }
         }
-
         return que;
     }
     //get habitname from habits table
@@ -193,7 +322,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 name = cursor.getString(0);
             }
         }
-
         return name;
     }
     //get color from habits Table
@@ -208,21 +336,34 @@ public class DBHelper extends SQLiteOpenHelper {
                 freq = cursor.getString(0);
             }
         }
-
         return freq;
     }
     //check if record is available
     public boolean isRecordPresent(int habitId, String date){
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT COUNT(*) FROM record WHERE habitid = ? AND date = ?";
+        String query = "SELECT COUNT(*) FROM records WHERE habitid = ? AND date = ?";
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(habitId),date});
         cursor.moveToFirst();
         int count = cursor.getInt(0);
-        cursor.close();
         if (count > 0) {
             return true;
         } else {
             return false;
+        }
+
+
+    }
+    //check if Subrecord is available
+    public boolean isSubRecordPresent(int habitId, String date){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT subrecord FROM records WHERE habitid = ? AND date = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(habitId),date});
+        cursor.moveToFirst();
+        String str = cursor.getString(0);
+        if (str.equals("")) {
+            return false;
+        } else {
+            return true;
         }
 
     }
@@ -235,7 +376,6 @@ public class DBHelper extends SQLiteOpenHelper {
         if(db != null){
             cursor = db.rawQuery(query, new String[]{day});
         }
-
         return cursor;
     }
     public Cursor getalldataHabit()
@@ -261,7 +401,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 shlist = cursor.getString(0);
             }
         }
-
         return shlist;
     }
     //get habit type from habits table
@@ -304,6 +443,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String[] whereArgs = new String[]{email};
         SQLiteDatabase db = getWritableDatabase();
         db.update(table, values, whereClause, whereArgs);
+
     }
     //Check username Function
     public Boolean checkusername(String username) {
@@ -347,7 +487,6 @@ public class DBHelper extends SQLiteOpenHelper {
         String query = "Select securityque from users where email = ?";
         String[] selectionArgs = { email };
         Cursor cursor = db.rawQuery(query, selectionArgs);
-
         String text = null;
         if (cursor.moveToFirst()) {
             text = cursor.getString(cursor.getColumnIndexOrThrow("securityque"));

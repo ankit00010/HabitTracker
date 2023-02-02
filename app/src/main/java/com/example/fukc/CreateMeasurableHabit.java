@@ -6,17 +6,13 @@ import androidx.fragment.app.FragmentManager;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -92,175 +88,139 @@ public class CreateMeasurableHabit extends AppCompatActivity {
         savehabit= findViewById(R.id.measurable_create_text);
         target= findViewById(R.id.measurable_target_text1);
         color=findViewById(R.id.measurable_color_button);
-        Intent intent = getIntent();
         db = new DBHelper(this);
-        reminderbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar calendar= Calendar.getInstance();
-                int hours=calendar.get(Calendar.HOUR_OF_DAY);
-                int mins=calendar.get(Calendar.MINUTE);
-                TimePickerDialog timePickerDialog=new TimePickerDialog(CreateMeasurableHabit.this, com.google.android.material.R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                        Calendar c=Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-                        c.setTimeZone(TimeZone.getDefault());
-                        SimpleDateFormat format=new SimpleDateFormat("k:mm a");
-                        String time=format.format(c.getTime());
-                        reminderbox.setText(time);
+        reminderbox.setOnClickListener(view -> {
+            Calendar calendar= Calendar.getInstance();
+            int hours=calendar.get(Calendar.HOUR_OF_DAY);
+            int mins=calendar.get(Calendar.MINUTE);
+            TimePickerDialog timePickerDialog=new TimePickerDialog(CreateMeasurableHabit.this, com.google.android.material.R.style.Theme_AppCompat_Dialog, (timePicker, hourOfDay, minute) -> {
+                Calendar c=Calendar.getInstance();
+                c.set(Calendar.HOUR_OF_DAY,hourOfDay);
+                c.set(Calendar.MINUTE,minute);
+                c.setTimeZone(TimeZone.getDefault());
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat format=new SimpleDateFormat("k:mm a");
+                String time=format.format(c.getTime());
+                reminderbox.setText(time);
 
 
-                    }
-                },hours,mins,false);
-                timePickerDialog.show();
+            },hours,mins,false);
+            timePickerDialog.show();
 
-            }
         });
         //backtext to navigate to habit options back
-        backtext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),HabitOptions.class);
-                startActivity(intent);
-            }
+        backtext.setOnClickListener(view -> {
+            Intent intent=new Intent(getApplicationContext(),HabitOptions.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         });
         //code for frequency
-        frequency_edittext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Initialize alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreateMeasurableHabit.this);
-                builder.setTitle("Select Days of the week");
-                builder.setCancelable(false);
+        frequency_edittext.setOnClickListener(view -> {
+            // Initialize alert dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(CreateMeasurableHabit.this);
+            builder.setTitle("Select Days of the week");
+            builder.setCancelable(false);
 
-                builder.setMultiChoiceItems(daysArray, selectedDays, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                        // check condition
-                        if (b) {
-                            // when checkbox selected
-                            // Add position in lang list
-                            daysList.add(i);
-                            Collections.sort(daysList);
-                        } else {
-                            // when checkbox unselected
-                            // Remove position from langList
-                            daysList.remove(Integer.valueOf(i));
-                        }
-                    }
-                });
+            builder.setMultiChoiceItems(daysArray, selectedDays, (dialogInterface, i, b) -> {
+                // check condition
+                if (b) {
+                    // when checkbox selected
+                    // Add position in lang list
+                    daysList.add(i);
+                    Collections.sort(daysList);
+                } else {
+                    // when checkbox unselected
+                    // Remove position from langList
+                    daysList.remove(Integer.valueOf(i));
+                }
+            });
 
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Initialize string builder
-                        StringBuilder stringBuilder = new StringBuilder();
+            builder.setPositiveButton("OK", (dialogInterface, i) -> {
+                // Initialize string builder
+                StringBuilder stringBuilder = new StringBuilder();
 
-                        for (int j = 0; j < daysList.size(); j++) {
-                            // concat array value
-                            stringBuilder.append(daysArray[daysList.get(j)]);
-                            // check condition
-                            if (j != daysList.size() - 1) {
-                                // When j value not equal
-                                // to lang list size - 1
-                                // add comma
-                                stringBuilder.append(", ");
-                            }
-                        }
-                        // set text on textView
-                        frequency_edittext.setText(stringBuilder.toString());
+                for (int j = 0; j < daysList.size(); j++) {
+                    // concat array value
+                    stringBuilder.append(daysArray[daysList.get(j)]);
+                    // check condition
+                    if (j != daysList.size() - 1) {
+                        // When j value not equal
+                        // to lang list size - 1
+                        // add comma
+                        stringBuilder.append(", ");
                     }
-                });
+                }
+                // set text on textView
+                frequency_edittext.setText(stringBuilder.toString());
+            });
 
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // dismiss dialog
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // use for loop
-                        for (int j = 0; j < selectedDays.length; j++) {
-                            // remove all selection
-                            selectedDays[j] = false;
-                            // clear language list
-                            daysList.clear();
-                            // clear text view value
-                            frequency_edittext.setText("");
-                        }
-                    }
-                });
-                // show dialog
-                builder.show();
-            }
+            builder.setNegativeButton("Cancel", (dialogInterface, i) -> {
+                // dismiss dialog
+                dialogInterface.dismiss();
+            });
+            builder.setNeutralButton("Clear All", (dialogInterface, i) -> {
+                // use for loop
+                for (int j = 0; j < selectedDays.length; j++) {
+                    // remove all selection
+                    selectedDays[j] = false;
+                    // clear language list
+                    daysList.clear();
+                    // clear text view value
+                    frequency_edittext.setText("");
+                }
+            });
+            // show dialog
+            builder.show();
         });
 
-        savehabit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(TextUtils.isEmpty(habitname.getText()))//validation for  habitname field is empty
-                {
-                    Toast.makeText(CreateMeasurableHabit.this, "Enter a name", Toast.LENGTH_SHORT).show();
-                }
-                else if(TextUtils.isEmpty(target.getText()))//validation for  Target field is empty
-                {
-                    Toast.makeText(CreateMeasurableHabit.this, "Enter a target greater than zero", Toast.LENGTH_SHORT).show();
-                }
-                else if(TextUtils.isEmpty(frequency_edittext.getText()))//validation for  Frequency field is empty
-                {
-                    Toast.makeText(CreateMeasurableHabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
-                }
-                //save the data
-                else {
+        savehabit.setOnClickListener(view -> {
+            if(TextUtils.isEmpty(habitname.getText()))//validation for  habitname field is empty
+            {
+                Toast.makeText(CreateMeasurableHabit.this, "Enter a name", Toast.LENGTH_SHORT).show();
+            }
+            else if(TextUtils.isEmpty(target.getText()))//validation for  Target field is empty
+            {
+                Toast.makeText(CreateMeasurableHabit.this, "Enter a target greater than zero", Toast.LENGTH_SHORT).show();
+            }
+            else if(TextUtils.isEmpty(frequency_edittext.getText()))//validation for  Frequency field is empty
+            {
+                Toast.makeText(CreateMeasurableHabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
+            }
+            //save the data
+            else {
 
-                    colorvalue = dialogFragment.colorval;
-                    final int habittype = 1;
-                    String frequency = frequency_edittext.getText().toString();
-                    String reminder = reminderbox.getText().toString();
-                    int targetval = Integer.valueOf(target.getText().toString());
-                    hname = habitname.getText().toString();
-                    hque = habitque.getText().toString();
-                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, targetval);
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
-                    startActivity(intent);
-                    finish();
-                }
+                colorvalue = dialogFragment.colorval;
+                final int habittype = 1;
+                String frequency = frequency_edittext.getText().toString();
+                String reminder = reminderbox.getText().toString();
+                int targetval = Integer.parseInt(target.getText().toString());
+                hname = habitname.getText().toString();
+                hque = habitque.getText().toString();
+                db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, targetval);
+                Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
             }
         });
-        color.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                dialogFragment.show(fragmentManager, "dialog");
+        color.setOnClickListener(view -> {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            dialogFragment.show(fragmentManager, "dialog");
 
-            }
         });
 
-
+        db.close();
     }
     public void onBackPressed(){
         AlertDialog.Builder alertDialog =new AlertDialog.Builder(CreateMeasurableHabit.this);
         alertDialog.setTitle("Discard");
         alertDialog.setMessage("Discard the new habit ?");
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent=new Intent(getApplicationContext(),HomeActivity1.class);
-                startActivity(intent);
-                finish();
-            }
+        alertDialog.setPositiveButton("Yes", (dialog, which) -> {
+            Intent intent=new Intent(getApplicationContext(),HomeActivity1.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         });
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        alertDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         alertDialog.show();
     }
 

@@ -2,43 +2,29 @@ package com.example.fukc;
 
 import static java.sql.Types.NULL;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
-import android.content.res.Resources;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
-
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ContextThemeWrapper;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.textfield.TextInputLayout;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimeZone;
 
 public class CreateChecklistHabits extends AppCompatActivity {
@@ -115,160 +101,130 @@ public class CreateChecklistHabits extends AppCompatActivity {
         subhabitlist = findViewById(R.id.linearLayout);
         color=findViewById(R.id.color_icon);
         db = new DBHelper(this);
-        backarrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), HabitOptions.class);
+        backarrow.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), HabitOptions.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        });
+        reminderbutton.setOnClickListener(view -> {
+            Calendar calendar = Calendar.getInstance();
+            int hours = calendar.get(Calendar.HOUR_OF_DAY);
+            int mins = calendar.get(Calendar.MINUTE);
+            TimePickerDialog timePickerDialog = new TimePickerDialog(CreateChecklistHabits.this, com.google.android.material.R.style.Theme_AppCompat_Dialog, (timePicker, hourOfDay, minute) -> {
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                c.set(Calendar.MINUTE, minute);
+                c.setTimeZone(TimeZone.getDefault());
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("k:mm a");
+                String time = format.format(c.getTime());
+                reminderbutton.setText(time);
+            }, hours, mins, false);
+            timePickerDialog.show();
+        });
+        frequencybutton.setOnClickListener(view -> {
+            // Initialize alert dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(CreateChecklistHabits.this);
+            builder.setTitle("Select Days of the week");
+            builder.setCancelable(false);
+            daysList.clear();
+
+            builder.setMultiChoiceItems(daysArray, selectedDays, (dialogInterface, i, b) -> {
+                // check condition
+                if (b) {
+                    // when checkbox selected
+                    // Add position in lang list
+                    daysList.add(i);
+                    Collections.sort(daysList);
+                } else {
+                    // when checkbox unselected
+                    // Remove position from langList
+                    daysList.remove(Integer.valueOf(i));
+                }
+            });
+
+            builder.setPositiveButton("OK", (dialogInterface, i) -> {
+                // Initialize string builder
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int j = 0; j < daysList.size(); j++) {
+                    // concat array value
+                    stringBuilder.append(daysArray[daysList.get(j)]);
+                    // check condition
+                    if (j != daysList.size() - 1) {
+                        // When j value not equal
+                        // to lang list size - 1
+                        // add comma
+                        stringBuilder.append(", ");
+                    }
+                }
+                // set text on textView
+                frequencybutton.setText(stringBuilder.toString());
+            });
+            builder.setNegativeButton("Cancel", (dialogInterface, i) -> {
+                // dismiss dialog
+                dialogInterface.dismiss();
+            });
+            builder.setNeutralButton("Clear All", (dialogInterface, i) -> {
+                daysList.clear();
+                frequencybutton.setText("");
+            });
+            // show dialog
+            builder.show();
+        });
+        addsubtask.setOnClickListener(view -> {
+            numberOfEditTexts =numberOfEditTexts+1;
+            adapter = new MyAdapterSHabit(numberOfEditTexts);
+            recyclerView = findViewById(R.id.recyclerview);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            recyclerView.setVisibility(View.VISIBLE);
+        });
+        create.setOnClickListener(view -> {
+            if(TextUtils.isEmpty(habitname.getText()))
+            {
+                Toast.makeText(CreateChecklistHabits.this, "Enter a name", Toast.LENGTH_SHORT).show();
+            }
+            else if(TextUtils.isEmpty(frequencybutton.getText()))
+            {
+                Toast.makeText(CreateChecklistHabits.this, "Select at least one frequency", Toast.LENGTH_SHORT).show();
+            }
+            else if(TextUtils.isEmpty(subhabit1.getText())){
+                Toast.makeText(CreateChecklistHabits.this, "Enter at least two sub habit", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                colorvalue = dialogFragment.colorval;
+                String hname = habitname.getText().toString();
+                String frequency = frequencybutton.getText().toString();
+                String reminder = reminderbutton.getText().toString();
+                String hque = habitque.getText().toString();
+                String subH1 = subhabit1.getText().toString();
+                inputList.add(subH1);
+                if (numberOfEditTexts > 0) {
+                    for (int i = 0; i < Objects.requireNonNull(recyclerView.getAdapter()).getItemCount(); i++) {
+                        MyAdapterSHabit.MyViewHolder viewHolder = (MyAdapterSHabit.MyViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
+                        if (viewHolder != null) {
+                            String text = viewHolder.getText();
+                            inputList.add(text);
+                        }
+                    }
+                }
+                String delimiter = ",";
+                String result = String.join(delimiter, inputList);
+                db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL);
+                int habitid=db.getHabitId(hname);
+                db.insertDataSubhabits(result,habitid);
+                Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
-            }
-        });
-        reminderbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                TimePickerDialog timePickerDialog = new TimePickerDialog(CreateChecklistHabits.this, com.google.android.material.R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-                        c.setTimeZone(TimeZone.getDefault());
-                        SimpleDateFormat format = new SimpleDateFormat("k:mm a");
-                        String time = format.format(c.getTime());
-                        reminderbutton.setText(time);
-                    }
-                }, hours, mins, false);
-                timePickerDialog.show();
-            }
-        });
-        frequencybutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Initialize alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreateChecklistHabits.this);
-                builder.setTitle("Select Days of the week");
-                builder.setCancelable(false);
-                daysList.clear();
-
-                builder.setMultiChoiceItems(daysArray, selectedDays, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                        // check condition
-                        if (b) {
-                            // when checkbox selected
-                            // Add position in lang list
-                            daysList.add(i);
-                            Collections.sort(daysList);
-                        } else {
-                            // when checkbox unselected
-                            // Remove position from langList
-                            daysList.remove(Integer.valueOf(i));
-                        }
-                    }
-                });
-
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Initialize string builder
-                        StringBuilder stringBuilder = new StringBuilder();
-                        for (int j = 0; j < daysList.size(); j++) {
-                            // concat array value
-                            stringBuilder.append(daysArray[daysList.get(j)]);
-                            // check condition
-                            if (j != daysList.size() - 1) {
-                                // When j value not equal
-                                // to lang list size - 1
-                                // add comma
-                                stringBuilder.append(", ");
-                            }
-                        }
-                        // set text on textView
-                        frequencybutton.setText(stringBuilder.toString());
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // dismiss dialog
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        daysList.clear();
-                        frequencybutton.setText("");
-                    }
-                });
-                // show dialog
-                builder.show();
-            }
-        });
-        addsubtask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                numberOfEditTexts =numberOfEditTexts+1;
-                adapter = new MyAdapterSHabit(getApplicationContext(),numberOfEditTexts);
-                recyclerView = findViewById(R.id.recyclerview);
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                recyclerView.setVisibility(View.VISIBLE);
-            }
-        });
-        create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(TextUtils.isEmpty(habitname.getText()))
-                {
-                    Toast.makeText(CreateChecklistHabits.this, "Enter a name", Toast.LENGTH_SHORT).show();
-                }
-                else if(TextUtils.isEmpty(frequencybutton.getText()))
-                {
-                    Toast.makeText(CreateChecklistHabits.this, "Select at least one frequency", Toast.LENGTH_SHORT).show();
-                }
-                else if(TextUtils.isEmpty(subhabit1.getText())){
-                    Toast.makeText(CreateChecklistHabits.this, "Enter at least two sub habit", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    colorvalue = dialogFragment.colorval;
-                    String hname = habitname.getText().toString();
-                    String frequency = frequencybutton.getText().toString();
-                    String reminder = reminderbutton.getText().toString();
-                    String hque = habitque.getText().toString();
-                    String subH1 = subhabit1.getText().toString();
-                    inputList.add(subH1);
-                    if (numberOfEditTexts > 0) {
-                        for (int i = 0; i < recyclerView.getAdapter().getItemCount(); i++) {
-                            MyAdapterSHabit.MyViewHolder viewHolder = (MyAdapterSHabit.MyViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
-                            if (viewHolder != null) {
-                                String text = viewHolder.getText();
-                                inputList.add(text);
-                            }
-                        }
-                    }
-                    String delimiter = ",";
-                    String result = String.join(delimiter, inputList);
-                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL);
-                    int habitid=db.getHabitId(hname);
-                    db.insertDataSubhabits(result,habitid);
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
-                    startActivity(intent);
-                    finish();
-
-                }
-            }
-        });
-        color.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                dialogFragment.show(fragmentManager, "dialog");
 
             }
         });
+        color.setOnClickListener(view -> {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            dialogFragment.show(fragmentManager, "dialog");
+
+        });
+        db.close();
     }
 }

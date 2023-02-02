@@ -1,50 +1,34 @@
 package com.example.fukc;
 
-import static java.sql.Types.NULL;
-import android.app.AlarmManager;
-import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.ClipData;
+
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.preference.PreferenceManager;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+
 
 public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHolder> {
-    private Context context;
-    private ArrayList name;
+    private final Context context;
+    private final ArrayList name;
     public int[] drawables = {R.drawable.crossedcircle,R.drawable.checkedcircle};
-    public int[] drawablesm = {R.drawable.checkedcircle, R.drawable.minuscircle};
     public String[] recordYN = {"N","Y"};
-    int number;
     DBHelper db;
     ArrayList<String> shabitname;
     MyAdapterSubHabit adapter;
@@ -77,78 +61,96 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.name.setText(String.valueOf(name.get(position)));
         String habitname = holder.name.getText().toString();
-
         int habittype = db.getHabittype(habitname);
         int target = db.getHabitTarget(habitname);
         int habitid= db.getHabitId(habitname);
         String colorcode=db.getHabitColor(habitname);
+
+        if(db.getRecord(habitname).equals("Y")){
+            Glide.with(context).load(R.drawable.checkedcircle).into(holder.checkbox);
+        }else if(db.getRecord(habitname).equals("N")){
+            Glide.with(context).load(R.drawable.crossedcircle).into(holder.checkbox);
+        }else if(db.getRecord(habitname).equals("S")){
+            Glide.with(context).load(R.drawable.circle).into(holder.checkbox);
+        }else if(db.getRecord(habitname).equals("F")){
+            //holder.checkbox.setImageResource(R.drawable.minuscircle);
+            Glide.with(context).load(R.drawable.minuscircle).into(holder.checkbox);
+        }
+
         if(!TextUtils.isEmpty(colorcode)){
             holder.name.setTextColor(Color.parseColor(colorcode));
         }
         if (habittype == 0) {
+            holder.icon.setImageResource(R.drawable.yn_icon);
             holder.checkbox.setOnClickListener(new View.OnClickListener() {
                 int currentDrawableIndex = 0;
                 @Override
                 public void onClick(View view) {
                     currentDrawableIndex = (currentDrawableIndex + 1) % drawables.length;
-                    holder.checkbox.setImageDrawable(context.getDrawable(drawables[currentDrawableIndex]));
-                    Log.d("xyz", "Inserting record into database: " + habitid + " " + recordYN[currentDrawableIndex] + " " + strDate + " " + NULL);
+                    Glide.with(context).load(context.getDrawable(drawables[currentDrawableIndex])).transition(DrawableTransitionOptions.withCrossFade()).into(holder.checkbox);
                     db.updateYNrecord(habitid,recordYN[currentDrawableIndex],strDate);
-                    Log.d("xyz", "Inserting record into database: " + habitid + " " + recordYN[currentDrawableIndex] + " " + strDate + " " + NULL);
                 }
             });
         }else if (habittype == 1) {
+            holder.icon.setImageResource(R.drawable.measurable_icon);
             holder.itemView.setTag(R.id.tag_variable, target);
             holder.itemView.setTag(R.id.tag_variable2, habitid);
-            holder.checkbox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d("dialog today","before this");
-                    if (listener != null) {
-                        int position = holder.getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
+            holder.checkbox.setOnClickListener(view -> {
+                Log.d("dialog today","before this");
+                if (listener != null) {
+                    int position1 = holder.getAdapterPosition();
+                    if (position1 != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position1);
                     }
                 }
             });
-        } else if (habittype == 2) {
+        }else if (habittype == 2) {
+            RotateAnimation rotateLeft = new RotateAnimation(-90, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            RotateAnimation rotateRight = new RotateAnimation(0, -90, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            rotateLeft.setDuration(100);
+            rotateLeft.setInterpolator(new LinearInterpolator());
+            rotateLeft.setFillAfter(true);
+            rotateRight.setDuration(100);
+            rotateRight.setInterpolator(new LinearInterpolator());
+            rotateRight.setFillAfter(true);
+
+
+            holder.dropdown.setImageResource(R.drawable.dropdown_icon);
+            holder.icon.setImageResource(R.drawable.checklist_icon);
             String shlst= db.getdataSHabit(habitid);
             String[] stringArray = shlst.split(",");
             ArrayList<String> shabitname = new ArrayList<>(Arrays.asList(stringArray));
-            adapter = new MyAdapterSubHabit(context,shabitname,habitid);
+            adapter = new MyAdapterSubHabit(context,shabitname,habitid,habitname);
             holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
             holder.recyclerView.setHasFixedSize(true);
-            holder.recyclerView.setAdapter(adapter);
-            int iconn=0;
-            int childCount = holder.recyclerView.getChildCount();
-            Drawable desiredDrawabl2 = context.getResources().getDrawable(R.drawable.checkedcircle);
-            for (int i = 0; i < childCount; i++) {
-                View childView = holder.recyclerView.getChildAt(i);
-                ImageView imageView = childView.findViewById(R.id.shempty);
-                if (imageView.getDrawable() == desiredDrawabl2) {
-                    iconn = iconn+1;
-                    break;
+            String[] sRecord = new String[shabitname.size()];
+            if (db.isSubRecordPresent(habitid, strDate) == false) {
+                for(int i = 0;i<shabitname.size();i++){
+                    sRecord[i]="S";
                 }
-            }
-            if(iconn==0){
-                holder.checkbox.setImageDrawable(context.getDrawable(drawables[0]));
-            }else if(iconn>0 && iconn<childCount){
-                holder.checkbox.setImageDrawable(context.getDrawable(drawablesm[1]));
-            }else if(iconn==childCount){
-                holder.checkbox.setImageDrawable(context.getDrawable(drawablesm[0]));
-            }
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (holder.recyclerView.getVisibility() == View.GONE) {
-                        holder.recyclerView.setVisibility(View.VISIBLE);
-                    } else {
-                        holder.recyclerView.setVisibility(View.GONE);
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < stringArray.length; i++) {
+                    sb.append(stringArray[i]);
+                    if (i < stringArray.length - 1) {
+                        sb.append(",");
                     }
                 }
+                db.updateSubRecord(habitid,sb.toString(),strDate);
+            }
+            holder.recyclerView.setAdapter(adapter);
+            holder.itemView.setOnClickListener(view -> {
+                if (holder.recyclerView.getVisibility() == View.GONE) {
+                    holder.recyclerView.setVisibility(View.VISIBLE);
+                    holder.dropdown.startAnimation(rotateRight);
+
+                } else {
+                    holder.recyclerView.setVisibility(View.GONE);
+                    holder.dropdown.startAnimation(rotateLeft);
+                }
             });
+
         }
+        db.close();
     }
 
     @Override
@@ -157,13 +159,15 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
-        public ImageView checkbox;
+        public ImageView checkbox,icon,dropdown;
         RecyclerView recyclerView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.habitname);
             checkbox = itemView.findViewById(R.id.empty);
             recyclerView = itemView.findViewById(R.id.child_rv);
+            icon = itemView.findViewById(R.id.habit_list_icon);
+            dropdown = itemView.findViewById(R.id.dropdown_icon);
             Glide.with(itemView.getContext()).load(R.drawable.circle).into(checkbox);
         }
     }

@@ -1,54 +1,32 @@
 package com.example.fukc;
 
-import static java.sql.Types.NULL;
-import android.app.AlarmManager;
-import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.ClipData;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.preference.PreferenceManager;
-import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+
 
 public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.ViewHolder> {
-    private Context context;
-    private ArrayList name;
+    private final Context context;
+    private final ArrayList name;
     DBHelper db;
     ArrayList<String> shabitname;
     public MyAdapterAllHabit(Context context, ArrayList name) {
         this.context = context;
         this.name = name;
     }
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.all_habits_item,parent,false);
         db = new DBHelper(context);
         shabitname = new ArrayList<>();
@@ -84,6 +62,17 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
             holder.htype.setText("Checklist");
         }
         holder.frequency.setText(shortS);
+        holder.stats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,Statistics.class);
+                intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("habitName", hname);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
+        db.close();
     }
 
     @Override

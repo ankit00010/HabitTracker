@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -38,13 +39,12 @@
 
         <ImageView
             android:id="@+id/BottomBox"
-            android:layout_width="410dp"
+            android:layout_width="match_parent"
             android:layout_height="57dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="28dp"
             android:background="#040007"
             android:contentDescription="@string/_2"
-            android:foreground="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -56,8 +56,7 @@
         <TextView
             android:id="@+id/measurable_back_text"
             android:layout_width="94dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="16dp"
+            android:layout_height="56dp"
             android:background="#0B0606"
             android:gravity="center"
             android:text="BACK"
@@ -72,8 +71,7 @@
         <TextView
             android:id="@+id/measurable_create_text"
             android:layout_width="94dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="3dp"
+            android:layout_height="55dp"
             android:background="#0B0606"
             android:gravity="center"
             android:text="CREATE"
@@ -83,7 +81,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/BottomBox"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/yes_input_text"
@@ -106,7 +104,7 @@
                 android:hint="Habit name"
                 android:inputType="textPersonName"
                 android:textColor="@color/white"
-                android:textColorHint="#009688"
+                android:textColorHint="@color/lightsilver"
                 app:layout_constraintStart_toStartOf="@id/yes_input_text"
                 app:layout_constraintTop_toTopOf="@id/yes_input_text" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -132,7 +130,7 @@
                 android:hint="eg: 15"
                 android:inputType="number"
                 android:textColor="@color/white"
-                android:textColorHint="#009688" />
+                android:textColorHint="@color/lightsilver" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -155,7 +153,7 @@
                 android:hint="Did i complete my morning routine?"
                 android:inputType="textPersonName"
                 android:textColor="@color/white"
-                android:textColorHint="#009688"
+                android:textColorHint="@color/lightsilver"
                 app:layout_constraintStart_toStartOf="@id/question_input1"
                 app:layout_constraintTop_toTopOf="@id/question_input1" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -195,16 +193,13 @@
             android:id="@+id/measurable_color_button"
             android:layout_width="58dp"
             android:layout_height="53dp"
-            android:layout_marginTop="59dp"
-            android:layout_marginEnd="36dp"
-            android:contentDescription="abc"
-            app:layout_constraintBottom_toBottomOf="@+id/yes_input_text"
+            android:layout_marginTop="60dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/yes_input_text"
             app:layout_constraintTop_toTopOf="@+id/CreateHabitText"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/choose_color_icon" />
+            app:srcCompat="@drawable/choose_color_icon"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/Target_text"
@@ -275,7 +270,7 @@
                 android:id="@+id/recyclerview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
+                android:visibility="gone" />
         </LinearLayout>
 
         <ImageView
@@ -286,7 +281,8 @@
             android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toEndOf="@+id/measurable_frequency_edit_text"
             app:layout_constraintTop_toTopOf="@+id/measurable_frequency_edit_text"
-            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/dropicon_rem"
@@ -296,7 +292,8 @@
             android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toEndOf="@+id/measurable_reminder_edit_text"
             app:layout_constraintTop_toTopOf="@+id/measurable_reminder_edit_text"
-            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,6 @@ import android.util.Patterns;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -44,28 +43,25 @@ public class Register_user extends AppCompatActivity {
         //email format validation
 
         // Set an OnFocusChangeListener for the EditText field
-        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+        email.setOnFocusChangeListener((v, hasFocus) -> {
 
-                if (!hasFocus) {
-                    // Get the email address from the EditText field
-                    String stremail = email.getText().toString().trim();
+            if (!hasFocus) {
+                // Get the email address from the EditText field
+                String stremail = email.getText().toString().trim();
 
-                    // Check if the email address is empty
-                    if (stremail.isEmpty()) {
-                        email.setError("Email is required");
-                        return;
-                    }
+                // Check if the email address is empty
+                if (stremail.isEmpty()) {
+                    email.setError("Email is required");
+                    return;
+                }
 
-                    // Check if the email address is valid
-                    if (!Patterns.EMAIL_ADDRESS.matcher(stremail).matches()) {
-                        email.setError("Please enter a valid email");
-                        return;
-                    }
-
+                // Check if the email address is valid
+                if (!Patterns.EMAIL_ADDRESS.matcher(stremail).matches()) {
+                    email.setError("Please enter a valid email");
 
                 }
+
+
             }
         });
 
@@ -73,94 +69,85 @@ public class Register_user extends AppCompatActivity {
 
         securityan = findViewById(R.id.securityans);
         db=new DBHelper(this);
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String user =username.getText().toString();
-                String pass=password.getText().toString();
-                String repass=repassword.getText().toString();
-                String securityque = (String) securityquel.getSelectedItem();
-                String emaill =email.getText().toString();
-                String securityans= securityan.getText().toString();
-                if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(repass))
+        signup.setOnClickListener(view -> {
+            String user =username.getText().toString();
+            String pass=password.getText().toString();
+            String repass=repassword.getText().toString();
+            String securityque = (String) securityquel.getSelectedItem();
+            String emaill =email.getText().toString();
+            String securityans= securityan.getText().toString();
+            if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(repass))
+            {
+                Toast.makeText(Register_user.this, "All fields Required", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                if (pass.equals(repass))
                 {
-                    Toast.makeText(Register_user.this, "All fields Required", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    if (pass.equals(repass))
+                    Boolean checkuser=db.checkusername(user);
+                    if (checkuser==false)
                     {
-                        Boolean checkuser=db.checkusername(user);
-                        if (checkuser==false)
+                        Boolean insert =db.insertData(user,emaill,pass,securityque,securityans);
+                        if (insert==true)
                         {
-                            Boolean insert =db.insertData(user,emaill,pass,securityque,securityans);
-                            if (insert==true)
-                            {
-                                Toast.makeText(Register_user.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);
-                            }
-                            else
-                            {
-                                Toast.makeText(Register_user.this, "Registration Failed", Toast.LENGTH_SHORT).show();
-                            }
+                            Toast.makeText(Register_user.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(getApplicationContext(), MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
                         }
                         else
                         {
-                            Toast.makeText(Register_user.this, "User Already Exists", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register_user.this, "Registration Failed", Toast.LENGTH_SHORT).show();
                         }
-                    }else{
-                        Toast.makeText(Register_user.this, "Passwords are not matching", Toast.LENGTH_SHORT).show();
                     }
+                    else
+                    {
+                        Toast.makeText(Register_user.this, "User Already Exists", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(Register_user.this, "Passwords are not matching", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        signin.setOnClickListener(view -> {
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         });
 
 
         //Show hide password  using eye icon
         hidepaswd.setImageResource(R.drawable.hidepaswd);
         hidecnfrmpswd.setImageResource(R.drawable.hidepaswd);
-        hidepaswd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //first to check whether the password  is visible or hidden when the eye icon is clicked
-                //Transformation method will return whether the password is hidden or visible
-                if(password.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
-                    //if password is visible then hide it
-                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    hidepaswd.setImageResource(R.drawable.hidepaswd);
-                }else
-                {
-                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    hidepaswd.setImageResource(R.drawable.unhidepswd);
-                }
+        hidepaswd.setOnClickListener(v -> {
+            //first to check whether the password  is visible or hidden when the eye icon is clicked
+            //Transformation method will return whether the password is hidden or visible
+            if(password.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
+                //if password is visible then hide it
+                password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                hidepaswd.setImageResource(R.drawable.hidepaswd);
+            }else
+            {
+                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                hidepaswd.setImageResource(R.drawable.unhidepswd);
             }
         });
 
         //code for confirm password hide and unhide
-        hidecnfrmpswd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //first to check whether the password  is visible or hidden when the eye icon is clicked
-                //Transformation method will return whether the password is hidden or visible
-                if(password.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
-                    //if password is visible then hide it
-                    repassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    hidepaswd.setImageResource(R.drawable.hidepaswd);
-                }else
-                {
-                    repassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    hidecnfrmpswd.setImageResource(R.drawable.unhidepswd);
-                }
+        hidecnfrmpswd.setOnClickListener(v -> {
+            //first to check whether the password  is visible or hidden when the eye icon is clicked
+            //Transformation method will return whether the password is hidden or visible
+            if(password.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
+                //if password is visible then hide it
+                repassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                hidepaswd.setImageResource(R.drawable.hidepaswd);
+            }else
+            {
+                repassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                hidecnfrmpswd.setImageResource(R.drawable.unhidepswd);
             }
         });
+        db.close();
     }
 }

@@ -1,12 +1,10 @@
 package com.example.fukc;
 
-import android.app.AlertDialog;
+
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.location.GnssAntennaInfo;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyCallback extends ItemTouchHelper.Callback {
 
-    private ColorDrawable background = new ColorDrawable();
+    private final ColorDrawable background = new ColorDrawable();
     private Drawable icon;
-    private int iconMargin;
+    private final int iconMargin;
     private final MyAdapterHabit adapter;
     DBHelper db;
     Context context;

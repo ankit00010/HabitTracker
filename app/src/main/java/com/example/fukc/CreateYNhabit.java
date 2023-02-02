@@ -5,26 +5,20 @@ import static java.sql.Types.NULL;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -106,180 +100,152 @@ public class CreateYNhabit extends AppCompatActivity {
         color=(ImageView) findViewById(R.id.yes_color_button);
         selectedDays = new boolean[daysArray.length];
         calendar=Calendar.getInstance();
-        Intent intent = getIntent();
         db = new DBHelper(this);
-        yes_backtext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), HabitOptions.class);
-                startActivity(intent);
-                finish();
-
-            }
+        yes_backtext.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), HabitOptions.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         });
         Log.d("reminder",reminderbutton.getText().toString());
-        reminderbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                TimePickerDialog timePickerDialog = new TimePickerDialog(CreateYNhabit.this, com.google.android.material.R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-                        c.setTimeZone(TimeZone.getDefault());
-                        SimpleDateFormat format = new SimpleDateFormat("k:mm a");
-                        String time = format.format(c.getTime());
-                        reminderbutton.setText(time);
+        reminderbutton.setOnClickListener(view -> {
+            Calendar calendar = Calendar.getInstance();
+            int hours = calendar.get(Calendar.HOUR_OF_DAY);
+            int mins = calendar.get(Calendar.MINUTE);
+            TimePickerDialog timePickerDialog = new TimePickerDialog(CreateYNhabit.this, com.google.android.material.R.style.Theme_AppCompat_Dialog, (timePicker, hourOfDay, minute) -> {
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                c.set(Calendar.MINUTE, minute);
+                c.setTimeZone(TimeZone.getDefault());
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("k:mm a");
+                String time = format.format(c.getTime());
+                reminderbutton.setText(time);
 
 
-                    }
-                }, hours, mins, false);
-                timePickerDialog.show();
+            }, hours, mins, false);
+            timePickerDialog.show();
 
-            }
         });
 
-        frequencybutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Initialize alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreateYNhabit.this);
-                builder.setTitle("Select Days of the week");
-                builder.setCancelable(false);
+        frequencybutton.setOnClickListener(view -> {
+            // Initialize alert dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(CreateYNhabit.this);
+            builder.setTitle("Select Days of the week");
+            builder.setCancelable(false);
 
-                builder.setMultiChoiceItems(daysArray, selectedDays, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                        // check condition
-                        if (b) {
-                            // when checkbox selected
-                            // Add position in lang list
-                            daysList.add(i);
-                            Collections.sort(daysList);
-                        } else {
-                            // when checkbox unselected
-                            // Remove position from langList
-                            daysList.remove(Integer.valueOf(i));
-                        }
-                    }
-                });
-
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Initialize string builder
-                        StringBuilder stringBuilder = new StringBuilder();
-
-                        for (int j = 0; j < daysList.size(); j++) {
-                            // concat array value
-                            stringBuilder.append(daysArray[daysList.get(j)]);
-                            // check condition
-                            if (j != daysList.size() - 1) {
-                                // When j value not equal
-                                // to lang list size - 1
-                                // add comma
-                                stringBuilder.append(", ");
-                            }
-                        }
-                        // set text on textView
-                        frequencybutton.setText(stringBuilder.toString());
-                    }
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // dismiss dialog
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // use for loop
-                        for (int j = 0; j < selectedDays.length; j++) {
-                            // remove all selection
-                            selectedDays[j] = false;
-                            // clear language list
-                            daysList.clear();
-                            // clear text view value
-                            frequencybutton.setText("");
-                        }
-                    }
-                });
-                // show dialog
-                builder.show();
-            }
-        });
-        savehabit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                if (TextUtils.isEmpty(habitname.getText())) {
-                    Toast.makeText(CreateYNhabit.this, "Enter a name", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(frequencybutton.getText())) {
-                    Toast.makeText(CreateYNhabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
+            builder.setMultiChoiceItems(daysArray, selectedDays, (dialogInterface, i, b) -> {
+                // check condition
+                if (b) {
+                    // when checkbox selected
+                    // Add position in lang list
+                    daysList.add(i);
+                    Collections.sort(daysList);
+                } else {
+                    // when checkbox unselected
+                    // Remove position from langList
+                    daysList.remove(Integer.valueOf(i));
                 }
+            });
 
-              else  if (reminder.isEmpty() )
+            builder.setPositiveButton("OK", (dialogInterface, i) -> {
+                // Initialize string builder
+                StringBuilder stringBuilder = new StringBuilder();
+
+                for (int j = 0; j < daysList.size(); j++) {
+                    // concat array value
+                    stringBuilder.append(daysArray[daysList.get(j)]);
+                    // check condition
+                    if (j != daysList.size() - 1) {
+                        // When j value not equal
+                        // to lang list size - 1
+                        // add comma
+                        stringBuilder.append(", ");
+                    }
+                }
+                // set text on textView
+                frequencybutton.setText(stringBuilder.toString());
+            });
+
+            builder.setNegativeButton("Cancel", (dialogInterface, i) -> {
+                // dismiss dialog
+                dialogInterface.dismiss();
+            });
+            builder.setNeutralButton("Clear All", (dialogInterface, i) -> {
+                // use for loop
+                for (int j = 0; j < selectedDays.length; j++) {
+                    // remove all selection
+                    selectedDays[j] = false;
+                    // clear language list
+                    daysList.clear();
+                    // clear text view value
+                    frequencybutton.setText("");
+                }
+            });
+            // show dialog
+            builder.show();
+        });
+        savehabit.setOnClickListener(view -> {
+
+
+            if (TextUtils.isEmpty(habitname.getText())) {
+                Toast.makeText(CreateYNhabit.this, "Enter a name", Toast.LENGTH_SHORT).show();
+            } else if (TextUtils.isEmpty(frequencybutton.getText())) {
+                Toast.makeText(CreateYNhabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
+            }
+
+          else  if (reminder.isEmpty() )
+            {
+                Log.d("reminderenter","remindercancel");
+                String question = habitque.getText().toString().trim();
+
+                if (question.isEmpty())
                 {
-                    Log.d("reminderenter","remindercancel");
-                    String question = habitque.getText().toString().trim();
+                    Log.d("question","questionhandler");
 
-                    if (question.isEmpty())
-                    {
-                        Log.d("question","questionhandler");
-
-                        Toast.makeText(CreateYNhabit.this, "Please fill in the question field ", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Log.d("save","Created Successfully");
-                        colorvalue = dialogFragment.colorval;
-                        final int habittype = 0;
-                        String frequency = frequencybutton.getText().toString();
-                        String reminder = reminderbutton.getText().toString();
-                        hname = habitname.getText().toString();
-                        hque = habitque.getText().toString();
-                        db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL);
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                    Toast.makeText(CreateYNhabit.this, "Please fill in the question field ", Toast.LENGTH_SHORT).show();
                 }
-                 else {
-
-                    setAlaram();
+                else {
+                    Log.d("save","Created Successfully");
                     colorvalue = dialogFragment.colorval;
-                        final int habittype = 0;
-                        String frequency = frequencybutton.getText().toString();
-                        String reminder = reminderbutton.getText().toString();
-                        hname = habitname.getText().toString();
-                        hque = habitque.getText().toString();
-                        db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL);
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
-                        startActivity(intent);
-                        finish();
-
+                    final int habittype = 0;
+                    String frequency = frequencybutton.getText().toString();
+                    String reminder1 = reminderbutton.getText().toString();
+                    hname = habitname.getText().toString();
+                    hque = habitque.getText().toString();
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder1, habittype, NULL);
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
                 }
             }
-        });
+             else {
 
-        color.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                dialogFragment.show(fragmentManager, "dialog");
+                setAlaram();
+                colorvalue = dialogFragment.colorval;
+                    final int habittype = 0;
+                    String frequency = frequencybutton.getText().toString();
+                    String reminder1 = reminderbutton.getText().toString();
+                    hname = habitname.getText().toString();
+                    hque = habitque.getText().toString();
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder1, habittype, NULL);
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
 
             }
         });
 
+        color.setOnClickListener(view -> {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            dialogFragment.show(fragmentManager, "dialog");
+
+        });
+        db.close();
     }
 //Method used to set the alaram after the habit is created
+    @SuppressLint("UnspecifiedImmutableFlag")
     private void setAlaram() {
         Toast.makeText(this, "naah bro ", Toast.LENGTH_SHORT).show();
         alaramManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -292,37 +258,14 @@ public class CreateYNhabit extends AppCompatActivity {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(CreateYNhabit.this);
         alertDialog.setTitle("Discard");
         alertDialog.setMessage("Discard the new habit ?");
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
-                startActivity(intent);
-                finish();
-            }
+        alertDialog.setPositiveButton("Yes", (dialog, which) -> {
+            Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         });
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        alertDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         alertDialog.show();
-
-
-    }
-    private void createNotificationChannel() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            CharSequence name = "foxandroidReminderChannel";
-            String description = "Channel For Alarm Manager";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel("foxandroid",name,importance);
-            channel.setDescription(description);
-
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-
-        }
 
 
     }

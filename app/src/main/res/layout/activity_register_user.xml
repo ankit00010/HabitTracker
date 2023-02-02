@@ -4,6 +4,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
@@ -48,13 +49,14 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_textfile"
 
-                android:drawableLeft="@drawable/ic_baseline_person_24"
+                android:drawableStart="@drawable/ic_baseline_person_24"
                 android:drawablePadding="8dp"
                 android:hint="Username"
                 android:padding="8dp"
                 android:textColor="@color/white"
                 android:textColorHighlight="@color/cardview_dark_background"
-                android:textColorHint="@color/teal_200" />
+                android:textColorHint="@color/teal_200"
+                tools:ignore="Autofill,TextFields" />
 
             <EditText
                 android:id="@+id/email"
@@ -63,13 +65,14 @@
 
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_textfile"
-                android:drawableLeft="@drawable/ic_baseline_email_24"
+                android:drawableStart="@drawable/ic_baseline_email_24"
                 android:drawablePadding="8dp"
                 android:hint="Email"
                 android:padding="8dp"
                 android:textColor="@color/white"
                 android:textColorHighlight="@color/cardview_dark_background"
-                android:textColorHint="@color/teal_200" />
+                android:textColorHint="@color/teal_200"
+                tools:ignore="Autofill,TextFields" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -81,7 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/custom_textfile"
-                    android:drawableLeft="@drawable/ic_baseline_lock_24"
+                    android:drawableStart="@drawable/ic_baseline_lock_24"
                     android:drawablePadding="8dp"
                     android:hint="Password"
                     android:inputType="textPassword"
@@ -94,7 +97,8 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:ignore="Autofill" />
 
                 <ImageView
                     android:id="@+id/hidepaswd"
@@ -105,7 +109,8 @@
                     app:layout_constraintHorizontal_bias="0.883"
                     app:layout_constraintStart_toStartOf="@+id/passreset"
                     app:layout_constraintTop_toTopOf="@+id/passreset"
-                    app:srcCompat="@drawable/hidepaswd" />
+                    app:srcCompat="@drawable/hidepaswd"
+                    tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -117,7 +122,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/custom_textfile"
-                    android:drawableLeft="@drawable/ic_baseline_lock_24"
+                    android:drawableStart="@drawable/ic_baseline_lock_24"
 
                     android:drawablePadding="8dp"
                     android:hint="Confirm Password"
@@ -131,7 +136,8 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintVertical_bias="1.0"
+                    tools:ignore="Autofill" />
 
                 <ImageView
                     android:id="@+id/hidepaswd1"
@@ -142,7 +148,8 @@
                     app:layout_constraintHorizontal_bias="0.887"
                     app:layout_constraintStart_toStartOf="@+id/repassreset"
                     app:layout_constraintTop_toTopOf="@+id/repassreset"
-                    app:srcCompat="@drawable/hidepaswd" />
+                    app:srcCompat="@drawable/hidepaswd"
+                    tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Spinner
@@ -169,14 +176,15 @@
 
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_textfile"
-                android:drawableLeft="@drawable/ic_baseline_question_answer_24"
+                android:drawableStart="@drawable/ic_baseline_question_answer_24"
                 android:drawablePadding="8dp"
                 android:hint="Answer"
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:textColor="@color/white"
                 android:textColorHighlight="@color/cardview_dark_background"
-                android:textColorHint="@color/teal_200" />
+                android:textColorHint="@color/teal_200"
+                android:importantForAutofill="no" />
 
             <Button
                 android:id="@+id/btnsignup"
@@ -198,7 +206,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="-10dp"
         android:minHeight="20dp"
-        android:onClick="signuptext"
         android:padding="8dp"
         android:text="Already have an account?  Sign In"
         android:textColor="@color/teal_200"

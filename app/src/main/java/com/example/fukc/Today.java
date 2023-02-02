@@ -2,37 +2,26 @@ package com.example.fukc;
 
 import static java.sql.Types.NULL;
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -47,7 +36,6 @@ public class Today extends Fragment implements MyAdapterHabit.OnItemClickListene
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     String strDate = dateFormat.format(calendar.getTime());
     View view;
-
     public Today() {
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,20 +61,18 @@ public class Today extends Fragment implements MyAdapterHabit.OnItemClickListene
         for (int i = 0; i < childCount; i++) {
             String habtname = habitname.get(i);
             int habitid = db.getHabitId(habtname);
-            //Log.d("dialog today","id "+habitid+" date "+strDate);
             if (db.isRecordPresent(habitid, strDate) == false) {
-                db.insertDataRecord(habitid, "N", strDate, NULL);
+                db.insertDataRecord(habitid, "S", strDate, NULL,"");
             }
         }
         plus=view.findViewById(R.id.plussign);
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getActivity().getApplicationContext(),HabitOptions.class);
-                startActivity(intent);
+        plus.setOnClickListener(view -> {
+            Intent intent=new Intent(getActivity().getApplicationContext(),HabitOptions.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
 
-            }
         });
+        db.close();
         return view;
     }
 
@@ -105,20 +91,17 @@ public class Today extends Fragment implements MyAdapterHabit.OnItemClickListene
             builder.setTitle("Select a value");
             builder.setView(editText);
             builder.setMessage("Target is " + target);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    int number = Integer.valueOf(editText.getText().toString());
-                    if (number >= target) {
-                        imageView.setImageDrawable(getContext().getDrawable(drawablesm[0]));
-                        db.updateMeasurableRecord(habitid,"Y",strDate,number);
-                    } else if(number<=0){
-                        imageView.setImageDrawable(getContext().getDrawable(drawables[0]));
-                        db.updateMeasurableRecord(habitid,"N",strDate,number);
-                    }else {
-                        imageView.setImageDrawable(getContext().getDrawable(drawablesm[1]));
-                        db.updateMeasurableRecord(habitid,"F",strDate,number);
-                    }
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                int number = Integer.valueOf(editText.getText().toString());
+                if (number >= target) {
+                    Glide.with(getContext()).load(getContext().getDrawable(drawablesm[0])).transition(DrawableTransitionOptions.withCrossFade()).into(imageView);
+                    db.updateMeasurableRecord(habitid,"Y",strDate,number);
+                } else if(number==0){
+                    Glide.with(getContext()).load(getContext().getDrawable(drawablesm[0])).transition(DrawableTransitionOptions.withCrossFade()).into(imageView);
+                    db.updateMeasurableRecord(habitid,"N",strDate,number);
+                }else {
+                    Glide.with(getContext()).load(getContext().getDrawable(drawablesm[1])).transition(DrawableTransitionOptions.withCrossFade()).into(imageView);
+                    db.updateMeasurableRecord(habitid,"F",strDate,number);
                 }
             });
             builder.setNegativeButton("Cancel", null);

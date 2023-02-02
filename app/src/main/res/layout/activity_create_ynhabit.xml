@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -38,27 +39,22 @@
 
         <ImageView
             android:id="@+id/BottomBox"
-            android:layout_width="406dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
             android:layout_marginTop="168dp"
             android:background="#040007"
-            android:contentDescription="@string/_2"
-            android:foreground="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/question_input1"
-            app:layout_constraintVertical_bias="0.842"
+            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/toponefrag" />
 
         <TextView
             android:id="@+id/yes_back_text"
             android:layout_width="94dp"
             android:layout_height="50dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="3dp"
             android:background="#0B0606"
             android:gravity="center"
             android:text="BACK"
@@ -74,8 +70,6 @@
             android:id="@+id/yes_create_text"
             android:layout_width="94dp"
             android:layout_height="50dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="3dp"
             android:background="#0B0606"
             android:gravity="center"
             android:text="CREATE"
@@ -85,7 +79,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/BottomBox"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/yes_input_text"
@@ -239,7 +233,8 @@
             android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toEndOf="@+id/yes_frequency_textview"
             app:layout_constraintTop_toTopOf="@+id/yes_frequency_textview"
-            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/dropicon_rem"
@@ -249,7 +244,8 @@
             android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toEndOf="@+id/yes_reminder_textview"
             app:layout_constraintTop_toTopOf="@+id/yes_reminder_textview"
-            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+            app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,10 +2,10 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:outlineSpotShadowColor="@color/white"
     android:layout_margin="4dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="6dp">
@@ -14,50 +14,79 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/blackone"
+        android:background="#121212"
         android:id="@+id/linear_layout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/blackone">
+            android:background="#121212">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:background="#393838"
+                android:layout_height="55dp"
+                android:background="@color/blackone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/empty"
-                    android:layout_width="41dp"
-                    android:layout_height="32dp"
+                    android:id="@+id/habit_list_icon"
+                    android:layout_width="29dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="11dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="14dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="342dp"
+                    android:layout_marginBottom="17dp"
+                    app:srcCompat="@drawable/checklist_icon"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/dropdown_icon"
+                    android:layout_width="23dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="362dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="19dp"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/empty"
+                    android:layout_width="46dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="22dp"
+                    android:layout_marginBottom="8dp"
                     android:contentDescription="hcheckbox"
                     app:srcCompat="@drawable/circle" />
 
                 <TextView
                     android:id="@+id/habitname"
-                    android:layout_width="118dp"
-                    android:layout_height="21dp"
-                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="17dp"
-                    android:layout_marginTop="17dp"
-                    android:layout_marginEnd="121dp"
-                    android:layout_marginBottom="19dp"
-                    android:text="TextView" />
+                    android:layout_marginStart="58dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginEnd="127dp"
+                    android:layout_marginBottom="17dp"
+                    android:text="TextView"
+                    android:textColor="@color/white" />
 
             </RelativeLayout>
 
@@ -67,7 +96,9 @@
             android:id="@+id/expandable_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right">
+            android:layout_marginTop="1dp"
+            android:background="#121212"
+            android:layout_gravity="end">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/child_rv"

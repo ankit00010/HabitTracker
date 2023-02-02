@@ -2,7 +2,7 @@ package com.example.fukc;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,24 +31,23 @@ public class Forget_pass2 extends AppCompatActivity {
         ques.setText(que);
 
 
-        btnverify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String anss=ans.getText().toString();
-                String que= db.giveque(emaill);
+        btnverify.setOnClickListener(view -> {
+            String anss=ans.getText().toString();
+            String que1 = db.giveque(emaill);
 
-                Boolean checksecurity=db.securityverify(que,anss);
+            Boolean checksecurity=db.securityverify(que1,anss);
 
-                if(checksecurity==true){
-                    Intent intent=new Intent(getApplicationContext(),Reset_pass.class);
-                    intent.putExtra("email", emaill);
-                    startActivity(intent);}
-                else{
-                    Toast.makeText(Forget_pass2.this, "Incorrect Answer", Toast.LENGTH_SHORT).show();
-                }
-
-
+            if(checksecurity==true){
+                Intent intent1 =new Intent(getApplicationContext(),Reset_pass.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent1.putExtra("email", emaill);
+                startActivity(intent1);}
+            else{
+                Toast.makeText(Forget_pass2.this, "Incorrect Answer", Toast.LENGTH_SHORT).show();
             }
+
+
         });
+        db.close();
     }
 }

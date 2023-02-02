@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blackone"
-    tools:context=".HabitOptions">
+    tools:context=".HabitOptions"
+    tools:ignore="HardcodedText">
 
 
     <TextView
@@ -46,27 +47,26 @@
 
     <ImageView
         android:id="@+id/BottomBox"
-        android:layout_width="413dp"
+        android:layout_width="match_parent"
         android:layout_height="52dp"
         android:background="#040007"
-        android:foreground="#000000"
         android:contentDescription="@string/_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.998"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/toponefrag" />
 
     <TextView
         android:id="@+id/options_back"
         android:layout_width="94dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="3dp"
+        android:background="#0B0606"
         android:gravity="center"
         android:text="BACK"
-        android:textColor="@color/orange"
-        android:background="#0B0606"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

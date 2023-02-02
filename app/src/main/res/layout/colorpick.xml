@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ContentDescription,SpeakableTextPresentCheck,SpeakableTextPresentCheck,HardcodedText"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -30,196 +31,176 @@
             android:background="#3E3E3E"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="275dp"
-                android:layout_height="251dp"
-                android:layout_gravity="bottom|center_horizontal"
-                android:orientation="vertical">
 
-                <TableLayout
-                    android:id="@+id/table_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
-                    android:background="#3E3E3E"
-                    android:stretchColumns="*">
+            <TableLayout
+                android:id="@+id/table_layout"
+                android:layout_width="263dp"
+                android:layout_height="263dp"
+                android:layout_gravity="bottom|center"
+                android:background="#3E3E3E"
+                android:stretchColumns="*">
 
-                    <TableRow>
+                <TableRow>
 
-                        <ImageView
-                            android:id="@+id/cl1"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl1"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
-                        <ImageView
-                            android:id="@+id/cl2"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl2"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                    <ImageView
+                        android:id="@+id/cl1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl1"
+                        tools:ignore="ContentDescription,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                        <ImageView
-                            android:id="@+id/cl3"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl3"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
-                        <ImageView
-                            android:id="@+id/cl4"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl4"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
-                    </TableRow>
+                    <ImageView
+                        android:id="@+id/cl2"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl2"
+                        tools:ignore="ContentDescription,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                    <TableRow>
-                        <ImageView
-                            android:id="@+id/cl5"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl5"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                    <ImageView
+                        android:id="@+id/cl3"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl3"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                        <ImageView
-                            android:id="@+id/cl6"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl6"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                    <ImageView
+                        android:id="@+id/cl4"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl4"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                </TableRow>
 
-                        <ImageView
-                            android:id="@+id/cl7"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl7"
-                            tools:ignore="SpeakableTextPresentCheck" />
+                <TableRow>
 
-                        <ImageView
-                            android:id="@+id/cl8"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl8"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                    <ImageView
+                        android:id="@+id/cl5"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl5"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                    </TableRow>
+                    <ImageView
+                        android:id="@+id/cl6"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl6"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                    <TableRow>
+                    <ImageView
+                        android:id="@+id/cl7"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl7"
+                        tools:ignore="SpeakableTextPresentCheck" />
 
-                        <ImageView
-                            android:id="@+id/cl9"
-                            android:layout_width="39dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl9"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                    <ImageView
+                        android:id="@+id/cl8"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl8"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                        <ImageView
-                            android:id="@+id/cl10"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl10"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                </TableRow>
 
-                        <ImageView
-                            android:id="@+id/cl11"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl11"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                <TableRow>
 
-                        <ImageView
-                            android:id="@+id/cl12"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl12"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                    <ImageView
+                        android:id="@+id/cl9"
+                        android:layout_width="39dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl9"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                    </TableRow>
+                    <ImageView
+                        android:id="@+id/cl10"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl10"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                    <TableRow>
-                        <ImageView
-                            android:id="@+id/cl13"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl13"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                    <ImageView
+                        android:id="@+id/cl11"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl11"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                        <ImageView
-                            android:id="@+id/cl14"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl14"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                    <ImageView
+                        android:id="@+id/cl12"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl12"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                        <ImageView
-                            android:id="@+id/cl15"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl15"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                </TableRow>
 
-                        <ImageView
-                            android:id="@+id/cl16"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl16"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                <TableRow>
 
-                    </TableRow>
+                    <ImageView
+                        android:id="@+id/cl13"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl13"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                    <TableRow>
-                        <ImageView
-                            android:id="@+id/cl17"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl17"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                    <ImageView
+                        android:id="@+id/cl14"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl14"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                        <ImageView
-                            android:id="@+id/cl18"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl18"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                    <ImageView
+                        android:id="@+id/cl15"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl15"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                        <ImageView
-                            android:id="@+id/cl19"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl19"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                    <ImageView
+                        android:id="@+id/cl16"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl16"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-                        <ImageView
-                            android:id="@+id/cl20"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:clickable="true"
-                            app:srcCompat="@drawable/cl20"
-                            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                </TableRow>
 
-                    </TableRow>
+                <TableRow>
 
-                </TableLayout>
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/cl17"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl17"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+                    <ImageView
+                        android:id="@+id/cl18"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl18"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+                    <ImageView
+                        android:id="@+id/cl19"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl19"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+                    <ImageView
+                        android:id="@+id/cl20"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/cl20"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+                </TableRow>
+
+            </TableLayout>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

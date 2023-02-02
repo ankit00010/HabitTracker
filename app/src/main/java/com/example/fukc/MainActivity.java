@@ -11,17 +11,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     EditText username, password;
@@ -50,71 +45,60 @@ public class MainActivity extends AppCompatActivity {
 
         if (sp.getBoolean("logged", true)) {
             Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
 
 
-        btnlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String user = username.getText().toString();
-                String pass = password.getText().toString();
-                if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass))
-                    Toast.makeText(MainActivity.this, "All fields Required", Toast.LENGTH_SHORT).show();
-                else {
-                    Boolean checkuserpass = db.checkusernamepassword(user, pass);
-                    if (checkuserpass == true) {
-                        //For keeping user logged in
-                        sp.edit().putBoolean("logged", true).apply();
+        btnlogin.setOnClickListener(view -> {
+            String user = username.getText().toString();
+            String pass = password.getText().toString();
+            if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass))
+                Toast.makeText(MainActivity.this, "All fields Required", Toast.LENGTH_SHORT).show();
+            else {
+                Boolean checkuserpass = db.checkusernamepassword(user, pass);
+                if (checkuserpass == true) {
+                    //For keeping user logged in
+                    sp.edit().putBoolean("logged", true).apply();
 
-                        Toast.makeText(MainActivity.this, "Login Successfull", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
-                        startActivity(intent);
+                    Toast.makeText(MainActivity.this, "Login Successfull", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity1.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
 
-                    } else {
+                } else {
 
-                        Toast.makeText(MainActivity.this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show();
 
-                    }
                 }
             }
         });
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Register_user.class);
-                startActivity(intent);
-            }
+        signup.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), Register_user.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         });
-        forgetpass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Forget_pass.class);
-                startActivity(intent);
-            }
+        forgetpass.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), Forget_pass.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         });
 
         //code for hide and unhide password in login ui
         hide_login_password.setImageResource(R.drawable.hidepaswd);
-        hide_login_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //first to check whether the password  is visible or hidden when the eye icon is clicked
-                //Transformation method will return whether the password is hidden or visible
-                if (password.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())) {
-                    //if password is visible then hide it
-                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    hide_login_password.setImageResource(R.drawable.hidepaswd);
-                } else {
-                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    hide_login_password.setImageResource(R.drawable.unhidepswd);
-                }
+        hide_login_password.setOnClickListener(v -> {
+            //first to check whether the password  is visible or hidden when the eye icon is clicked
+            //Transformation method will return whether the password is hidden or visible
+            if (password.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())) {
+                //if password is visible then hide it
+                password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                hide_login_password.setImageResource(R.drawable.hidepaswd);
+            } else {
+                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                hide_login_password.setImageResource(R.drawable.unhidepswd);
             }
         });
-
-
-
-
+        db.close();
 
     }
 
