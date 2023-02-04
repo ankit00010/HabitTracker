@@ -198,32 +198,7 @@ public class CreateYNhabit extends AppCompatActivity {
                 Toast.makeText(CreateYNhabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
             }
 
-          else  if (reminder.isEmpty() )
-            {
-                Log.d("reminderenter","remindercancel");
-                String question = habitque.getText().toString().trim();
 
-                if (question.isEmpty())
-                {
-                    Log.d("question","questionhandler");
-
-                    Toast.makeText(CreateYNhabit.this, "Please fill in the question field ", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Log.d("save","Created Successfully");
-                    colorvalue = dialogFragment.colorval;
-                    final int habittype = 0;
-                    String frequency = frequencybutton.getText().toString();
-                    String reminder1 = reminderbutton.getText().toString();
-                    hname = habitname.getText().toString();
-                    hque = habitque.getText().toString();
-                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder1, habittype, NULL);
-                    Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-            }
              else {
 
                 setAlaram();

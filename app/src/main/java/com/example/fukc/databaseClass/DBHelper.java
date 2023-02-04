@@ -65,8 +65,9 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("remainder", remainder);
         contentValues.put("habittype", habittype);
         contentValues.put("target", target);
-        MyDB.close();
         long result = MyDB.insert("habits", null, contentValues);
+        MyDB.close();
+
         if(result==-1) return false;
         else
             return true;
@@ -255,7 +256,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.update("records", values, "habitid = ? AND date = ?", new String[]{String.valueOf(habitid),date});
     }
     //get id from habits Table
-   public int getHabitId(String hname) {
+    public int getHabitId(String hname) {
         String query = "SELECT habitid FROM habits WHERE habitname = ?";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;

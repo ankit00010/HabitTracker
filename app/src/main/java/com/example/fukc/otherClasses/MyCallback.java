@@ -30,7 +30,7 @@ public class MyCallback extends ItemTouchHelper.Callback {
         this.iconMargin = iconMargin;
         db = new DBHelper(context);
         this.context=context;
-        icon = context.getResources().getDrawable(R.drawable.ic_baseline_delete_24);
+        icon = context.getResources().getDrawable(R.drawable.deleteit);
 
     }
 

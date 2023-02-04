@@ -57,7 +57,7 @@
                 android:id="@+id/dletesubtask"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/delete_icon"
+                android:src="@drawable/deleteit"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
 

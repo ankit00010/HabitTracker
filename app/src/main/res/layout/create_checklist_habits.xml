@@ -295,7 +295,7 @@
             android:layout_marginTop="252dp"
             app:layout_constraintStart_toEndOf="@+id/name_text_input1"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/delete_icon" />
+            app:srcCompat="@drawable/deleteit" />
 
         <ImageView
             android:id="@+id/dropicon_feq"

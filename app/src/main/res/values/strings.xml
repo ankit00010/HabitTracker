@@ -15,5 +15,6 @@
     <string name="option3"> WITH A CHECKLIST</string>
     <string name="option3note">If you want to evaluate your activity based on set of sub-items</string>
     <string name="create_cat">Create Category</string>
+    <string name="line">_______________________________________________________________</string>
 
 </resources>
