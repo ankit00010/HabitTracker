@@ -20,6 +20,8 @@ MyFragmentAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DailyQuotes.showqoutes(this);
+
         setContentView(R.layout.home_screen);
         today=findViewById(R.id.tab_item_1);
         habits=findViewById(R.id.tab_item_2);
