@@ -463,7 +463,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String[] whereArgs = new String[]{habitname};
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor= db.rawQuery("Select * from habits where habitname =? ",whereArgs);
-        if (cursor.getCount()>0)
+        if (cursor.getCount()>0)//cursor is added to load the data
         {
             Log.d("InaDatabase","45e54e5454545454545454545455");
         long result=db.update(table, contentValues, whereClause, whereArgs);

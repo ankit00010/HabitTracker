@@ -76,7 +76,8 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
         holder.frequency.setText(shortS);
         holder.stats.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//check if the id is required to update the exact row or this one is
+//                enouugh
                 Intent intent = new Intent(context, Statistics.class);
                 intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("habitName", hname);

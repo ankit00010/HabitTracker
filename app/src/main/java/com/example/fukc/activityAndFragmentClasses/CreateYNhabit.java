@@ -133,6 +133,7 @@ public class CreateYNhabit extends AppCompatActivity {
                 reminderbutton.setText(db.getReminder(hnameEdit));
                 habitque.setText(db.getHabitque(hnameEdit));
                 savehabit.setText("Update");
+                //check this logic should be written outside or inside savehabit
             }
         }
 
