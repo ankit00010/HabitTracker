@@ -17,8 +17,8 @@
             >
 
 
-            <View
-                android:id="@+id/textView2"
+            <TextView
+                android:id="@+id/bar"
                 android:layout_width="6dp"
                 android:layout_height="44dp"
                 android:layout_alignParentTop="true"

@@ -311,6 +311,20 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return que;
     }
+    //get reminder from habits table
+    public String getReminder(String hname) {
+        String query = "SELECT remainder FROM habits WHERE habitname = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        String remainder="";
+        if(db != null) {
+            cursor = db.rawQuery(query, new String[]{hname});
+            if (cursor.moveToFirst()) {
+                remainder = cursor.getString(0);
+            }
+        }
+        return remainder;
+    }
     //get habitname from habits table
     public String getHabitName(String hname) {
         String query = "SELECT habitname FROM habits WHERE habitname = ?";
@@ -433,6 +447,38 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
         return target;
+    }
+    //Update all records in habit
+    public Boolean updateEdit(String habitname,String frequency,String remainder,String color,String que,String target){
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("habitname", habitname);
+        contentValues.put("color", color);
+        contentValues.put("question", que);
+        contentValues.put("frequency", frequency);
+        contentValues.put("remainder", remainder);
+        contentValues.put("target", target);
+        String table = "habits";
+        String whereClause = "habitname =?";
+        String[] whereArgs = new String[]{habitname};
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor= db.rawQuery("Select * from habits where habitname =? ",whereArgs);
+        if (cursor.getCount()>0)
+        {
+            Log.d("InaDatabase","45e54e5454545454545454545455");
+        long result=db.update(table, contentValues, whereClause, whereArgs);
+        if (result==-1)
+        {
+            return false;
+        }
+        else{
+            return true;
+        }}
+        else
+        {
+            return false;
+        }
+
     }
     //Update pass
     public void updatepass(String pass,String email){
