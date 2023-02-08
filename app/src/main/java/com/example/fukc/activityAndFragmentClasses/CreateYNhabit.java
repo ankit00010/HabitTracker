@@ -168,6 +168,7 @@ public class CreateYNhabit extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(CreateYNhabit.this);
             builder.setTitle("Select Days of the week");
             builder.setCancelable(false);
+            daysList.clear();
 
             builder.setMultiChoiceItems(daysArray, selectedDays, (dialogInterface, i, b) -> {
                 // check condition
@@ -185,6 +186,7 @@ public class CreateYNhabit extends AppCompatActivity {
 
             builder.setPositiveButton("OK", (dialogInterface, i) -> {
                 // Initialize string builder
+
                 StringBuilder stringBuilder = new StringBuilder();
 
                 for (int j = 0; j < daysList.size(); j++) {
@@ -243,15 +245,8 @@ public class CreateYNhabit extends AppCompatActivity {
                 if (savehabit.getText().equals("Update")) {
                     Log.d("Heereeeeeeeee","11111111111111111111111111111111");
 
-                   Boolean result= db.updateEdit(hname, frequency, reminder1, colorvalue, hque, "");
+                   db.updateEdit(hnameEdit,hname, frequency, reminder1, colorvalue, hque, "");
 
-                    if (result) {
-                        // Update was successful
-                        Log.d("Update Result", "Success");
-                    } else {
-                        // Update was not successful
-                        Log.d("Update Result", "Failed");
-                    }
                 } else{
                     Log.d("Heereeeeeeeee","22222222222222222222222222222222");
 

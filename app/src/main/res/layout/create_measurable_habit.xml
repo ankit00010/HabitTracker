@@ -41,7 +41,6 @@
             android:id="@+id/BottomBox"
             android:layout_width="match_parent"
             android:layout_height="57dp"
-            android:layout_marginStart="4dp"
             android:layout_marginTop="28dp"
             android:background="#040007"
             android:contentDescription="@string/_2"
@@ -188,6 +187,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reminder_text" />
 
+        <ImageView
+            android:layout_width="63dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="304dp"
+            android:layout_marginTop="100dp"
+            android:contentDescription="abc"
+            android:foregroundGravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/colorbox" />
 
         <ImageView
             android:id="@+id/measurable_color_button"

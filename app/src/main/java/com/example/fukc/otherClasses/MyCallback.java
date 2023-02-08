@@ -17,7 +17,6 @@ import com.example.fukc.adapterClasses.MyAdapterHabit;
 import com.example.fukc.databaseClass.DBHelper;
 
 public class MyCallback extends ItemTouchHelper.Callback {
-
     private final ColorDrawable background = new ColorDrawable();
     private Drawable icon;
     private final int iconMargin;
@@ -31,7 +30,6 @@ public class MyCallback extends ItemTouchHelper.Callback {
         db = new DBHelper(context);
         this.context=context;
         icon = context.getResources().getDrawable(R.drawable.deleteit);
-
     }
 
     @Override

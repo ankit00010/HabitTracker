@@ -123,6 +123,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(CreateMeasurableHabit.this);
             builder.setTitle("Select Days of the week");
             builder.setCancelable(false);
+            daysList.clear();
 
             builder.setMultiChoiceItems(daysArray, selectedDays, (dialogInterface, i, b) -> {
                 // check condition

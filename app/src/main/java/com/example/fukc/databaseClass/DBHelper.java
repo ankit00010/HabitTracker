@@ -227,7 +227,7 @@ public class DBHelper extends SQLiteOpenHelper {
         int id = getHabitId(habitName);
         String whereClause1 = "habitid" + " = ?";
         String[] whereArgs1 = {String.valueOf(id)};
-        db.delete("record", whereClause1, whereArgs1);
+        db.delete("records", whereClause1, whereArgs1);
         db.delete("subhabits", whereClause1, whereArgs1);
     }
 
@@ -449,7 +449,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return target;
     }
     //Update all records in habit
-    public Boolean updateEdit(String habitname,String frequency,String remainder,String color,String que,String target){
+    public void updateEdit(String prevHabitName,String habitname,String frequency,String remainder,String color,String que,String target){
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("habitname", habitname);
@@ -459,25 +459,12 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("remainder", remainder);
         contentValues.put("target", target);
         String table = "habits";
-        String whereClause = "habitname =?";
-        String[] whereArgs = new String[]{habitname};
+        String whereClause = "habitname = ? ";
+        String[] whereArgs = new String[]{prevHabitName};
         SQLiteDatabase db = getWritableDatabase();
+        db.update(table, contentValues, whereClause, whereArgs);
         Cursor cursor= db.rawQuery("Select * from habits where habitname =? ",whereArgs);
-        if (cursor.getCount()>0)//cursor is added to load the data
-        {
-            Log.d("InaDatabase","45e54e5454545454545454545455");
-        long result=db.update(table, contentValues, whereClause, whereArgs);
-        if (result==-1)
-        {
-            return false;
-        }
-        else{
-            return true;
-        }}
-        else
-        {
-            return false;
-        }
+        Log.d("InaDatabase","45e54e5454545454545454545455");
 
     }
     //Update pass

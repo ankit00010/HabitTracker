@@ -1,6 +1,8 @@
 package com.example.fukc.adapterClasses;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
@@ -24,13 +26,14 @@ import java.util.ArrayList;
 
 
 public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.ViewHolder> {
-    private final Context context;
+    private final Context context,contextDialogue;
     private final ArrayList name;
     DBHelper db;
     ArrayList<String> shabitname;
-    public MyAdapterAllHabit(Context context, ArrayList name) {
+    public MyAdapterAllHabit(Context contextDialogue,Context context, ArrayList name) {
         this.context = context;
         this.name = name;
+        this.contextDialogue=contextDialogue;
     }
     @NonNull
     @Override
@@ -55,13 +58,16 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
         if(!TextUtils.isEmpty(colorcode)){
             holder.name.setTextColor(Color.parseColor(colorcode));
         }
-        String[] days = frequncy.split(",");
+        String[] days = frequncy.split(", ");
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < days.length; i++) {
-            String shortDay = days[i].substring(0, 3);
-            sb.append(shortDay);
-            if (i < days.length - 1) {
-                sb.append(",");
+        if(days.length>4) {
+            for (int i = 0; i < days.length; i++) {
+                Log.d("AthroughZ", days[i]);
+                String shortDay = days[i].substring(0, 3);
+                sb.append(shortDay);
+                if (i < days.length - 1) {
+                    sb.append(",");
+                }
             }
         }
         String shortS = sb.toString();
@@ -74,47 +80,60 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
             holder.htype.setText("Checklist");
         }
         holder.frequency.setText(shortS);
-        holder.stats.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {//check if the id is required to update the exact row or this one is
-//                enouugh
-                Intent intent = new Intent(context, Statistics.class);
-                intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("habitName", hname);
-                context.startActivity(intent);
-            }
+        holder.delete.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(contextDialogue);
+            builder.setMessage("Are you sure you want to Delete?\n Note: All records for this habit will be deleted")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            db.deleteHabit(hname);
+                            int index = name.indexOf(hname);
+                            name.remove(hname);
+                            notifyItemRemoved(index);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
 
         });
-        holder.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int category =db.getHabitType(hname);
-                if (category==0){
-                    Intent intent=new Intent(context.getApplicationContext(), CreateYNhabit.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    Log.d("hname",hname);
-                    intent.putExtra("habitEdit", hname);
-                    context.getApplicationContext().startActivity(intent);
-                }
-                else if (category==1)
-                {
-                    Intent intent=new Intent(context, CreateMeasurableHabit.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("habitName", hname);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+        holder.stats.setOnClickListener(v -> {
+            Intent intent = new Intent(context, Statistics.class);
+            intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("habitName", hname);
+            context.startActivity(intent);
+        });
+        holder.edit.setOnClickListener(v -> {
+            int category =db.getHabitType(hname);
+            if (category==0){
+                Intent intent=new Intent(context, CreateYNhabit.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Log.d("hname",hname);
+                intent.putExtra("habitEdit", hname);
+                context.getApplicationContext().startActivity(intent);
+            }
+            else if (category==1)
+            {
+                Intent intent=new Intent(context, CreateMeasurableHabit.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("habitName", hname);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
 
 
-                }
-                else if (category==2){
-                    Intent intent=new Intent(context, CreateChecklistHabits.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("habitName", hname);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+            }
+            else if (category==2){
+                Intent intent=new Intent(context, CreateChecklistHabits.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("habitName", hname);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
 
 
-                }
             }
         });
         db.close();

@@ -38,7 +38,7 @@ public class Habits extends Fragment {
             habitname.add(cursor.getString(0));
         }
         recyclerView = view.findViewById(R.id.habits);
-        adapter = new MyAdapterAllHabit(getActivity().getApplicationContext(), habitname);
+        adapter = new MyAdapterAllHabit(getActivity(),getActivity().getApplicationContext(), habitname);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
