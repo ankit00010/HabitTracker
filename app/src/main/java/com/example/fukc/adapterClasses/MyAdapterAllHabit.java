@@ -50,6 +50,8 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
         Glide.with(holder.itemView.getContext()).load(R.drawable.stat).into(holder.stats);
         Glide.with(holder.itemView.getContext()).load(R.drawable.ic_baseline_edit_24).into(holder.edit);
         Glide.with(holder.itemView.getContext()).load(R.drawable.deleteit).into(holder.delete);
+        holder.bar.setBackgroundResource(R.drawable.round_button);
+
 
 
         String hname = String.valueOf(name.get(position));
@@ -74,10 +76,15 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
         int htype = db.getHabitType(hname);
         if(htype==0){
             holder.htype.setText("Yes/No");
+            Glide.with(holder.itemView.getContext()).load(R.drawable.yn_icon).into(holder.icon);
         }else if(htype==1){
             holder.htype.setText("Measurable");
+            Glide.with(holder.itemView.getContext()).load(R.drawable.measurable_icon).into(holder.icon);
+
         }else if(htype==2) {
             holder.htype.setText("Checklist");
+            Glide.with(holder.itemView.getContext()).load(R.drawable.checklist_icon).into(holder.icon);
+
         }
         holder.frequency.setText(shortS);
         holder.delete.setOnClickListener(v -> {
@@ -119,19 +126,19 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
             else if (category==1)
             {
                 Intent intent=new Intent(context, CreateMeasurableHabit.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("habitName", hname);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Log.d("hname",hname);
+                intent.putExtra("habitEdit", hname);
+                context.getApplicationContext().startActivity(intent);
 
 
             }
             else if (category==2){
                 Intent intent=new Intent(context, CreateChecklistHabits.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("habitName", hname);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Log.d("hname",hname);
+                intent.putExtra("habitEdit", hname);
+                context.getApplicationContext().startActivity(intent);
 
 
             }
@@ -144,8 +151,9 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
         return name.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView name,frequency,htype;
-        public ImageView stats,edit,delete;
+        public TextView name,frequency,htype,show_frequency;
+        public ImageView stats,edit,delete,icon;
+        View bar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.habitname);
@@ -154,6 +162,9 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
             stats = itemView.findViewById(R.id.stats);
             edit =itemView.findViewById(R.id.edit);
             delete=itemView.findViewById(R.id.delete);
+            icon=itemView.findViewById(R.id.habittype);
+            bar=itemView.findViewById(R.id.bar);
+            show_frequency=itemView.findViewById(R.id.show_frequency);
             //Glide.with(itemView.getContext()).load(R.drawable.circle).into(stats);
 
         }

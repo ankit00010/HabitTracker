@@ -3,12 +3,16 @@ package com.example.fukc.activityAndFragmentClasses;
 import static java.sql.Types.NULL;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fukc.databaseClass.DBHelper;
 import com.example.fukc.adapterClasses.MyAdapterCreateSubHabit;
 import com.example.fukc.R;
+import com.example.fukc.otherClasses.AlaramReciever;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,9 +50,12 @@ public class CreateChecklistHabits extends AppCompatActivity {
     MyAdapterCreateSubHabit adapter;
     RecyclerView recyclerView;
     DBHelper db;
+    AlarmManager alaramManager;
+    PendingIntent pendingIntent;
+    Calendar calendar;
     DialogfragmentColor dialogFragment = new DialogfragmentColor();
     int habittype = 2;
-    String colorvalue;
+    String colorvalue,hnameEdit;
     public void selectclr(ImageView ac) {
         if(ac==dialogFragment.cl1){
             color.setImageResource(R.drawable.cl1);
@@ -100,11 +108,14 @@ public class CreateChecklistHabits extends AppCompatActivity {
         habitque = findViewById(R.id.question_edittext);
         backarrow =findViewById(R.id.back_text);
         reminderbutton = findViewById(R.id.reminder_textview);
+        String remainder = reminderbutton.getText().toString().trim();
+
         frequencybutton = findViewById(R.id.frequency_textview);
         addsubtask = findViewById(R.id.additem_text);
         create = findViewById(R.id.create_text);
         subhabitlist = findViewById(R.id.linearLayout);
         color=findViewById(R.id.color_icon);
+        calendar=Calendar.getInstance();
         db = new DBHelper(this);
         backarrow.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), HabitOptions.class);
@@ -184,6 +195,25 @@ public class CreateChecklistHabits extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
             recyclerView.setVisibility(View.VISIBLE);
         });
+        if (hnameEdit != null && hnameEdit.length() > 0)
+        {
+            if (remainder.isEmpty())
+            {   Log.d("CHeckthisone","The reminder exception handled");
+                habitname.setText(db.getHabitName(hnameEdit));
+                frequencybutton.setText((db.getHabitFrequency(hnameEdit)));
+                create.setText("Update");
+            }
+            else {
+                Log.d("CHeckthisone","The reminder exception handled ??????????????");
+
+                habitname.setText(db.getHabitName(hnameEdit));
+                frequencybutton.setText((db.getHabitFrequency(hnameEdit)));
+                reminderbutton.setText(db.getReminder(hnameEdit));
+                habitque.setText(db.getHabitque(hnameEdit));
+                create.setText("Update");
+                //check this logic should be written outside or inside savehabit
+            }
+        }
         create.setOnClickListener(view -> {
             if(TextUtils.isEmpty(habitname.getText()))
             {
@@ -215,6 +245,7 @@ public class CreateChecklistHabits extends AppCompatActivity {
                 }
                 String delimiter = ",";
                 String result = String.join(delimiter, inputList);
+
                 db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL);
                 int habitid=db.getHabitId(hname);
                 db.insertDataSubhabits(result,habitid);
@@ -231,5 +262,12 @@ public class CreateChecklistHabits extends AppCompatActivity {
 
         });
         db.close();
+    }
+    private void setAlaram() {
+        Toast.makeText(this, "naah bro ", Toast.LENGTH_SHORT).show();
+        alaramManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent=new Intent(this, AlaramReciever.class);
+        pendingIntent=PendingIntent.getBroadcast(this,0,intent,0);
+        alaramManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
     }
 }

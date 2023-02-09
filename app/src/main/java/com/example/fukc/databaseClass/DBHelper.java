@@ -449,7 +449,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return target;
     }
     //Update all records in habit
-    public void updateEdit(String prevHabitName,String habitname,String frequency,String remainder,String color,String que,String target){
+    public void updateEdit(String prevHabitName,String habitname,String frequency,String remainder,String color,String que,Integer habittype ,Integer target){
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("habitname", habitname);
@@ -457,6 +457,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("question", que);
         contentValues.put("frequency", frequency);
         contentValues.put("remainder", remainder);
+        contentValues.put("habittype", habittype);
         contentValues.put("target", target);
         String table = "habits";
         String whereClause = "habitname = ? ";

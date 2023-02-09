@@ -176,6 +176,7 @@ public class CreateYNhabit extends AppCompatActivity {
                     // when checkbox selected
                     // Add position in lang list
                     daysList.add(i);
+
                     Collections.sort(daysList);
                 } else {
                     // when checkbox unselected
@@ -188,6 +189,7 @@ public class CreateYNhabit extends AppCompatActivity {
                 // Initialize string builder
 
                 StringBuilder stringBuilder = new StringBuilder();
+
 
                 for (int j = 0; j < daysList.size(); j++) {
                     // concat array value
@@ -232,9 +234,38 @@ public class CreateYNhabit extends AppCompatActivity {
                 Toast.makeText(CreateYNhabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
             }
 
+            else if (reminder.isEmpty()){
+                Log.d("Heereeeeeeeee",reminder);
+
+                colorvalue = dialogFragment.colorval;
+                final int habittype = 0;
+                String frequency = frequencybutton.getText().toString();
+                String reminder1 = reminderbutton.getText().toString();
+                hname = habitname.getText().toString();
+                hque = habitque.getText().toString();
+                if (savehabit.getText().equals("Update")) {
+
+                    db.updateEdit(hnameEdit,hname, frequency, reminder1, colorvalue, hque,habittype, NULL);
+
+                } else{
+
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder1, habittype, NULL);
+
+                }
+                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+
 
             else {
 
+                if (TextUtils.isEmpty(habitque.getText())){
+                    Toast.makeText(this,"Please enter the question ",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
                 setAlaram();
                 colorvalue = dialogFragment.colorval;
                 final int habittype = 0;
@@ -245,7 +276,7 @@ public class CreateYNhabit extends AppCompatActivity {
                 if (savehabit.getText().equals("Update")) {
                     Log.d("Heereeeeeeeee","11111111111111111111111111111111");
 
-                   db.updateEdit(hnameEdit,hname, frequency, reminder1, colorvalue, hque, "");
+                   db.updateEdit(hnameEdit,hname, frequency, reminder1, colorvalue, hque,habittype, NULL);
 
                 } else{
                     Log.d("Heereeeeeeeee","22222222222222222222222222222222");
@@ -257,7 +288,7 @@ public class CreateYNhabit extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
-            }
+            }}
         });
 
 

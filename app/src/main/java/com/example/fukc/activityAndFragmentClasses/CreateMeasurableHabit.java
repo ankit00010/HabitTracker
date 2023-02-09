@@ -1,14 +1,20 @@
 package com.example.fukc.activityAndFragmentClasses;
 
+import static java.sql.Types.NULL;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.fukc.databaseClass.DBHelper;
 import com.example.fukc.R;
+import com.example.fukc.otherClasses.AlaramReciever;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,9 +39,12 @@ public class CreateMeasurableHabit extends AppCompatActivity {
     boolean[] selectedDays;
     ArrayList<Integer> daysList = new ArrayList<>();
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
-    String hname,hque;
+    String hname,hque,hnameEdit;
     DBHelper db;
     String colorvalue;
+    AlarmManager alaramManager;
+    PendingIntent pendingIntent;
+    Calendar calendar;
     DialogfragmentColorM dialogFragment = new DialogfragmentColorM();
     public void selectclr(ImageView ac) {
         if(ac==dialogFragment.cl1){
@@ -86,12 +96,23 @@ public class CreateMeasurableHabit extends AppCompatActivity {
         setContentView(R.layout.create_measurable_habit);
         backtext=findViewById(R.id.measurable_back_text);
         reminderbox =findViewById(R.id.measurable_reminder_edit_text);
+        String remainder = reminderbox.getText().toString().trim();
+
         frequency_edittext=findViewById(R.id.measurable_frequency_edit_text);
         habitname = findViewById(R.id.measurable_name_text);
         habitque = findViewById(R.id.measurable_question_edit_text);
         savehabit= findViewById(R.id.measurable_create_text);
         target= findViewById(R.id.measurable_target_text1);
+
         color=findViewById(R.id.measurable_color_button);
+        calendar=Calendar.getInstance();
+        if (getIntent().getStringExtra("habitEdit") != "")
+        {
+//            Log.d("checkitbruh cuk",hnameEdit);
+            hnameEdit = getIntent().getStringExtra("habitEdit");
+
+        }
+
         db = new DBHelper(this);
         reminderbox.setOnClickListener(view -> {
             Calendar calendar= Calendar.getInstance();
@@ -176,6 +197,31 @@ public class CreateMeasurableHabit extends AppCompatActivity {
             // show dialog
             builder.show();
         });
+        if (hnameEdit != null && hnameEdit.length() > 0)
+        {
+            if (remainder.isEmpty())
+            {   Log.d("CHeckthisone","The reminder exception handled");
+                habitname.setText(db.getHabitName(hnameEdit));
+                frequency_edittext.setText((db.getHabitFrequency(hnameEdit)));
+                String targetString = ""+db.getHabitTarget(hnameEdit);
+                target.setText(targetString);
+                Log.d("Here it is bruh", targetString);
+
+
+                savehabit.setText("Update");
+            }
+            else {
+                Log.d("CHeckthisone","The reminder exception handled ??????????????");
+
+                habitname.setText(db.getHabitName(hnameEdit));
+                frequency_edittext.setText((db.getHabitFrequency(hnameEdit)));
+                reminderbox.setText(db.getReminder(hnameEdit));
+                habitque.setText(db.getHabitque(hnameEdit));
+                target.setText(db.getHabitTarget(hnameEdit));
+                savehabit.setText("Update");
+                //check this logic should be written outside or inside savehabit
+            }
+        }
 
         savehabit.setOnClickListener(view -> {
             if(TextUtils.isEmpty(habitname.getText()))//validation for  habitname field is empty
@@ -200,7 +246,16 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                 int targetval = Integer.parseInt(target.getText().toString());
                 hname = habitname.getText().toString();
                 hque = habitque.getText().toString();
-                db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, targetval);
+                if (savehabit.getText().equals("Update")) {
+                    Log.d("Heereeeeeeeee","11111111111111111111111111111111");
+
+                    db.updateEdit(hnameEdit,hname,frequency,reminder,colorvalue,hque,habittype,targetval);
+                } else{
+                    Log.d("Heereeeeeeeee","22222222222222222222222222222222");
+
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, targetval);
+
+                }
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -214,6 +269,13 @@ public class CreateMeasurableHabit extends AppCompatActivity {
         });
 
         db.close();
+    }
+    private void setAlaram() {
+        Toast.makeText(this, "naah bro ", Toast.LENGTH_SHORT).show();
+        alaramManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent=new Intent(this, AlaramReciever.class);
+        pendingIntent=PendingIntent.getBroadcast(this,0,intent,0);
+        alaramManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
     }
     public void onBackPressed(){
         AlertDialog.Builder alertDialog =new AlertDialog.Builder(CreateMeasurableHabit.this);

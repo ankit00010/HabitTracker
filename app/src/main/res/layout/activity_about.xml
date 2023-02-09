@@ -1,0 +1,67 @@
+<!-- XML layout -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:background="@color/blackone"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_app_logo"
+            android:layout_width="184dp"
+            android:layout_height="158dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="App Logo"
+            android:src="@drawable/habit_icon" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="About Habit Tracker"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/teal_700"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/aboutapp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textStyle="italic"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_developers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Developed by Shivam Dubey and Ankit Mishra"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/teal_700"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_contact_us"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/contactus"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="italic" />
+    </LinearLayout>
+</LinearLayout>

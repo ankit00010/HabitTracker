@@ -103,7 +103,8 @@ public class Today extends Fragment implements MyAdapterHabit.OnItemClickListene
                 } else if(number==0){
                     Glide.with(getContext()).load(getContext().getDrawable(drawablesm[0])).transition(DrawableTransitionOptions.withCrossFade()).into(imageView);
                     db.updateMeasurableRecord(habitid,"N",strDate,number);
-                }else {
+                }
+                else {
                     Glide.with(getContext()).load(getContext().getDrawable(drawablesm[1])).transition(DrawableTransitionOptions.withCrossFade()).into(imageView);
                     db.updateMeasurableRecord(habitid,"F",strDate,number);
                 }
