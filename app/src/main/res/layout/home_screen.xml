@@ -55,11 +55,10 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/main_layout"
-        android:layout_width="393dp"
-        android:layout_height="673dp"
+        android:layout_width="411dp"
+        android:layout_height="671dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout">
-    </androidx.viewpager2.widget.ViewPager2>
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout"></androidx.viewpager2.widget.ViewPager2>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
