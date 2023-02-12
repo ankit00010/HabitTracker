@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.TimeZone;
 
 
@@ -40,10 +41,9 @@ public class CreateYNhabit extends AppCompatActivity {
     boolean[] selectedDays;
     String hname,hque,hnameEdit;
     ArrayList<Integer> daysList = new ArrayList<>();
-    AlarmManager alaramManager;
-    PendingIntent pendingIntent;
-    Calendar calendar;
 
+    Calendar calendar;
+    String timer="";
 
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
     DialogfragmentColorYN dialogFragment = new DialogfragmentColorYN();
@@ -98,7 +98,7 @@ public class CreateYNhabit extends AppCompatActivity {
         habitname = (EditText) findViewById(R.id.yes_name_edit_text);
         habitque = findViewById(R.id.yes_question_edit_text);
             hnameEdit="";
-        if (getIntent().getStringExtra("habitEdit") != "")
+        if (!Objects.equals(getIntent().getStringExtra("habitEdit"), ""))
         {
 //            Log.d("checkitbruh cuk",hnameEdit);
             hnameEdit = getIntent().getStringExtra("habitEdit");
@@ -109,7 +109,6 @@ public class CreateYNhabit extends AppCompatActivity {
         savehabit= (TextView) findViewById(R.id.yes_create_text);
         yes_backtext =findViewById(R.id.yes_back_text);
         reminderbutton = (TextView) findViewById(R.id.yes_reminder_textview);
-        String reminder = reminderbutton.getText().toString().trim();
 
         frequencybutton = (TextView) findViewById(R.id.yes_frequency_textview);
         color=(ImageView) findViewById(R.id.yes_color_button);
@@ -119,21 +118,19 @@ public class CreateYNhabit extends AppCompatActivity {
 
         if (hnameEdit != null && hnameEdit.length() > 0)
         {
-            if (reminder.isEmpty())
+            if (timer.isEmpty())
             {   Log.d("CHeckthisone","The reminder exception handled");
-                habitname.setText(db.getHabitName(hnameEdit));
+                habitname.setText(hnameEdit);
                 frequencybutton.setText((db.getHabitFrequency(hnameEdit)));
                 savehabit.setText("Update");
             }
             else {
                   Log.d("CHeckthisone","The reminder exception handled ??????????????");
-
-                    habitname.setText(db.getHabitName(hnameEdit));
+                habitname.setText(hnameEdit);
                 frequencybutton.setText((db.getHabitFrequency(hnameEdit)));
                 reminderbutton.setText(db.getReminder(hnameEdit));
                 habitque.setText(db.getHabitque(hnameEdit));
                 savehabit.setText("Update");
-                //check this logic should be written outside or inside savehabit
             }
         }
 
@@ -218,7 +215,8 @@ public class CreateYNhabit extends AppCompatActivity {
                     // clear language list
                     daysList.clear();
                     // clear text view value
-                    frequencybutton.setText("");
+                    frequencybutton.setText(timer);
+
                 }
             });
             // show dialog
@@ -234,22 +232,48 @@ public class CreateYNhabit extends AppCompatActivity {
                 Toast.makeText(CreateYNhabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
             }
 
-            else if (reminder.isEmpty()){
-                Log.d("Heereeeeeeeee",reminder);
+            else if (!timer.isEmpty()) {
+                Log.d("Heereeeeeeeee", timer);
+                if (TextUtils.isEmpty(habitque.getText())) {
+                    Toast.makeText(this, "Please enter the question ", Toast.LENGTH_SHORT).show();
+                } else {
+                    setAlaram();
+                    colorvalue = dialogFragment.colorval;
+                    final int habittype = 0;
+                    String frequency = frequencybutton.getText().toString();
+                    hname = habitname.getText().toString();
+                    hque = habitque.getText().toString();
+                    if (savehabit.getText().equals("Update")) {
+
+                        db.updateEdit(hnameEdit, hname, frequency, timer, colorvalue, hque, habittype, NULL);
+
+                    } else {
+
+                        db.insertDatahabit(hname, colorvalue, hque, frequency, timer, habittype, NULL);
+
+                    }
+                    Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            } else {
+
 
                 colorvalue = dialogFragment.colorval;
                 final int habittype = 0;
                 String frequency = frequencybutton.getText().toString();
-                String reminder1 = reminderbutton.getText().toString();
                 hname = habitname.getText().toString();
                 hque = habitque.getText().toString();
                 if (savehabit.getText().equals("Update")) {
+                    Log.d("Heereeeeeeeee", "11111111111111111111111111111111");
 
-                    db.updateEdit(hnameEdit,hname, frequency, reminder1, colorvalue, hque,habittype, NULL);
+                    db.updateEdit(hnameEdit, hname, frequency, timer, colorvalue, hque, habittype, NULL);
 
-                } else{
+                } else {
+                    Log.d("Heereeeeeeeee", "22222222222222222222222222222222");
 
-                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder1, habittype, NULL);
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, timer, habittype, NULL);
 
                 }
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
@@ -257,39 +281,11 @@ public class CreateYNhabit extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-
-
-            else {
-
-                if (TextUtils.isEmpty(habitque.getText())){
-                    Toast.makeText(this,"Please enter the question ",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                setAlaram();
-                colorvalue = dialogFragment.colorval;
-                final int habittype = 0;
-                String frequency = frequencybutton.getText().toString();
-                String reminder1 = reminderbutton.getText().toString();
-                hname = habitname.getText().toString();
-                hque = habitque.getText().toString();
-                if (savehabit.getText().equals("Update")) {
-                    Log.d("Heereeeeeeeee","11111111111111111111111111111111");
-
-                   db.updateEdit(hnameEdit,hname, frequency, reminder1, colorvalue, hque,habittype, NULL);
-
-                } else{
-                    Log.d("Heereeeeeeeee","22222222222222222222222222222222");
-
-                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder1, habittype, NULL);
-
-                }
-                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-            }}
         });
+
+
+
+
 
 
 
@@ -303,12 +299,23 @@ public class CreateYNhabit extends AppCompatActivity {
     //Method used to set the alaram after the habit is created
     @SuppressLint("UnspecifiedImmutableFlag")
     private void setAlaram() {
-        Toast.makeText(this, "naah bro ", Toast.LENGTH_SHORT).show();
-        alaramManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent=new Intent(this, AlaramReciever.class);
-        pendingIntent=PendingIntent.getBroadcast(this,0,intent,0);
-        alaramManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+        Calendar calendar = Calendar.getInstance();
+        int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
+
+        // Check if the currentt day is in the selected days list
+        Log.d("hereedaylisyvalue", daysList.toString());
+        if (daysList.contains((currentDay + 5) % 7)) {
+            // Set the alarm for the current daysssssss
+            AlarmManager alaramManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(this, AlaramReciever.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+            alaramManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            Toast.makeText(this, "Alarm set for today", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No alarm set for today", Toast.LENGTH_SHORT).show();
+        }
     }
+
 
     public void onBackPressed() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(CreateYNhabit.this);
