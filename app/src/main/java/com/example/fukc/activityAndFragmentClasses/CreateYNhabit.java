@@ -97,15 +97,11 @@ public class CreateYNhabit extends AppCompatActivity {
         setContentView(R.layout.create_ynhabit);
         habitname = (EditText) findViewById(R.id.yes_name_edit_text);
         habitque = findViewById(R.id.yes_question_edit_text);
-            hnameEdit="";
+        hnameEdit="";
         if (getIntent().getStringExtra("habitEdit") != "")
         {
-//            Log.d("checkitbruh cuk",hnameEdit);
             hnameEdit = getIntent().getStringExtra("habitEdit");
-
         }
-
-
         savehabit= (TextView) findViewById(R.id.yes_create_text);
         yes_backtext =findViewById(R.id.yes_back_text);
         reminderbutton = (TextView) findViewById(R.id.yes_reminder_textview);
@@ -120,25 +116,28 @@ public class CreateYNhabit extends AppCompatActivity {
         if (hnameEdit != null && hnameEdit.length() > 0)
         {
             if (reminder.isEmpty())
-            {   Log.d("CHeckthisone","The reminder exception handled");
-                habitname.setText(db.getHabitName(hnameEdit));
+            {
+                habitname.setText(hnameEdit);
                 frequencybutton.setText((db.getHabitFrequency(hnameEdit)));
                 savehabit.setText("Update");
             }
             else {
-                  Log.d("CHeckthisone","The reminder exception handled ??????????????");
-
-                    habitname.setText(db.getHabitName(hnameEdit));
+                habitname.setText(hnameEdit);
                 frequencybutton.setText((db.getHabitFrequency(hnameEdit)));
                 reminderbutton.setText(db.getReminder(hnameEdit));
                 habitque.setText(db.getHabitque(hnameEdit));
                 savehabit.setText("Update");
-                //check this logic should be written outside or inside savehabit
             }
         }
 
         yes_backtext.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), HabitOptions.class);
+            Intent intent;
+            if (savehabit.getText().equals("Update")) {
+                intent = new Intent(getApplicationContext(), HomeScreen.class);
+
+            } else{
+                intent = new Intent(getApplicationContext(), HabitOptions.class);
+            }
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
@@ -235,7 +234,6 @@ public class CreateYNhabit extends AppCompatActivity {
             }
 
             else if (reminder.isEmpty()){
-                Log.d("Heereeeeeeeee",reminder);
 
                 colorvalue = dialogFragment.colorval;
                 final int habittype = 0;
@@ -244,13 +242,9 @@ public class CreateYNhabit extends AppCompatActivity {
                 hname = habitname.getText().toString();
                 hque = habitque.getText().toString();
                 if (savehabit.getText().equals("Update")) {
-
                     db.updateEdit(hnameEdit,hname, frequency, reminder1, colorvalue, hque,habittype, NULL);
-
                 } else{
-
                     db.insertDatahabit(hname, colorvalue, hque, frequency, reminder1, habittype, NULL);
-
                 }
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -274,15 +268,9 @@ public class CreateYNhabit extends AppCompatActivity {
                 hname = habitname.getText().toString();
                 hque = habitque.getText().toString();
                 if (savehabit.getText().equals("Update")) {
-                    Log.d("Heereeeeeeeee","11111111111111111111111111111111");
-
                    db.updateEdit(hnameEdit,hname, frequency, reminder1, colorvalue, hque,habittype, NULL);
-
                 } else{
-                    Log.d("Heereeeeeeeee","22222222222222222222222222222222");
-
                     db.insertDatahabit(hname, colorvalue, hque, frequency, reminder1, habittype, NULL);
-
                 }
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

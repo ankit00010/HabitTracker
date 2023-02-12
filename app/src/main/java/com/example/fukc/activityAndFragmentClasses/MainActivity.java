@@ -63,12 +63,10 @@ public class MainActivity extends AppCompatActivity {
                 if (checkuserpass == true) {
                     //For keeping user logged in
                     sp.edit().putBoolean("logged", true).apply();
-
-                    Toast.makeText(MainActivity.this, "Login Successfull", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-
                 } else {
 
                     Toast.makeText(MainActivity.this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show();

@@ -9,6 +9,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import com.example.fukc.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -40,14 +42,14 @@ public class CreateChecklistHabits extends AppCompatActivity {
     boolean[] selectedDays;
     ArrayList<Integer> daysList = new ArrayList<>();
     List<String> inputList = new ArrayList<>();
+    ArrayList<String> mData = new ArrayList<>();
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
-    int numberOfEditTexts=0;
     MyAdapterCreateSubHabit adapter;
     RecyclerView recyclerView;
     DBHelper db;
     DialogfragmentColor dialogFragment = new DialogfragmentColor();
     int habittype = 2;
-    String colorvalue;
+    String colorvalue,hnameEdit;
     public void selectclr(ImageView ac) {
         if(ac==dialogFragment.cl1){
             color.setImageResource(R.drawable.cl1);
@@ -104,10 +106,43 @@ public class CreateChecklistHabits extends AppCompatActivity {
         addsubtask = findViewById(R.id.additem_text);
         create = findViewById(R.id.create_text);
         subhabitlist = findViewById(R.id.linearLayout);
+        recyclerView = findViewById(R.id.recyclerview);
         color=findViewById(R.id.color_icon);
         db = new DBHelper(this);
+        adapter = new MyAdapterCreateSubHabit(mData);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        hnameEdit="";
+        if (getIntent().getStringExtra("habitEdit") != "")
+        {
+            hnameEdit = getIntent().getStringExtra("habitEdit");
+        }
+        if (hnameEdit != null && hnameEdit.length() > 0)
+        {
+                habitname.setText(hnameEdit);
+                frequencybutton.setText((db.getHabitFrequency(hnameEdit)));
+                create.setText("Update");
+                reminderbutton.setText(db.getReminder(hnameEdit));
+                habitque.setText(db.getHabitque(hnameEdit));
+                String subHabitList = db.getSubHabit(hnameEdit);
+                String[] arrSubHabit = subHabitList.split(",");
+                for(int i = 0;i< arrSubHabit.length;i++){
+                    subhabit1.setText(arrSubHabit[0]);
+                    if (i > 0) {
+                        adapter.addItem(arrSubHabit[i]);
+                        if(recyclerView.getVisibility() != View.VISIBLE) {
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+        }
         backarrow.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), HabitOptions.class);
+            Intent intent;
+            if (create.getText().equals("Update")) {
+                intent = new Intent(getApplicationContext(), HomeScreen.class);
+            } else{
+                intent = new Intent(getApplicationContext(), HabitOptions.class);
+            }
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
@@ -177,12 +212,11 @@ public class CreateChecklistHabits extends AppCompatActivity {
             builder.show();
         });
         addsubtask.setOnClickListener(view -> {
-            numberOfEditTexts =numberOfEditTexts+1;
-            adapter = new MyAdapterCreateSubHabit(numberOfEditTexts);
-            recyclerView = findViewById(R.id.recyclerview);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-            recyclerView.setVisibility(View.VISIBLE);
+            subhabit1.requestFocus();
+            adapter.addItem("");
+            if(recyclerView.getVisibility() != View.VISIBLE) {
+                recyclerView.setVisibility(View.VISIBLE);
+            }
         });
         create.setOnClickListener(view -> {
             if(TextUtils.isEmpty(habitname.getText()))
@@ -204,7 +238,7 @@ public class CreateChecklistHabits extends AppCompatActivity {
                 String hque = habitque.getText().toString();
                 String subH1 = subhabit1.getText().toString();
                 inputList.add(subH1);
-                if (numberOfEditTexts > 0) {
+                if (recyclerView.getChildCount() > 0) {
                     for (int i = 0; i < Objects.requireNonNull(recyclerView.getAdapter()).getItemCount(); i++) {
                         MyAdapterCreateSubHabit.MyViewHolder viewHolder = (MyAdapterCreateSubHabit.MyViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
                         if (viewHolder != null) {
@@ -214,10 +248,10 @@ public class CreateChecklistHabits extends AppCompatActivity {
                     }
                 }
                 String delimiter = ",";
-                String result = String.join(delimiter, inputList);
+                String resultSubHabit = String.join(delimiter, inputList);
                 db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL);
                 int habitid=db.getHabitId(hname);
-                db.insertDataSubhabits(result,habitid);
+                db.insertDataSubhabits(resultSubHabit,habitid);
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

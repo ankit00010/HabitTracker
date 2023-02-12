@@ -31,7 +31,6 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
     private final Context context;
     private final ArrayList name;
     public int[] drawables = {R.drawable.crossedcircle,R.drawable.checkedcircle};
-    public String[] recordYN = {"N","Y"};
     DBHelper db;
     ArrayList<String> shabitname;
     MyAdapterSubHabit adapter;
@@ -86,12 +85,23 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
         if (habittype == 0) {
             holder.icon.setImageResource(R.drawable.yn_icon);
             holder.checkbox.setOnClickListener(new View.OnClickListener() {
-                int currentDrawableIndex = 0;
+                int currentDrawableIndex ;
                 @Override
                 public void onClick(View view) {
+                    if(db.getRecord(habitname)=="Y"){
+                        currentDrawableIndex = 1;
+                    }else if(db.getRecord(habitname)=="N"){
+                        currentDrawableIndex = 0;
+                    }
                     currentDrawableIndex = (currentDrawableIndex + 1) % drawables.length;
                     Glide.with(context).load(context.getDrawable(drawables[currentDrawableIndex])).transition(DrawableTransitionOptions.withCrossFade()).into(holder.checkbox);
-                    db.updateYNrecord(habitid,recordYN[currentDrawableIndex],strDate);
+                    if (currentDrawableIndex==0) {
+                        Glide.with(holder.itemView.getContext()).load(R.drawable.checkedcircle).into(holder.checkbox);
+                        db.updateYNrecord(habitid,"Y",strDate);
+                    } else {
+                        Glide.with(holder.itemView.getContext()).load(R.drawable.crossedcircle).into(holder.checkbox);
+                        db.updateYNrecord(habitid,"N",strDate);
+                    }
                 }
             });
         }else if (habittype == 1) {

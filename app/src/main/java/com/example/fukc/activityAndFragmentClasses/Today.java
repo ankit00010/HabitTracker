@@ -2,10 +2,13 @@ package com.example.fukc.activityAndFragmentClasses;
 
 import static java.sql.Types.NULL;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +24,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.fukc.databaseClass.DBHelper;
 import com.example.fukc.adapterClasses.MyAdapterHabit;
-import com.example.fukc.otherClasses.MyCallback;
 import com.example.fukc.R;
 
 import java.text.SimpleDateFormat;
@@ -58,9 +60,6 @@ public class Today extends Fragment implements MyAdapterHabit.OnItemClickListene
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL));
-        MyCallback callback = new MyCallback(adapter, getActivity().getApplicationContext(),  20);
-        ItemTouchHelper helper = new ItemTouchHelper(callback);
-        helper.attachToRecyclerView(recyclerView);
         int childCount = habitname.size();
         for (int i = 0; i < childCount; i++) {
             String habtname = habitname.get(i);
@@ -73,8 +72,8 @@ public class Today extends Fragment implements MyAdapterHabit.OnItemClickListene
         plus.setOnClickListener(view -> {
             Intent intent=new Intent(getActivity().getApplicationContext(),HabitOptions.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            //ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity().getApplicationContext(),  R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(intent);
-
         });
         db.close();
         return view;

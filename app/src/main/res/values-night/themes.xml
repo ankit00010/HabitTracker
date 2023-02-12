@@ -15,5 +15,10 @@
         <!-- Customize your theme here. -->
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
+
+
+    </style>
+    <style name="AppBaseTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 </resources>

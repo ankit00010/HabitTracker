@@ -285,14 +285,7 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imageView14"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="252dp"
-            app:layout_constraintStart_toEndOf="@+id/name_text_input1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/deleteit" />
+
 
         <ImageView
             android:id="@+id/dropicon_feq"

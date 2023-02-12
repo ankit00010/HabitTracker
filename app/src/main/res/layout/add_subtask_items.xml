@@ -55,9 +55,10 @@
 
             <ImageView
                 android:id="@+id/dletesubtask"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/deleteit"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:src="@drawable/ic_baseline_delete_24"
+                android:layout_gravity="center_vertical"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
 
