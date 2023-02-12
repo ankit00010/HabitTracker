@@ -246,6 +246,13 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("subrecord", subrecord);
         db.update("records", values, "habitid = ? AND date = ?", new String[]{String.valueOf(habitid),date});
     }
+    //Update record for checklist
+    public void updateChecklistRecord(int habitid,String record,String date){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("record", record);
+        db.update("records", values, "habitid = ? AND date = ?", new String[]{String.valueOf(habitid),date});
+    }
 
     //Update record for Measurable habits
     public void updateMeasurableRecord(int habitid,String record,String date,int target){
@@ -327,33 +334,35 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return remainder;
     }
-    //get habitname from habits table
-    public String getHabitName(String hname) {
-        String query = "SELECT habitname FROM habits WHERE habitname = ?";
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        String name="";
-        if(db != null) {
-            cursor = db.rawQuery(query, new String[]{hname});
-            if (cursor.moveToFirst()) {
-                name = cursor.getString(0);
-            }
-        }
-        return name;
-    }
+
     //get color from habits Table
     public String getHabitColor(String hname) {
         String query = "SELECT color FROM habits WHERE habitname = ?";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
-        String freq="";
+        String color="";
         if(db != null) {
             cursor = db.rawQuery(query, new String[]{hname});
             if (cursor.moveToFirst()) {
-                freq = cursor.getString(0);
+                color = cursor.getString(0);
             }
         }
-        return freq;
+        return color;
+    }
+    //get color from subhabit Table
+    public String getSubHabit(String hname) {
+        int id = getHabitId(hname);
+        String query = "SELECT shabitlist FROM subhabits WHERE habitid = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        String subHabits="";
+        if(db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+            if (cursor.moveToFirst()) {
+                subHabits = cursor.getString(0);
+            }
+        }
+        return subHabits;
     }
     //check if record is available
     public boolean isRecordPresent(int habitId, String date){

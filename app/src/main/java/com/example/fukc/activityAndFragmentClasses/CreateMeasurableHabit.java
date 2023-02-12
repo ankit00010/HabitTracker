@@ -134,9 +134,15 @@ public class CreateMeasurableHabit extends AppCompatActivity {
         });
         //backtext to navigate to habit options back
         backtext.setOnClickListener(view -> {
-            Intent intent=new Intent(getApplicationContext(),HabitOptions.class);
+            Intent intent;
+            if (savehabit.getText().equals("Update")) {
+                intent = new Intent(getApplicationContext(), HomeScreen.class);
+            } else{
+                intent = new Intent(getApplicationContext(), HabitOptions.class);
+            }
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            finish();
         });
         //code for frequency
         frequency_edittext.setOnClickListener(view -> {
@@ -201,7 +207,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
         {
             if (remainder.isEmpty())
             {   Log.d("CHeckthisone","The reminder exception handled");
-                habitname.setText(db.getHabitName(hnameEdit));
+                habitname.setText(hnameEdit);
                 frequency_edittext.setText((db.getHabitFrequency(hnameEdit)));
                 String targetString = ""+db.getHabitTarget(hnameEdit);
                 target.setText(targetString);
@@ -213,7 +219,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
             else {
                 Log.d("CHeckthisone","The reminder exception handled ??????????????");
 
-                habitname.setText(db.getHabitName(hnameEdit));
+                habitname.setText(hnameEdit);
                 frequency_edittext.setText((db.getHabitFrequency(hnameEdit)));
                 reminderbox.setText(db.getReminder(hnameEdit));
                 habitque.setText(db.getHabitque(hnameEdit));

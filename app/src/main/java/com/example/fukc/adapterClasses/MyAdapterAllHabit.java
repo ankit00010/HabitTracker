@@ -119,7 +119,6 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
             if (category==0){
                 Intent intent=new Intent(context, CreateYNhabit.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Log.d("hname",hname);
                 intent.putExtra("habitEdit", hname);
                 context.getApplicationContext().startActivity(intent);
             }
@@ -127,20 +126,14 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
             {
                 Intent intent=new Intent(context, CreateMeasurableHabit.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Log.d("hname",hname);
                 intent.putExtra("habitEdit", hname);
                 context.getApplicationContext().startActivity(intent);
-
-
             }
             else if (category==2){
                 Intent intent=new Intent(context, CreateChecklistHabits.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Log.d("hname",hname);
                 intent.putExtra("habitEdit", hname);
                 context.getApplicationContext().startActivity(intent);
-
-
             }
         });
         db.close();

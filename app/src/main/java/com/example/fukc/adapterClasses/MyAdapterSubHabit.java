@@ -3,6 +3,7 @@ package com.example.fukc.adapterClasses;
 import static java.sql.Types.NULL;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.fukc.databaseClass.DBHelper;
 import com.example.fukc.R;
 
@@ -26,7 +29,6 @@ public class MyAdapterSubHabit extends RecyclerView.Adapter<MyAdapterSubHabit.Vi
     private final Context context;
     private final int habitid;
     public int[] drawables = {R.drawable.crossedcircle,R.drawable.checkedcircle};
-    public String[] recordYN = {"N","Y"};
     DBHelper db;
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -55,11 +57,11 @@ public class MyAdapterSubHabit extends RecyclerView.Adapter<MyAdapterSubHabit.Vi
         Glide.with(holder.itemView.getContext()).load(R.drawable.circle).into(holder.checkbox);
         Glide.with(holder.itemView.getContext()).load(R.drawable.subhabit_icon).into(holder.subHabitIcon);
         if(record[holder.getAdapterPosition()].equals("Y")){
-            holder.checkbox.setImageResource(R.drawable.checkedcircle);
+            Glide.with(holder.itemView.getContext()).load(R.drawable.checkedcircle).into(holder.checkbox);
         }else if(record[holder.getAdapterPosition()].equals("N")){
-            holder.checkbox.setImageResource(R.drawable.crossedcircle);
+            Glide.with(holder.itemView.getContext()).load(R.drawable.crossedcircle).into(holder.checkbox);
         }else if(record[holder.getAdapterPosition()].equals("S")){
-            holder.checkbox.setImageResource(R.drawable.circle);
+            Glide.with(holder.itemView.getContext()).load(R.drawable.circle).into(holder.checkbox);
         }
 
         holder.checkbox.setOnClickListener(new View.OnClickListener() {
@@ -67,8 +69,13 @@ public class MyAdapterSubHabit extends RecyclerView.Adapter<MyAdapterSubHabit.Vi
             @Override
             public void onClick(View view) {
                 currentDrawableIndex = (currentDrawableIndex+1 ) % drawables.length;
-                Glide.with(context).load(context.getDrawable(drawables[currentDrawableIndex])).transition(DrawableTransitionOptions.withCrossFade()).into(holder.checkbox);
-                record[holder.getAdapterPosition()]=recordYN[currentDrawableIndex];
+                if (currentDrawableIndex==0) {
+                    Glide.with(holder.itemView.getContext()).load(R.drawable.checkedcircle).into(holder.checkbox);
+                    record[holder.getAdapterPosition()]="Y";
+                } else {
+                    Glide.with(holder.itemView.getContext()).load(R.drawable.crossedcircle).into(holder.checkbox);
+                    record[holder.getAdapterPosition()]="N";
+                }
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < record.length; i++) {
                     sb.append(record[i]);
@@ -80,15 +87,13 @@ public class MyAdapterSubHabit extends RecyclerView.Adapter<MyAdapterSubHabit.Vi
                 int cnt=0;
                 for(int i=0;i<record.length;i++){
                     if(record[i].equals("Y")){
-                        Log.d("dialog today","In for if");
                         cnt++;
                     }
                 }
                 if(cnt==record.length){
-                    Log.d("dialog today","In imp if");
-                    db.insertDataRecord(habitid, "Y", strDate, NULL,sb.toString());
+                    db.updateChecklistRecord(habitid, "Y", strDate);
                 }else if(cnt<record.length&&cnt>0){
-                    db.insertDataRecord(habitid, "F", strDate, NULL,sb.toString());
+                    db.updateChecklistRecord(habitid, "F", strDate);
                 }
             }
         });

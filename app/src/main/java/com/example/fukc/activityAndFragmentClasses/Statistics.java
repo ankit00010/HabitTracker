@@ -64,7 +64,7 @@ public class Statistics extends AppCompatActivity {
         });
         titleText.setText("  "+habitName);
         //Habit score
-        int habitScore=25;         //default value to show progress bar
+        int habitScore=db.getDoneCount(habitName);         //default value to show progress bar
         if((db.getDoneCount(habitName))!=0&&(db.getFailCount(habitName))!=0&&(db.getSkipCount(habitName)!=0)){
             habitScore = ((db.getDoneCount(habitName))/(db.getFailCount(habitName)+db.getSkipCount(habitName)))*100;
         }
