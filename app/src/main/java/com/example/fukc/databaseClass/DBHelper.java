@@ -309,6 +309,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 que = cursor.getString(0);
             }
         }
+        Log.d("Inadatavase ",query);
+
         return que;
     }
     //get reminder from habits table
