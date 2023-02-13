@@ -19,6 +19,6 @@
 
     </style>
     <style name="AppBaseTheme" parent="Theme.MaterialComponents.DayNight">
-        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="android:windowAnimationStyle">@style/Widget.AppCompat.ActionButton.Overflow</item>
     </style>
 </resources>

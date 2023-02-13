@@ -24,6 +24,7 @@ import com.example.fukc.otherClasses.AlaramReciever;
 import com.example.fukc.databaseClass.DBHelper;
 import com.example.fukc.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -97,7 +98,7 @@ public class CreateYNhabit extends AppCompatActivity {
         setContentView(R.layout.create_ynhabit);
         habitname = (EditText) findViewById(R.id.yes_name_edit_text);
         habitque = findViewById(R.id.yes_question_edit_text);
-            hnameEdit="";
+        hnameEdit="";
         if (!Objects.equals(getIntent().getStringExtra("habitEdit"), ""))
         {
 //            Log.d("checkitbruh cuk",hnameEdit);
@@ -125,7 +126,7 @@ public class CreateYNhabit extends AppCompatActivity {
                 savehabit.setText("Update");
             }
             else {
-                  Log.d("CHeckthisone","The reminder exception handled ??????????????");
+                Log.d("CHeckthisone","The reminder exception handled ??????????????");
                 habitname.setText(hnameEdit);
                 frequencybutton.setText((db.getHabitFrequency(hnameEdit)));
                 reminderbutton.setText(db.getReminder(hnameEdit));
@@ -151,14 +152,13 @@ public class CreateYNhabit extends AppCompatActivity {
                 c.set(Calendar.MINUTE, minute);
                 c.setTimeZone(TimeZone.getDefault());
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("k:mm a");
-                String time = format.format(c.getTime());
-                reminderbutton.setText(time);
-
-
+                timer = format.format(c.getTime());
+                reminderbutton.setText(timer);
+                setAlaram(timer);
             }, hours, mins, false);
             timePickerDialog.show();
-
         });
+
 
         frequencybutton.setOnClickListener(view -> {
             // Initialize alert dialog
@@ -237,7 +237,7 @@ public class CreateYNhabit extends AppCompatActivity {
                 if (TextUtils.isEmpty(habitque.getText())) {
                     Toast.makeText(this, "Please enter the question ", Toast.LENGTH_SHORT).show();
                 } else {
-                    setAlaram();
+                    setAlaram(timer);
                     colorvalue = dialogFragment.colorval;
                     final int habittype = 0;
                     String frequency = frequencybutton.getText().toString();
@@ -297,24 +297,30 @@ public class CreateYNhabit extends AppCompatActivity {
         db.close();
     }
     //Method used to set the alaram after the habit is created
-    @SuppressLint("UnspecifiedImmutableFlag")
-    private void setAlaram() {
+    private void setAlaram(String timer) {
+        SimpleDateFormat format = new SimpleDateFormat("k:mm a");
         Calendar calendar = Calendar.getInstance();
-        int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
-
-        // Check if the currentt day is in the selected days list
-        Log.d("hereedaylisyvalue", daysList.toString());
-        if (daysList.contains((currentDay + 5) % 7)) {
-            // Set the alarm for the current daysssssss
-            AlarmManager alaramManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(this, AlaramReciever.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-            alaramManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-            Toast.makeText(this, "Alarm set for today", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "No alarm set for today", Toast.LENGTH_SHORT).show();
+        try {
+            calendar.setTime(format.parse(timer));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        // Set the alarm for the current hour and minute
+        AlarmManager alaramManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlaramReciever.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        alaramManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        Toast.makeText(this, "Alarm set for " + timer, Toast.LENGTH_SHORT).show();
     }
+
+
+
 
 
     public void onBackPressed() {
