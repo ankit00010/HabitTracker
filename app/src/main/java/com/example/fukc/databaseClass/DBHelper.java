@@ -100,7 +100,18 @@ public class DBHelper extends SQLiteOpenHelper {
         else
             return true;
     }
-
+    //update the subhabits of the checklist
+    public Boolean updateSubHabit(String shabitname,Integer habitid){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues= new ContentValues();
+        contentValues.put("shabitlist", shabitname);
+        contentValues.put("habitid", habitid);
+        long result = MyDB.insert("subhabits", null, contentValues);
+        MyDB.close();
+        if(result==-1) return false;
+        else
+            return true;
+    }
     //Get Record
     public String getRecord(String hname) {
         int id = getHabitId(hname);

@@ -117,7 +117,7 @@ public class CreateYNhabit extends AppCompatActivity {
         selectedDays = new boolean[daysArray.length];
         calendar=Calendar.getInstance();
         db = new DBHelper(this);
-
+        String callingActivity = getIntent().getStringExtra("calling_activity");
         if (hnameEdit != null && hnameEdit.length() > 0)
         {
 
@@ -130,12 +130,19 @@ public class CreateYNhabit extends AppCompatActivity {
 
         }
 
+
         yes_backtext.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), HabitOptions.class);
+            Intent intent;
+            if (savehabit.getText().equals("Update")) {
+                intent = new Intent(getApplicationContext(), HomeScreen.class);
+            } else{
+                intent = new Intent(getApplicationContext(), HabitOptions.class);
+            }
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         });
+
         Log.d("reminder",reminderbutton.getText().toString());
         reminderbutton.setOnClickListener(view -> {
             Calendar calendar = Calendar.getInstance();
