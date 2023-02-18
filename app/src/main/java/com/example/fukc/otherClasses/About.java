@@ -1,10 +1,11 @@
-package com.example.fukc;
+package com.example.fukc.otherClasses;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.fukc.R;
 import com.example.fukc.activityAndFragmentClasses.HomeScreen;
 
 public class About extends AppCompatActivity {

@@ -165,27 +165,28 @@
             app:layout_constraintTop_toBottomOf="@+id/reminder_text" />
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="63dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="304dp"
+            android:layout_height="59dp"
             android:layout_marginTop="100dp"
             android:contentDescription="abc"
             android:foregroundGravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.913"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/colorbox" />
+
         <ImageView
             android:id="@+id/yes_color_button"
             android:layout_width="58dp"
             android:layout_height="53dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginTop="9dp"
             android:contentDescription="abc"
-            app:layout_constraintBottom_toBottomOf="@+id/yes_input_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.409"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
             app:layout_constraintStart_toEndOf="@+id/yes_input_text"
-            app:layout_constraintTop_toBottomOf="@+id/CreateHabitText"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintTop_toTopOf="@+id/imageView"
             app:srcCompat="@drawable/choose_color_icon" />
 
         <TextView

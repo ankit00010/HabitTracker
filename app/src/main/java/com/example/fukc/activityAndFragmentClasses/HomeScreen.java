@@ -1,7 +1,5 @@
 package com.example.fukc.activityAndFragmentClasses;
 
-import static com.google.android.material.tabs.TabLayout.MODE_SCROLLABLE;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
@@ -11,7 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.example.fukc.About;
+import com.example.fukc.otherClasses.About;
 import com.example.fukc.adapterClasses.MyFragmentAdapter;
 import com.example.fukc.R;
 import com.google.android.material.tabs.TabItem;

@@ -3,9 +3,12 @@ package com.example.fukc.activityAndFragmentClasses;
 import static java.sql.Types.NULL;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,7 +27,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fukc.databaseClass.DBHelper;
 import com.example.fukc.adapterClasses.MyAdapterCreateSubHabit;
 import com.example.fukc.R;
+import com.example.fukc.otherClasses.AlaramReciever;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +51,9 @@ public class CreateChecklistHabits extends AppCompatActivity {
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
     MyAdapterCreateSubHabit adapter;
     RecyclerView recyclerView;
+    int selectedHour,selectedMinute;
     DBHelper db;
+    String timer="";
     DialogfragmentColor dialogFragment = new DialogfragmentColor();
     int habittype = 2;
     String colorvalue,hnameEdit;
@@ -157,8 +164,10 @@ public class CreateChecklistHabits extends AppCompatActivity {
                 c.set(Calendar.MINUTE, minute);
                 c.setTimeZone(TimeZone.getDefault());
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("k:mm a");
-                String time = format.format(c.getTime());
-                reminderbutton.setText(time);
+                 timer = format.format(c.getTime());
+                reminderbutton.setText(timer);
+                selectedHour=hourOfDay;
+                selectedMinute=minute;
             }, hours, mins, false);
             timePickerDialog.show();
         });
@@ -230,6 +239,41 @@ public class CreateChecklistHabits extends AppCompatActivity {
             else if(TextUtils.isEmpty(subhabit1.getText())){
                 Toast.makeText(CreateChecklistHabits.this, "Enter at least two sub habit", Toast.LENGTH_SHORT).show();
             }
+            else if (!timer.isEmpty()) {
+                Log.d("Heereeeeeeeee", timer);
+                if (TextUtils.isEmpty(habitque.getText())) {
+                    Toast.makeText(this, "Please enter the question ", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {   setAlarm();
+                    colorvalue = dialogFragment.colorval;
+                    String hname = habitname.getText().toString();
+                    String frequency = frequencybutton.getText().toString();
+                    String reminder = reminderbutton.getText().toString();
+                    String hque = habitque.getText().toString();
+                    String subH1 = subhabit1.getText().toString();
+                    inputList.add(subH1);
+                    if (recyclerView.getChildCount() > 0) {
+                        for (int i = 0; i < Objects.requireNonNull(recyclerView.getAdapter()).getItemCount(); i++) {
+                            MyAdapterCreateSubHabit.MyViewHolder viewHolder = (MyAdapterCreateSubHabit.MyViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
+                            if (viewHolder != null) {
+                                String text = viewHolder.getText();
+                                inputList.add(text);
+                            }
+                        }
+                    }
+                    String delimiter = ",";
+                    String resultSubHabit = String.join(delimiter, inputList);
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL);
+                    int habitid=db.getHabitId(hname);
+                    db.insertDataSubhabits(resultSubHabit,habitid);
+                    Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+
+                }
+            }
             else {
                 colorvalue = dialogFragment.colorval;
                 String hname = habitname.getText().toString();
@@ -265,5 +309,40 @@ public class CreateChecklistHabits extends AppCompatActivity {
 
         });
         db.close();
+    }
+    private void setAlarm() {
+        Calendar calendar = Calendar.getInstance();
+        int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
+
+        // Check if the current day is in the selected days list
+        if (daysList.contains((currentDay + 5) % 7)) {
+            // Set the alarm for the selected time
+            calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+            calendar.set(Calendar.MINUTE, selectedMinute);
+            calendar.set(Calendar.SECOND, 0);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(this, AlaramReciever.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+            Toast.makeText(this, "Alarm set for " + timer, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No alarm set for today", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void onBackPressed(){
+        AlertDialog.Builder alertDialog =new AlertDialog.Builder(CreateChecklistHabits.this);
+        alertDialog.setTitle("Discard");
+        alertDialog.setMessage("Discard the new habit ?");
+        alertDialog.setPositiveButton("Yes", (dialog, which) -> {
+            Intent intent=new Intent(getApplicationContext(), HomeScreen.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        });
+        alertDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        alertDialog.show();
     }
 }

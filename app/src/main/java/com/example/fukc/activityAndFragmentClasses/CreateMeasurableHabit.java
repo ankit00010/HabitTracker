@@ -24,6 +24,7 @@ import com.example.fukc.databaseClass.DBHelper;
 import com.example.fukc.R;
 import com.example.fukc.otherClasses.AlaramReciever;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -44,7 +45,9 @@ public class CreateMeasurableHabit extends AppCompatActivity {
     String colorvalue;
     AlarmManager alaramManager;
     PendingIntent pendingIntent;
+    int selectedMinute,selectedHour;
     Calendar calendar;
+    String timer="";
     DialogfragmentColorM dialogFragment = new DialogfragmentColorM();
     public void selectclr(ImageView ac) {
         if(ac==dialogFragment.cl1){
@@ -124,10 +127,11 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                 c.set(Calendar.MINUTE,minute);
                 c.setTimeZone(TimeZone.getDefault());
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat format=new SimpleDateFormat("k:mm a");
-                String time=format.format(c.getTime());
-                reminderbox.setText(time);
+                 timer=format.format(c.getTime());
+                reminderbox.setText(timer);
 
-
+                selectedHour=hourOfDay;
+                selectedMinute=minute;
             },hours,mins,false);
             timePickerDialog.show();
 
@@ -243,6 +247,39 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                 Toast.makeText(CreateMeasurableHabit.this, "Select atleast one frequency", Toast.LENGTH_SHORT).show();
             }
             //save the data
+            else if (!timer.isEmpty()) {
+                Log.d("Heereeeeeeeee", timer);
+                if (TextUtils.isEmpty(habitque.getText())) {
+                    Toast.makeText(this, "Please enter the question ", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    setAlarm();
+
+                    colorvalue = dialogFragment.colorval;
+                    final int habittype = 1;
+                    String frequency = frequency_edittext.getText().toString();
+                    String reminder = reminderbox.getText().toString();
+                    int targetval = Integer.parseInt(target.getText().toString());
+                    hname = habitname.getText().toString();
+                    hque = habitque.getText().toString();
+                    if (savehabit.getText().equals("Update")) {
+                        Log.d("Heereeeeeeeee","11111111111111111111111111111111");
+
+                        db.updateEdit(hnameEdit,hname,frequency,reminder,colorvalue,hque,habittype,targetval);
+                    } else{
+                        Log.d("Heereeeeeeeee","22222222222222222222222222222222");
+
+                        db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, targetval);
+
+                    }
+                    Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+                }
+
             else {
 
                 colorvalue = dialogFragment.colorval;
@@ -276,12 +313,27 @@ public class CreateMeasurableHabit extends AppCompatActivity {
 
         db.close();
     }
-    private void setAlaram() {
-        Toast.makeText(this, "naah bro ", Toast.LENGTH_SHORT).show();
-        alaramManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent=new Intent(this, AlaramReciever.class);
-        pendingIntent=PendingIntent.getBroadcast(this,0,intent,0);
-        alaramManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+    private void setAlarm() {
+        Calendar calendar = Calendar.getInstance();
+        int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
+
+        // Check if the current day is in the selected days list
+        if (daysList.contains((currentDay + 5) % 7)) {
+            // Set the alarm for the selected time
+            calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+            calendar.set(Calendar.MINUTE, selectedMinute);
+            calendar.set(Calendar.SECOND, 0);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(this, AlaramReciever.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+            Toast.makeText(this, "Alarm set for " + timer, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No alarm set for today", Toast.LENGTH_SHORT).show();
+        }
     }
     public void onBackPressed(){
         AlertDialog.Builder alertDialog =new AlertDialog.Builder(CreateMeasurableHabit.this);

@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Objects;
 import java.util.TimeZone;
 
@@ -42,7 +43,7 @@ public class CreateYNhabit extends AppCompatActivity {
     boolean[] selectedDays;
     String hname,hque,hnameEdit;
     ArrayList<Integer> daysList = new ArrayList<>();
-
+    int selectedHour,selectedMinute;
     Calendar calendar;
     String timer="";
 
@@ -119,20 +120,14 @@ public class CreateYNhabit extends AppCompatActivity {
 
         if (hnameEdit != null && hnameEdit.length() > 0)
         {
-            if (timer.isEmpty())
-            {   Log.d("CHeckthisone","The reminder exception handled");
-                habitname.setText(hnameEdit);
-                frequencybutton.setText((db.getHabitFrequency(hnameEdit)));
-                savehabit.setText("Update");
-            }
-            else {
+
                 Log.d("CHeckthisone","The reminder exception handled ??????????????");
                 habitname.setText(hnameEdit);
                 frequencybutton.setText((db.getHabitFrequency(hnameEdit)));
                 reminderbutton.setText(db.getReminder(hnameEdit));
                 habitque.setText(db.getHabitque(hnameEdit));
                 savehabit.setText("Update");
-            }
+
         }
 
         yes_backtext.setOnClickListener(view -> {
@@ -154,7 +149,8 @@ public class CreateYNhabit extends AppCompatActivity {
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("k:mm a");
                 timer = format.format(c.getTime());
                 reminderbutton.setText(timer);
-                setAlaram(timer);
+                selectedHour=hourOfDay;
+                selectedMinute=minute;
             }, hours, mins, false);
             timePickerDialog.show();
         });
@@ -237,7 +233,7 @@ public class CreateYNhabit extends AppCompatActivity {
                 if (TextUtils.isEmpty(habitque.getText())) {
                     Toast.makeText(this, "Please enter the question ", Toast.LENGTH_SHORT).show();
                 } else {
-                    setAlaram(timer);
+                    setAlarm();
                     colorvalue = dialogFragment.colorval;
                     final int habittype = 0;
                     String frequency = frequencybutton.getText().toString();
@@ -297,27 +293,30 @@ public class CreateYNhabit extends AppCompatActivity {
         db.close();
     }
     //Method used to set the alaram after the habit is created
-    private void setAlaram(String timer) {
-        SimpleDateFormat format = new SimpleDateFormat("k:mm a");
+    private void setAlarm() {
         Calendar calendar = Calendar.getInstance();
-        try {
-            calendar.setTime(format.parse(timer));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
+        int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
 
-        // Set the alarm for the current hour and minute
-        AlarmManager alaramManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlaramReciever.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-        alaramManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        Toast.makeText(this, "Alarm set for " + timer, Toast.LENGTH_SHORT).show();
+        // Check if the current day is in the selected days list
+        if (daysList.contains((currentDay + 5) % 7)) {
+            // Set the alarm for the selected time
+            calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+            calendar.set(Calendar.MINUTE, selectedMinute);
+            calendar.set(Calendar.SECOND, 0);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(this, AlaramReciever.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+            Toast.makeText(this, "Alarm set for " + timer, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No alarm set for today", Toast.LENGTH_SHORT).show();
+        }
     }
+
+
 
 
 

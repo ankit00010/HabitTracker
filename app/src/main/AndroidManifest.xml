@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Fukc"
         tools:targetApi="31">
         <activity
-            android:name=".About"
+            android:name=".otherClasses.About"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
