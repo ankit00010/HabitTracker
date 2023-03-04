@@ -128,14 +128,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return userid;
     }
     //Get Record
-    public String getRecord(String hname) {
+    public String getRecord(String hname,String date) {
         int id = getHabitId(hname);
-        String query = "SELECT record FROM records WHERE habitid = ?";
+        String query = "SELECT record FROM records WHERE habitid = ? AND date = ?";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         String record="";
         if(db != null) {
-            cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+            cursor = db.rawQuery(query, new String[]{String.valueOf(id),date});
             if (cursor.moveToFirst()) {
                 record = cursor.getString(0);
             }

@@ -68,13 +68,13 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
         int habitid= db.getHabitId(habitname);
         String colorcode=db.getHabitColor(habitname);
 
-        if(db.getRecord(habitname).equals("Y")){
+        if(db.getRecord(habitname,strDate).equals("Y")){
             Glide.with(context).load(R.drawable.checkedcircle).into(holder.checkbox);
-        }else if(db.getRecord(habitname).equals("N")){
+        }else if(db.getRecord(habitname,strDate).equals("N")){
             Glide.with(context).load(R.drawable.crossedcircle).into(holder.checkbox);
-        }else if(db.getRecord(habitname).equals("S")){
+        }else if(db.getRecord(habitname,strDate).equals("S")){
             Glide.with(context).load(R.drawable.circle).into(holder.checkbox);
-        }else if(db.getRecord(habitname).equals("F")){
+        }else if(db.getRecord(habitname,strDate).equals("F")){
             //holder.checkbox.setImageResource(R.drawable.minuscircle);
             Glide.with(context).load(R.drawable.minuscircle).into(holder.checkbox);
         }
@@ -88,9 +88,9 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
                 int currentDrawableIndex ;
                 @Override
                 public void onClick(View view) {
-                    if(db.getRecord(habitname)=="Y"){
+                    if(db.getRecord(habitname,strDate)=="Y"){
                         currentDrawableIndex = 1;
-                    }else if(db.getRecord(habitname)=="N"){
+                    }else if(db.getRecord(habitname,strDate)=="N"){
                         currentDrawableIndex = 0;
                     }
                     currentDrawableIndex = (currentDrawableIndex + 1) % drawables.length;
