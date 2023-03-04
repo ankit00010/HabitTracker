@@ -12,6 +12,7 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -43,11 +44,12 @@ public class CreateMeasurableHabit extends AppCompatActivity {
     String hname,hque,hnameEdit;
     DBHelper db;
     String colorvalue;
-    AlarmManager alaramManager;
     PendingIntent pendingIntent;
     int selectedMinute,selectedHour;
     Calendar calendar;
     String timer="";
+    SharedPreferences sp;
+    int userid;
     DialogfragmentColorM dialogFragment = new DialogfragmentColorM();
     public void selectclr(ImageView ac) {
         if(ac==dialogFragment.cl1){
@@ -109,6 +111,8 @@ public class CreateMeasurableHabit extends AppCompatActivity {
 
         color=findViewById(R.id.measurable_color_button);
         calendar=Calendar.getInstance();
+        sp= getSharedPreferences("login", MODE_PRIVATE);
+        userid = sp.getInt("userId",0);
         if (getIntent().getStringExtra("habitEdit") != "")
         {
 //            Log.d("checkitbruh cuk",hnameEdit);
@@ -270,7 +274,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                     } else{
                         Log.d("Heereeeeeeeee","22222222222222222222222222222222");
 
-                        db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, targetval);
+                        db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, targetval,userid);
 
                     }
                     Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
@@ -296,7 +300,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                 } else{
                     Log.d("Heereeeeeeeee","22222222222222222222222222222222");
 
-                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, targetval);
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, targetval,userid);
 
                 }
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);

@@ -7,6 +7,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.example.fukc.otherClasses.About;
@@ -21,11 +22,13 @@ TabItem today,habits;
 ViewPager2 mainLayout;
 MyFragmentAdapter adapter;
 SharedPreferences sp;
-
+int userid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen);
+        sp= getSharedPreferences("login", MODE_PRIVATE);
+        userid = sp.getInt("userId",0);
         Toolbar toolbar = findViewById(R.id.linearLayout2);
         setSupportActionBar(toolbar);
         today=findViewById(R.id.tab_item_1);

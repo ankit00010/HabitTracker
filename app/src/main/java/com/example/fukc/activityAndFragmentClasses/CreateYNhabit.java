@@ -12,6 +12,7 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -49,7 +50,8 @@ public class CreateYNhabit extends AppCompatActivity {
 
     String[] daysArray = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"};
     DialogfragmentColorYN dialogFragment = new DialogfragmentColorYN();
-
+    SharedPreferences sp;
+    int userid;
     public void selectclr(ImageView ac) {
         if(ac==dialogFragment.cl1){
             color.setImageResource(R.drawable.cl1);
@@ -117,7 +119,8 @@ public class CreateYNhabit extends AppCompatActivity {
         selectedDays = new boolean[daysArray.length];
         calendar=Calendar.getInstance();
         db = new DBHelper(this);
-        String callingActivity = getIntent().getStringExtra("calling_activity");
+        sp= getSharedPreferences("login", MODE_PRIVATE);
+        userid = sp.getInt("userId",0);
         if (hnameEdit != null && hnameEdit.length() > 0)
         {
 
@@ -252,7 +255,7 @@ public class CreateYNhabit extends AppCompatActivity {
 
                     } else {
 
-                        db.insertDatahabit(hname, colorvalue, hque, frequency, timer, habittype, NULL);
+                        db.insertDatahabit(hname, colorvalue, hque, frequency, timer, habittype, NULL,userid);
 
                     }
                     Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
@@ -276,7 +279,7 @@ public class CreateYNhabit extends AppCompatActivity {
                 } else {
                     Log.d("Heereeeeeeeee", "22222222222222222222222222222222");
 
-                    db.insertDatahabit(hname, colorvalue, hque, frequency, timer, habittype, NULL);
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, timer, habittype, NULL,userid);
 
                 }
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);

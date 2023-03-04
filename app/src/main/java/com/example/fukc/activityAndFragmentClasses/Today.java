@@ -1,13 +1,16 @@
 package com.example.fukc.activityAndFragmentClasses;
 
+import static android.content.Context.MODE_PRIVATE;
 import static java.sql.Types.NULL;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.transition.Slide;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +45,8 @@ public class Today extends Fragment implements MyAdapterHabit.OnItemClickListene
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     String strDate = dateFormat.format(calendar.getTime());
     View view;
+    SharedPreferences sp;
+    int userid;
     public Today() {
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +54,9 @@ public class Today extends Fragment implements MyAdapterHabit.OnItemClickListene
         view = inflater.inflate(R.layout.today, container, false);
         db = new DBHelper(getActivity().getApplicationContext());
         habitname = new ArrayList<>();
-        Cursor cursor = db.getdataHabit(strday);
+        sp = getContext().getSharedPreferences("login", MODE_PRIVATE);
+        userid = sp.getInt("userId", 0);
+        Cursor cursor = db.getdataHabit(strday,userid);
         while (cursor.moveToNext()) {
             habitname.add(cursor.getString(0));
         }
