@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                 Boolean checkuserpass = db.checkusernamepassword(user, pass);
                 if (checkuserpass == true) {
                     //For keeping user logged in
+                    int userId= db.getUserid(user);
+                    sp.edit().putInt("userId", userId).apply();
                     sp.edit().putBoolean("logged", true).apply();
                     Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), HomeScreen.class);

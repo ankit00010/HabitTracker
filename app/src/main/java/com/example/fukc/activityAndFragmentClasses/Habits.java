@@ -1,5 +1,8 @@
 package com.example.fukc.activityAndFragmentClasses;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,16 +27,19 @@ public class Habits extends Fragment {
     ArrayList<String> habitname;
     MyAdapterAllHabit adapter;
     DBHelper db;
+    SharedPreferences sp;
+    int userid;
     public Habits() {
         // Required empty public constructor
     }
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.habits, container, false);
         db = new DBHelper(getActivity().getApplicationContext());
+        sp = getContext().getSharedPreferences("login", MODE_PRIVATE);
+        userid = sp.getInt("userId", 0);
         habitname = new ArrayList<>();
-        Cursor cursor = db.getalldataHabit();
+        Cursor cursor = db.getalldataHabit(userid);
         while (cursor.moveToNext()) {
             habitname.add(cursor.getString(0));
         }

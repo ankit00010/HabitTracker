@@ -10,6 +10,7 @@ import android.app.TimePickerDialog;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -59,6 +60,8 @@ public class CreateChecklistHabits extends AppCompatActivity {
     DialogfragmentColor dialogFragment = new DialogfragmentColor();
     int habittype = 2;
     String colorvalue,hnameEdit;
+    SharedPreferences sp;
+    int userid;
     public void selectclr(ImageView ac) {
         if(ac==dialogFragment.cl1){
             color.setImageResource(R.drawable.cl1);
@@ -122,6 +125,8 @@ public class CreateChecklistHabits extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         hnameEdit="";
+        sp= getSharedPreferences("login", MODE_PRIVATE);
+        userid = sp.getInt("userId",0);
         if (getIntent().getStringExtra("habitEdit") != "")
         {
             hnameEdit = getIntent().getStringExtra("habitEdit");
@@ -144,8 +149,6 @@ public class CreateChecklistHabits extends AppCompatActivity {
                         }
                     }
                 }
-
-
         }
         backarrow.setOnClickListener(view -> {
             Intent intent;
@@ -285,7 +288,7 @@ public class CreateChecklistHabits extends AppCompatActivity {
                     } else {
                         Log.d("Heereeeeeeeee", "22222222222222222222222222222222");
 
-                        db.insertDatahabit(hname, colorvalue, hque, frequency, timer, habittype, NULL);
+                        db.insertDatahabit(hname, colorvalue, hque, frequency, timer, habittype, NULL,userid);
                         db.insertDataSubhabits(resultSubHabit,habitid);
 
 
@@ -316,7 +319,7 @@ public class CreateChecklistHabits extends AppCompatActivity {
                 }
                 String delimiter = ",";
                 String resultSubHabit = String.join(delimiter, inputList);
-                db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL);
+                db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL,userid);
                 if (create.getText().equals("Update")) {
                     Log.d("Heereeeeeeeee", "11111111111111111111111111111111");
 
@@ -327,7 +330,7 @@ public class CreateChecklistHabits extends AppCompatActivity {
                 } else {
                     Log.d("Heereeeeeeeee", "22222222222222222222222222222222");
 
-                    db.insertDatahabit(hname, colorvalue, hque, frequency, timer, habittype, NULL);
+                    db.insertDatahabit(hname, colorvalue, hque, frequency, timer, habittype, NULL,userid);
                     int habitid=db.getHabitId(hname);
 
                     db.insertDataSubhabits(resultSubHabit,habitid);
