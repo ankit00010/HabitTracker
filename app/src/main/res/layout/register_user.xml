@@ -179,7 +179,7 @@
                 android:drawableStart="@drawable/ic_baseline_question_answer_24"
                 android:drawablePadding="8dp"
                 android:hint="Answer"
-                android:inputType="textPassword"
+                android:inputType="text"
                 android:padding="8dp"
                 android:textColor="@color/white"
                 android:textColorHighlight="@color/cardview_dark_background"

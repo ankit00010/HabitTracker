@@ -141,10 +141,10 @@ public class Register_user extends AppCompatActivity {
         hidecnfrmpswd.setOnClickListener(v -> {
             //first to check whether the password  is visible or hidden when the eye icon is clicked
             //Transformation method will return whether the password is hidden or visible
-            if(password.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
+            if(repassword.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
                 //if password is visible then hide it
                 repassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                hidepaswd.setImageResource(R.drawable.hidepaswd);
+                hidecnfrmpswd.setImageResource(R.drawable.hidepaswd);
             }else
             {
                 repassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
