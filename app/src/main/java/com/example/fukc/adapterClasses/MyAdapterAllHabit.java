@@ -30,11 +30,13 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
     private final ArrayList name;
     DBHelper db;
     ArrayList<String> shabitname;
+
     public MyAdapterAllHabit(Context contextDialogue,Context context, ArrayList name) {
         this.context = context;
         this.name = name;
         this.contextDialogue=contextDialogue;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -106,6 +108,7 @@ public class MyAdapterAllHabit extends RecyclerView.Adapter<MyAdapterAllHabit.Vi
                     });
             AlertDialog alert = builder.create();
             alert.show();
+
 
         });
         holder.stats.setOnClickListener(v -> {
