@@ -9,7 +9,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -157,6 +161,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return record;
     }
+
     //Current Streak
     public int getCurrentStreak(String habitName){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -203,6 +208,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         int id =getHabitId(habitName);
         String query ="SELECT COUNT(*) FROM records WHERE record LIKE '%Y%' AND date LIKE '%-"+month+"-%' AND habitid = "+ id +"";
+        Log.d("Heremonthcheck",query);
         Cursor cursor = db.rawQuery(query, null);
         int count = 0;
         if(cursor.moveToFirst()){
@@ -210,6 +216,56 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return count;
     }
+    public int getDailyHabitsCount(String habitName, String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id = getHabitId(habitName);
+        String query = "SELECT COUNT(*) FROM records WHERE record LIKE '%Y%' AND date = ? AND habitid = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{date, String.valueOf(id)});
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+
+    public int getWeeklyHabitsCountForYear(String habitName, int year) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id = getHabitId(habitName);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        int currentWeek = calendar.get(Calendar.WEEK_OF_YEAR);
+        calendar.set(Calendar.WEEK_OF_YEAR, currentWeek);
+        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+        Date startOfWeek = calendar.getTime();
+        calendar.add(Calendar.DATE, 6);
+        Date endOfWeek = calendar.getTime();
+        String startDate = new SimpleDateFormat("yyyy-MM-dd").format(startOfWeek);
+        String endDate = new SimpleDateFormat("yyyy-MM-dd").format(endOfWeek);
+        String query = "SELECT COUNT(*) FROM records WHERE record LIKE '%Y%' AND date BETWEEN '"+startDate+"' AND '"+endDate+"' AND habitid = "+id;
+        Cursor cursor = db.rawQuery(query, null);
+        int count = 0;
+        if(cursor.moveToFirst()){
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+
+
+    public int getYearlyHabitsCount(String habitName, int year) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id = getHabitId(habitName);
+        String query = "SELECT COUNT(*) FROM records WHERE record LIKE '%Y%' AND date LIKE '"+year+"-%' AND habitid = "+ id +"";
+        Cursor cursor = db.rawQuery(query, null);
+        int count = 0;
+        if(cursor.moveToFirst()){
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+
     //for pieChart
     public int getDoneCount(String habitName){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -565,6 +621,26 @@ public class DBHelper extends SQLiteOpenHelper {
             text = cursor.getString(cursor.getColumnIndexOrThrow("securityque"));
         }
         return text;
+    }
+    public boolean GetWeeklyData(String habitName, String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id = getHabitId(habitName);
+        String query = "SELECT record FROM records WHERE date = ? AND habitid = ?";
+        Log.d("DEBUG", "Query for date " + date + ", habit id " + id + ": " + query);
+        String[] selectionArgs = {date, String.valueOf(id)};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        Log.d("DEBUG", "Cursor count: " + cursor.getCount());
+        if (cursor != null && cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndex("record");
+            String record = cursor.getString(columnIndex);
+            Log.d("Debug", "Record: " + record);
+            if (record != null && record.equals("Y")) {
+                cursor.close();
+                return true;
+            }
+            cursor.close();
+        }
+        return false;
     }
 
 }
