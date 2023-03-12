@@ -37,10 +37,10 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     String strDate = dateFormat.format(calendar.getTime());
+
     public MyAdapterHabit(Context context, ArrayList name) {
         this.context = context;
         this.name = name;
-
     }
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -75,7 +75,6 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
         }else if(db.getRecord(habitname,strDate).equals("S")){
             Glide.with(context).load(R.drawable.circle).into(holder.checkbox);
         }else if(db.getRecord(habitname,strDate).equals("F")){
-            //holder.checkbox.setImageResource(R.drawable.minuscircle);
             Glide.with(context).load(R.drawable.minuscircle).into(holder.checkbox);
         }
 
@@ -96,11 +95,11 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
                     currentDrawableIndex = (currentDrawableIndex + 1) % drawables.length;
                     Glide.with(context).load(context.getDrawable(drawables[currentDrawableIndex])).transition(DrawableTransitionOptions.withCrossFade()).into(holder.checkbox);
                     if (currentDrawableIndex==0) {
-                        Glide.with(holder.itemView.getContext()).load(R.drawable.checkedcircle).into(holder.checkbox);
-                        db.updateYNrecord(habitid,"Y",strDate);
-                    } else {
                         Glide.with(holder.itemView.getContext()).load(R.drawable.crossedcircle).into(holder.checkbox);
                         db.updateYNrecord(habitid,"N",strDate);
+                    } else {
+                        Glide.with(holder.itemView.getContext()).load(R.drawable.checkedcircle).into(holder.checkbox);
+                        db.updateYNrecord(habitid,"Y",strDate);
                     }
                 }
             });
@@ -159,6 +158,7 @@ public class MyAdapterHabit extends RecyclerView.Adapter<MyAdapterHabit.ViewHold
                 } else {
                     holder.recyclerView.setVisibility(View.GONE);
                     holder.dropdown.startAnimation(rotateLeft);
+                    notifyItemChanged(position);
                 }
             });
 

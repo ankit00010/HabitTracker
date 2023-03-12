@@ -36,11 +36,13 @@ public class MyAdapterSubHabit extends RecyclerView.Adapter<MyAdapterSubHabit.Vi
     String hName;
     String sRecord;
     String[] record;
+
     public MyAdapterSubHabit(Context con,ArrayList name,int habitid,String hName) {
         this.name = name;
         this.context=con;
         this.habitid=habitid;
         this.hName=hName;
+
     }
     @NonNull
     @Override
@@ -65,7 +67,7 @@ public class MyAdapterSubHabit extends RecyclerView.Adapter<MyAdapterSubHabit.Vi
         }
 
         holder.checkbox.setOnClickListener(new View.OnClickListener() {
-            int currentDrawableIndex = 0;
+            int currentDrawableIndex = -1;
             @Override
             public void onClick(View view) {
                 currentDrawableIndex = (currentDrawableIndex+1 ) % drawables.length;
@@ -94,7 +96,10 @@ public class MyAdapterSubHabit extends RecyclerView.Adapter<MyAdapterSubHabit.Vi
                     db.updateChecklistRecord(habitid, "Y", strDate);
                 }else if(cnt<record.length&&cnt>0){
                     db.updateChecklistRecord(habitid, "F", strDate);
+                }else if(cnt==0){
+                    db.updateChecklistRecord(habitid, "N", strDate);
                 }
+
             }
         });
         db.close();

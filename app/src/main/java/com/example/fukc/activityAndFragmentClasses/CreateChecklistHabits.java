@@ -253,7 +253,6 @@ public class CreateChecklistHabits extends AppCompatActivity {
                 Toast.makeText(CreateChecklistHabits.this, "Enter at least two sub habit", Toast.LENGTH_SHORT).show();
             }
             else if (!timer.isEmpty()) {
-                Log.d("Heereeeeeeeee", timer);
                 if (TextUtils.isEmpty(habitque.getText())) {
                     Toast.makeText(this, "Please enter the question ", Toast.LENGTH_SHORT).show();
                 }
@@ -262,7 +261,6 @@ public class CreateChecklistHabits extends AppCompatActivity {
                     colorvalue = dialogFragment.colorval;
                     String hname = habitname.getText().toString();
                     String frequency = frequencybutton.getText().toString();
-                    String reminder = reminderbutton.getText().toString();
                     String hque = habitque.getText().toString();
                     String subH1 = subhabit1.getText().toString();
                     inputList.add(subH1);
@@ -277,21 +275,15 @@ public class CreateChecklistHabits extends AppCompatActivity {
                     }
                     String delimiter = ",";
                     String resultSubHabit = String.join(delimiter, inputList);
-                    int habitid=db.getHabitId(hname);
 
                     if (create.getText().equals("Update")) {
-                        Log.d("Heereeeeeeeee", "11111111111111111111111111111111");
-
                         db.updateEdit(hnameEdit, hname, frequency, timer, colorvalue, hque, habittype, NULL);
+                        int habitid=db.getHabitId(hname);
                         db.updateSubHabit(resultSubHabit,habitid);
-
                     } else {
-                        Log.d("Heereeeeeeeee", "22222222222222222222222222222222");
-
                         db.insertDatahabit(hname, colorvalue, hque, frequency, timer, habittype, NULL,userid);
+                        int habitid=db.getHabitId(hname);
                         db.insertDataSubhabits(resultSubHabit,habitid);
-
-
                     }
                     Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -319,23 +311,14 @@ public class CreateChecklistHabits extends AppCompatActivity {
                 }
                 String delimiter = ",";
                 String resultSubHabit = String.join(delimiter, inputList);
-                db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, NULL,userid);
                 if (create.getText().equals("Update")) {
-                    Log.d("Heereeeeeeeee", "11111111111111111111111111111111");
-
                     db.updateEdit(hnameEdit, hname, frequency, timer, colorvalue, hque, habittype, NULL);
                     int habitid=db.getHabitId(hname);
                     db.updateSubHabit(resultSubHabit,habitid);
-
                 } else {
-                    Log.d("Heereeeeeeeee", "22222222222222222222222222222222");
-
                     db.insertDatahabit(hname, colorvalue, hque, frequency, timer, habittype, NULL,userid);
                     int habitid=db.getHabitId(hname);
-
                     db.insertDataSubhabits(resultSubHabit,habitid);
-
-
                 }
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
