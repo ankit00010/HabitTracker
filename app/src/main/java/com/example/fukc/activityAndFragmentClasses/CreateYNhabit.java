@@ -239,7 +239,6 @@ public class CreateYNhabit extends AppCompatActivity {
             }
 
             else if (!timer.isEmpty()) {
-                Log.d("Heereeeeeeeee", timer);
                 if (TextUtils.isEmpty(habitque.getText())) {
                     Toast.makeText(this, "Please enter the question ", Toast.LENGTH_SHORT).show();
                 } else {
@@ -272,12 +271,10 @@ public class CreateYNhabit extends AppCompatActivity {
                 hname = habitname.getText().toString();
                 hque = habitque.getText().toString();
                 if (savehabit.getText().equals("Update")) {
-                    Log.d("Heereeeeeeeee", "11111111111111111111111111111111");
 
                     db.updateEdit(hnameEdit, hname, frequency, timer, colorvalue, hque, habittype, NULL);
 
                 } else {
-                    Log.d("Heereeeeeeeee", "22222222222222222222222222222222");
 
                     db.insertDatahabit(hname, colorvalue, hque, frequency, timer, habittype, NULL,userid);
 

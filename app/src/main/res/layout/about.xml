@@ -8,8 +8,9 @@
     android:padding="16dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="398dp"
+        android:layout_height="712dp"
+        android:layout_marginTop="50dp"
         android:orientation="vertical">
 
         <ImageView
@@ -17,6 +18,7 @@
             android:layout_width="184dp"
             android:layout_height="158dp"
             android:layout_gravity="center_horizontal"
+
             android:layout_marginTop="24dp"
             android:layout_marginBottom="16dp"
             android:contentDescription="App Logo"
@@ -26,12 +28,12 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Habit Tracker"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/teal_700"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:text="Habit Tracker"
+            android:textColor="@color/teal_700"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_description"
@@ -44,10 +46,11 @@
 
         <TextView
             android:id="@+id/tv_developers"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="16dp"
+            android:gravity="center"
             android:text="Developers"
             android:textColor="@color/teal_700"
             android:textSize="18sp"
@@ -58,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:layout_marginBottom="16dp"
+            android:gravity="center"
             android:text="@string/credits"
             android:textColor="@color/white"
             android:textSize="16sp" />
