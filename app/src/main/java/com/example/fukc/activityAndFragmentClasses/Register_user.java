@@ -79,7 +79,7 @@ public class Register_user extends AppCompatActivity {
             String securityque = (String) securityquel.getSelectedItem();
             String emaill =email.getText().toString();
             String securityans= securityan.getText().toString();
-            if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(repass))
+            if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(repass) || TextUtils.isEmpty(securityans) || TextUtils.isEmpty(emaill))
             {
                 Toast.makeText(Register_user.this, "All fields Required", Toast.LENGTH_SHORT).show();
             }

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.transition.Slide;
 import android.util.Log;
 import android.view.Gravity;
@@ -106,7 +107,9 @@ public class Today extends Fragment implements MyAdapterHabit.OnItemClickListene
                 if (number >= target) {
                     Glide.with(getContext()).load(getContext().getDrawable(drawablesm[0])).transition(DrawableTransitionOptions.withCrossFade()).into(imageView);
                     db.updateMeasurableRecord(habitid,"Y",strDate,number);
-                } else if(number==0){
+
+                }
+                else if(number==0 ){
                     Glide.with(getContext()).load(getContext().getDrawable(drawablesm[0])).transition(DrawableTransitionOptions.withCrossFade()).into(imageView);
                     db.updateMeasurableRecord(habitid,"N",strDate,number);
                 }
