@@ -91,6 +91,8 @@ public class Today extends Fragment implements MyAdapterHabit.OnItemClickListene
     public void onItemClick(int position) {
         if (isAdded() && isVisible()) {
             int[] drawablesm = {R.drawable.checkedcircle, R.drawable.minuscircle};
+            int[] drawables = {R.drawable.crossedcircle,R.drawable.checkedcircle};
+
             MyAdapterHabit.ViewHolder holder = (MyAdapterHabit.ViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
             ImageView imageView = holder.checkbox;
             final EditText editText = new EditText(getContext());
@@ -108,7 +110,7 @@ public class Today extends Fragment implements MyAdapterHabit.OnItemClickListene
                     Glide.with(getContext()).load(getContext().getDrawable(drawablesm[0])).transition(DrawableTransitionOptions.withCrossFade()).into(imageView);
                     db.updateMeasurableRecord(habitid,"Y",strDate,number);
                 } else if(number==0){
-                    Glide.with(getContext()).load(getContext().getDrawable(drawablesm[0])).transition(DrawableTransitionOptions.withCrossFade()).into(imageView);
+                    Glide.with(getContext()).load(getContext().getDrawable(drawables[0])).transition(DrawableTransitionOptions.withCrossFade()).into(imageView);
                     db.updateMeasurableRecord(habitid,"N",strDate,number);
                 }
                 else {

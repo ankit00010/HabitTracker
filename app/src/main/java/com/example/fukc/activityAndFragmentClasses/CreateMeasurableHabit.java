@@ -274,6 +274,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                         db.insertDatahabit(hname, colorvalue, hque, frequency, reminder, habittype, targetval,userid);
 
                     }
+
                     Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

@@ -88,13 +88,9 @@ public class Statistics extends AppCompatActivity {
         int habitScore=db.getDoneCount(habitName);         //default value to show progress bar
         if((db.getDoneCount(habitName))!=0&&(db.getFailCount(habitName))!=0&&(db.getSkipCount(habitName)!=0)){
             habitScore = ((db.getDoneCount(habitName))/(db.getFailCount(habitName)+db.getSkipCount(habitName)))*100;
-
-
-
         }
         //getting the week data from the CurrentWeekHabitCount to display in stats
         thisweek.setText(String.valueOf(CurrentWeekHabitCount(habitName)));
-
         // Get the current month
             Calendar calendar = Calendar.getInstance();
             int currentMonth = calendar.get(Calendar.MONTH) + 1; // Adding 1 because January is 0 in Calendar.MONTH
