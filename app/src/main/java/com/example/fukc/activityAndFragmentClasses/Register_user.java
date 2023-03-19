@@ -47,10 +47,10 @@ public class Register_user extends AppCompatActivity {
 
         // Set an OnFocusChangeListener for the EditText field
         email.setOnFocusChangeListener((v, hasFocus) -> {
-
             if (!hasFocus) {
                 // Get the email address from the EditText field
                 String stremail = email.getText().toString().trim();
+
 
                 // Check if the email address is empty
                 if (stremail.isEmpty()) {
@@ -64,9 +64,10 @@ public class Register_user extends AppCompatActivity {
 
                 }
 
-
             }
         });
+
+
 
         securityquel = findViewById(R.id.securityques);
 
@@ -79,10 +80,17 @@ public class Register_user extends AppCompatActivity {
             String securityque = (String) securityquel.getSelectedItem();
             String emaill =email.getText().toString();
             String securityans= securityan.getText().toString();
-            if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(repass) || TextUtils.isEmpty(securityans) || TextUtils.isEmpty(emaill))
+            boolean isError = false; // set isError flag to false initially
+            if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(repass) || TextUtils.isEmpty(securityans) ||TextUtils.isEmpty(emaill))
             {
                 Toast.makeText(Register_user.this, "All fields Required", Toast.LENGTH_SHORT).show();
             }
+            // Check for any EditText errors
+            if ( email.getError() != null) {
+                Toast.makeText(Register_user.this, "Please give the valid email", Toast.LENGTH_SHORT).show();
+                isError = true; // set flag to true if there's an error
+            }
+
             else{
                 if (pass.equals(repass))
                 {
@@ -153,4 +161,10 @@ public class Register_user extends AppCompatActivity {
         });
         db.close();
     }
+
+
+
+
+
+
 }
