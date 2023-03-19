@@ -8,11 +8,14 @@ import androidx.fragment.app.FragmentManager;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -138,6 +141,7 @@ public class CreateMeasurableHabit extends AppCompatActivity {
                 selectedMinute=minute;
             },hours,mins,false);
             timePickerDialog.show();
+            createNotificationChannel();
 
         });
         //backtext to navigate to habit options back
@@ -348,5 +352,17 @@ public class CreateMeasurableHabit extends AppCompatActivity {
         alertDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         alertDialog.show();
     }
+    private void createNotificationChannel() {
 
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
+        {
+            CharSequence name="HabitTrackerChannel"; ///channel for habit tracker
+            String description="Channel for Alaram Manager";
+            int importance= NotificationManager.IMPORTANCE_HIGH;//It will appear on screen of a user
+            NotificationChannel channel=new NotificationChannel("HabitTracker",name,importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager=getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 }

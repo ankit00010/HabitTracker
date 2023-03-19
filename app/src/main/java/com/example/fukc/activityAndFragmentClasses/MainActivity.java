@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         btnlogin = (Button) findViewById(R.id.btnsignin1);
         signup = (TextView) findViewById(R.id.signupText);
         forgetpass = (TextView) findViewById(R.id.forgetpass);
-        createNotificationChannel();
+
 
         hide_login_password = (ImageView) findViewById(R.id.hideloginpaswd);
         db = new DBHelper(this);
@@ -106,19 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void createNotificationChannel() {
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
-        {
-            CharSequence name="HabitTrackerChannel"; ///channel for habit tracker
-            String description="Channel for Alaram Manager";
-            int importance=NotificationManager.IMPORTANCE_HIGH;//It will appear on screen of a user
-            NotificationChannel channel=new NotificationChannel("HabitTracker",name,importance);
-                channel.setDescription(description);
-                NotificationManager notificationManager=getSystemService(NotificationManager.class);
-                notificationManager.createNotificationChannel(channel);
-        }
-    }
 
 }
 
