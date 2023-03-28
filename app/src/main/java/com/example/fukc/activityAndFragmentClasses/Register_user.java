@@ -86,10 +86,22 @@ public class Register_user extends AppCompatActivity {
                 Toast.makeText(Register_user.this, "All fields Required", Toast.LENGTH_SHORT).show();
             }
             // Check for any EditText errors
-            if ( email.getError() != null) {
+            else if ( email.getError() != null) {
                 Toast.makeText(Register_user.this, "Please give the valid email", Toast.LENGTH_SHORT).show();
                 isError = true; // set flag to true if there's an error
             }
+            else if (pass.length() < 6 || pass.length() > 20) {
+                Toast.makeText(Register_user.this, "Password length should be between 6 and 20 characters", Toast.LENGTH_SHORT).show();
+                isError = true;
+            }
+            else if (!securityans.matches("[a-zA-Z]+")) {
+                Toast.makeText(Register_user.this, "Security answer should only contain alphabets", Toast.LENGTH_SHORT).show();
+                isError = true;
+            } else if (securityans.length() < 6 || securityans.length() > 20) {
+                Toast.makeText(Register_user.this, "Security answer should be between 6 to 20 characters", Toast.LENGTH_SHORT).show();
+                isError = true;
+            }
+
 
             else{
                 if (pass.equals(repass))

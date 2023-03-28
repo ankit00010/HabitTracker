@@ -57,26 +57,32 @@ public class MainActivity extends AppCompatActivity {
         btnlogin.setOnClickListener(view -> {
             String user = username.getText().toString();
             String pass = password.getText().toString();
-            if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass))
+            if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass)) {
                 Toast.makeText(MainActivity.this, "All fields Required", Toast.LENGTH_SHORT).show();
-            else {
-                Boolean checkuserpass = db.checkusernamepassword(user, pass);
-                if (checkuserpass == true) {
-                    //For keeping user logged in
-                    int userId= db.getUserid(user);
-                    sp.edit().putInt("userId", userId).apply();
-                    sp.edit().putBoolean("logged", true).apply();
-                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+            } else {
+                // Check if username exists in the database
+                boolean userExists = db.checkusername(user);
+                if (!userExists) {
+                    Toast.makeText(MainActivity.this, "Username is incorrect", Toast.LENGTH_SHORT).show();
                 } else {
-
-                    Toast.makeText(MainActivity.this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show();
-
+                    // Check if username and password match in the database
+                    boolean checkuserpass = db.checkusernamepassword(user, pass);
+                    if (checkuserpass) {
+                        //For keeping user logged in
+                        int userId= db.getUserid(user);
+                        sp.edit().putInt("userId", userId).apply();
+                        sp.edit().putBoolean("logged", true).apply();
+                        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(MainActivity.this, "Password is incorrect", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
+
         signup.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), Register_user.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
