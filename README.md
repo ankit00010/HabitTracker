@@ -16,8 +16,8 @@ The Habit Tracker App is a versatile Android application designed to help you tr
 - Log your progress daily
 - View statistics and insights for each habit
 - Secure offline login and sign-up functionality
-- Organize habits into different categories (e.g., Home, Work, Personal)
-- Track habits online or offline
+
+
 
 ## Technologies Used
 
